@@ -233,7 +233,7 @@ tsconfig.json
 
 ## 阶段 1：内容站基础
 ### Task 1
-- 初始化 TanStack Start 项目：`npm create cloudflare@latest my-app -- --framework=tanstack-start`
+- 初始化 TanStack Start 项目
 - 配置 wrangler.toml（添加 D1 binding）
 - 本地开发：`npm run dev`
 - 首次部署：`npm run deploy`
