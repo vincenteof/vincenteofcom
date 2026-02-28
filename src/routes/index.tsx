@@ -1,118 +1,124 @@
 import { createFileRoute } from '@tanstack/react-router'
-import {
-  Zap,
-  Server,
-  Route as RouteIcon,
-  Shield,
-  Waves,
-  Sparkles,
-} from 'lucide-react'
 
-export const Route = createFileRoute('/')({ component: App })
+const themes = [
+  {
+    title: 'Capital',
+    lines: ['资产的分配', '风险的理解', '收益的结构', '长期的纪律'],
+  },
+  {
+    title: 'Cognition',
+    lines: ['决策的形成', '偏见的识别', '情绪与判断', '系统的训练'],
+  },
+  {
+    title: 'Sovereignty',
+    lines: ['时间与收入', '技术与能力', '结构与自由', '长期选择'],
+  },
+]
 
-function App() {
-  const features = [
-    {
-      icon: <Zap className="w-12 h-12 text-cyan-400" />,
-      title: 'Powerful Server Functions',
-      description:
-        'Write server-side code that seamlessly integrates with your client components. Type-safe, secure, and simple.',
-    },
-    {
-      icon: <Server className="w-12 h-12 text-cyan-400" />,
-      title: 'Flexible Server Side Rendering',
-      description:
-        'Full-document SSR, streaming, and progressive enhancement out of the box. Control exactly what renders where.',
-    },
-    {
-      icon: <RouteIcon className="w-12 h-12 text-cyan-400" />,
-      title: 'API Routes',
-      description:
-        'Build type-safe API endpoints alongside your application. No separate backend needed.',
-    },
-    {
-      icon: <Shield className="w-12 h-12 text-cyan-400" />,
-      title: 'Strongly Typed Everything',
-      description:
-        'End-to-end type safety from server to client. Catch errors before they reach production.',
-    },
-    {
-      icon: <Waves className="w-12 h-12 text-cyan-400" />,
-      title: 'Full Streaming Support',
-      description:
-        'Stream data from server to client progressively. Perfect for AI applications and real-time updates.',
-    },
-    {
-      icon: <Sparkles className="w-12 h-12 text-cyan-400" />,
-      title: 'Next Generation Ready',
-      description:
-        'Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.',
-    },
-  ]
+const essays = [
+  '长期投资的心理结构',
+  'AI 时代的资本分配思考',
+  '心理账户与风险认知',
+  '收益结构的设计记录',
+]
 
+export const Route = createFileRoute('/')({ component: HomePage })
+
+function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-      <section className="relative py-20 px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10"></div>
-        <div className="relative max-w-5xl mx-auto">
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <img
-              src="/tanstack-circle-logo.png"
-              alt="TanStack Logo"
-              className="w-24 h-24 md:w-32 md:h-32"
-            />
-            <h1 className="text-6xl md:text-7xl font-black text-white [letter-spacing:-0.08em]">
-              <span className="text-gray-300">TANSTACK</span>{' '}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                START
-              </span>
-            </h1>
-          </div>
-          <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-            The framework for next generation AI applications
-          </p>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-            Full-stack framework powered by TanStack Router for React and Solid.
-            Build modern applications with server functions, streaming, and type
-            safety.
-          </p>
-          <div className="flex flex-col items-center gap-4">
-            <a
-              href="https://tanstack.com/start"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/50"
-            >
-              Documentation
-            </a>
-            <p className="text-gray-400 text-sm mt-2">
-              Begin your TanStack Start journey by editing{' '}
-              <code className="px-2 py-1 bg-slate-700 rounded text-cyan-400">
-                /src/routes/index.tsx
-              </code>
-            </p>
-          </div>
+    <main className="site-shell">
+      <section className="section hero reveal-up">
+        <p className="kicker">Personal Sovereign Publishing</p>
+        <h1 className="hero-title">构建选择权。</h1>
+        <p className="hero-english">Investing. Self-Training. Sovereignty.</p>
+        <p className="lede">
+          在不确定之中，
+          <br />
+          为自己建立可以依靠的结构。
+        </p>
+        <div className="hero-actions">
+          <a href="#selected" className="btn-outline">
+            阅读文章
+          </a>
+          <a href="#membership" className="btn-outline">
+            加入会员
+          </a>
         </div>
       </section>
 
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-400 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
+      <section className="section reveal-up" style={{ animationDelay: '90ms' }}>
+        <h2 className="section-title">定位</h2>
+        <div className="copy-block">
+          <p>这里记录的是一种长期的实践。</p>
+          <p>关于投资。关于认知。关于在波动中保持稳定。</p>
+          <p>更多时候，是拆解结构，校准判断，反思决策。</p>
+          <p>没有标准答案。只有持续的调整与理解。</p>
+        </div>
+      </section>
+
+      <section className="section reveal-up" style={{ animationDelay: '160ms' }}>
+        <h2 className="section-title">关于我</h2>
+        <div className="copy-block">
+          <p>我是一名长期的学习者，也是一名实践者。</p>
+          <p>投资、技术、结构设计，是我持续探索的方向。写作只是记录过程的一种方式。</p>
+          <p>很多判断会改变。很多观点会被修正。</p>
+          <p>但对长期结构的关注，一直没有改变。</p>
+          <p>这个网站，是一次公开的整理。</p>
+        </div>
+      </section>
+
+      <section className="section reveal-up" style={{ animationDelay: '220ms' }}>
+        <h2 className="section-title">主题</h2>
+        <div className="theme-grid">
+          {themes.map((theme) => (
+            <article key={theme.title} className="theme-block">
+              <h3>{theme.title}</h3>
+              <ul>
+                {theme.lines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </article>
           ))}
         </div>
       </section>
-    </div>
+
+      <section id="selected" className="section reveal-up" style={{ animationDelay: '280ms' }}>
+        <h2 className="section-title">精选文章</h2>
+        <p className="section-subtitle">Selected Essays</p>
+        <ul className="essay-list">
+          {essays.map((essay) => (
+            <li key={essay}>
+              <a href="#" aria-label={essay}>
+                {essay}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="membership" className="section membership reveal-up" style={{ animationDelay: '340ms' }}>
+        <h2 className="section-title">会员</h2>
+        <div className="copy-block">
+          <p>为愿意深入的人准备。</p>
+          <p>内容更系统，也更具体。</p>
+          <p>包括投资框架的展开，结构设计的记录，以及持续的实验笔记。</p>
+          <p>不承诺结果。只记录过程。</p>
+        </div>
+        <button
+          type="button"
+          className="btn-outline btn-coming-soon"
+          disabled
+          aria-label="加入会员（即将开放）"
+        >
+          <span>加入会员</span>
+          <span className="soon-tag">Coming Soon</span>
+        </button>
+      </section>
+
+      <section className="section outro reveal-up" style={{ animationDelay: '380ms' }}>
+        <p>未来始终不确定。结构可以被训练。</p>
+      </section>
+    </main>
   )
 }

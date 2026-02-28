@@ -1,0 +1,1 @@
+请先阅读REQUIREMENTS.md来了解当前完整需求。我已经初始化了当前的tanstack start 项目及其他相关的配置如 tailwindcss，并且已经测试部署 cloudflare 完成。也就是说任务拆分里的阶段0的 Task 0.1 已经完成，请开始后续工作。然后再阅读 VISUAL.md 和 LANDING_PAGE.md 来获取网站的视觉风格并开始开发 landing page。
