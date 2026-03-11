@@ -1,7 +1,7 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 
-import { getMembershipStatus } from '#/lib/membership'
-import { createPreview, getPostBySlug, splitBodyToParagraphs } from '#/lib/posts'
+import { getMembershipStatus } from '@/lib/membership'
+import { createPreview, getPostBySlug, splitBodyToParagraphs } from '@/lib/posts'
 
 export const Route = createFileRoute('/posts/$slug')({
   loader: async ({ params }) => {

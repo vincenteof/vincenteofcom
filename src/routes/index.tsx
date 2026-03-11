@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
-import { getPublicPostSummaries } from '#/lib/posts'
+import { getPublicPostSummaries } from '@/lib/posts'
 
 const themes = [
   {

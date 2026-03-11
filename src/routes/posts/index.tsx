@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
-import { getAllPostSummaries } from '#/lib/posts'
+import { getAllPostSummaries } from '@/lib/posts'
 
 export const Route = createFileRoute('/posts/')({
   loader: () => ({
