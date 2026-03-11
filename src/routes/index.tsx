@@ -1,4 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
+
+import { getPublicPostSummaries } from '@/lib/posts'
+import { ui } from '@/lib/ui'
 
 const themes = [
   {
@@ -15,40 +18,40 @@ const themes = [
   },
 ]
 
-const essays = [
-  '长期投资的心理结构',
-  'AI 时代的资本分配思考',
-  '心理账户与风险认知',
-  '收益结构的设计记录',
-]
-
-export const Route = createFileRoute('/')({ component: HomePage })
+export const Route = createFileRoute('/')({
+  loader: () => ({
+    selectedPosts: getPublicPostSummaries(4),
+  }),
+  component: HomePage,
+})
 
 function HomePage() {
+  const { selectedPosts } = Route.useLoaderData()
+
   return (
-    <main className="site-shell">
-      <section className="section hero reveal-up">
-        <p className="kicker">Personal Sovereign Publishing</p>
-        <h1 className="hero-title">构建选择权。</h1>
-        <p className="hero-english">Investing. Self-Training. Sovereignty.</p>
-        <p className="lede">
+    <main className={ui.shell}>
+      <section className={`${ui.section} ${ui.heroSection} ${ui.reveal}`}>
+        <p className={ui.kicker}>Personal Sovereign Publishing</p>
+        <h1 className={ui.heroTitle}>构建选择权。</h1>
+        <p className={ui.heroEnglish}>Investing. Self-Training. Sovereignty.</p>
+        <p className={ui.lede}>
           在不确定之中，
           <br />
           为自己建立可以依靠的结构。
         </p>
-        <div className="hero-actions">
-          <a href="#selected" className="btn-outline">
+        <div className="mt-8.5 flex flex-wrap gap-3.5">
+          <Link to="/posts" className={ui.buttonOutline}>
             阅读文章
-          </a>
-          <a href="#membership" className="btn-outline">
+          </Link>
+          <a href="#membership" className={ui.buttonOutline}>
             加入会员
           </a>
         </div>
       </section>
 
-      <section className="section reveal-up" style={{ animationDelay: '90ms' }}>
-        <h2 className="section-title">定位</h2>
-        <div className="copy-block">
+      <section className={`${ui.section} ${ui.reveal}`} style={{ animationDelay: '90ms' }}>
+        <h2 className={ui.sectionTitle}>定位</h2>
+        <div className={ui.copyBlock}>
           <p>这里记录的是一种长期的实践。</p>
           <p>关于投资。关于认知。关于在波动中保持稳定。</p>
           <p>更多时候，是拆解结构，校准判断，反思决策。</p>
@@ -56,9 +59,9 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section reveal-up" style={{ animationDelay: '160ms' }}>
-        <h2 className="section-title">关于我</h2>
-        <div className="copy-block">
+      <section className={`${ui.section} ${ui.reveal}`} style={{ animationDelay: '160ms' }}>
+        <h2 className={ui.sectionTitle}>关于我</h2>
+        <div className={ui.copyBlock}>
           <p>我是一名长期的学习者，也是一名实践者。</p>
           <p>投资、技术、结构设计，是我持续探索的方向。写作只是记录过程的一种方式。</p>
           <p>很多判断会改变。很多观点会被修正。</p>
@@ -67,15 +70,17 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section reveal-up" style={{ animationDelay: '220ms' }}>
-        <h2 className="section-title">主题</h2>
-        <div className="theme-grid">
+      <section className={`${ui.section} ${ui.reveal}`} style={{ animationDelay: '220ms' }}>
+        <h2 className={ui.sectionTitle}>主题</h2>
+        <div className="grid gap-6.5 max-[860px]:gap-8 min-[861px]:grid-cols-3">
           {themes.map((theme) => (
-            <article key={theme.title} className="theme-block">
-              <h3>{theme.title}</h3>
-              <ul>
+            <article key={theme.title}>
+              <h3 className="mb-3 text-(--text) font-medium tracking-[0.05em]">{theme.title}</h3>
+              <ul className="m-0 list-none p-0">
                 {theme.lines.map((line) => (
-                  <li key={line}>{line}</li>
+                  <li key={line} className="mb-2.5 text-(--text-soft) last:mb-0">
+                    {line}
+                  </li>
                 ))}
               </ul>
             </article>
@@ -83,23 +88,36 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="selected" className="section reveal-up" style={{ animationDelay: '280ms' }}>
-        <h2 className="section-title">精选文章</h2>
-        <p className="section-subtitle">Selected Essays</p>
-        <ul className="essay-list">
-          {essays.map((essay) => (
-            <li key={essay}>
-              <a href="#" aria-label={essay}>
-                {essay}
-              </a>
+      <section
+        id="selected"
+        className={`${ui.section} ${ui.reveal} pb-8.5!`}
+        style={{ animationDelay: '280ms' }}
+      >
+        <h2 className={ui.sectionTitle}>精选文章</h2>
+        <p className={ui.sectionSubtitle}>Selected Essays</p>
+        <ul className={ui.essayList}>
+          {selectedPosts.map((post) => (
+            <li key={post.slug}>
+              <Link to="/posts/$slug" params={{ slug: post.slug }} aria-label={post.title}>
+                {post.title}
+              </Link>
             </li>
           ))}
         </ul>
+        <div className="mt-4.5">
+          <Link to="/posts" className={ui.sectionLink}>
+            查看全部文章
+          </Link>
+        </div>
       </section>
 
-      <section id="membership" className="section membership reveal-up" style={{ animationDelay: '340ms' }}>
-        <h2 className="section-title">会员</h2>
-        <div className="copy-block">
+      <section
+        id="membership"
+        className={`${ui.section} ${ui.reveal} relative after:absolute after:right-0 after:top-8.5 after:h-px after:w-[min(45vw,190px)] after:bg-linear-to-r after:from-transparent after:to-(--accent) max-[860px]:after:hidden`}
+        style={{ animationDelay: '340ms' }}
+      >
+        <h2 className={ui.sectionTitle}>会员</h2>
+        <div className={ui.copyBlock}>
           <p>为愿意深入的人准备。</p>
           <p>内容更系统，也更具体。</p>
           <p>包括投资框架的展开，结构设计的记录，以及持续的实验笔记。</p>
@@ -107,17 +125,22 @@ function HomePage() {
         </div>
         <button
           type="button"
-          className="btn-outline btn-coming-soon"
+          className={`${ui.buttonOutline} relative mt-6 cursor-not-allowed gap-2.5 overflow-hidden disabled:opacity-100 after:absolute after:inset-0 after:bg-[linear-gradient(120deg,transparent_14%,rgba(255,255,255,0.12)_44%,transparent_74%)] after:content-[''] after:animate-[soonSweep_2.8s_ease-in-out_infinite]`}
           disabled
           aria-label="加入会员（即将开放）"
         >
-          <span>加入会员</span>
-          <span className="soon-tag">Coming Soon</span>
+          <span className="relative z-1">加入会员</span>
+          <span className="relative z-1 border border-[color-mix(in_oklab,var(--line)_80%,#fff_20%)] px-1.75 py-0.5 text-[0.66rem] uppercase tracking-[0.08em] text-(--text-soft)">
+            Coming Soon
+          </span>
         </button>
       </section>
 
-      <section className="section outro reveal-up" style={{ animationDelay: '380ms' }}>
-        <p>未来始终不确定。结构可以被训练。</p>
+      <section
+        className={`${ui.section} ${ui.reveal} pb-6 text-center`}
+        style={{ animationDelay: '380ms' }}
+      >
+        <p className="m-0 text-(--text-soft)">未来始终不确定。结构可以被训练。</p>
       </section>
     </main>
   )
