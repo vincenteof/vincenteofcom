@@ -72,23 +72,30 @@ function PostDetailPage() {
 
         {isMemberPost && !canReadFull ? (
           <section
-            className="mt-6.5 border-t border-[color-mix(in_oklab,var(--line)_78%,transparent)] pt-4"
+            className="mt-8 border-t border-[color-mix(in_oklab,var(--line)_78%,transparent)] pt-5"
             aria-label="会员文章提示"
           >
-            <p className="mb-3.5 text-(--text-soft)">
-              这是一篇会员专享文章。当前仅展示预览内容。
+            <p className="m-0 text-[0.98rem] tracking-[0.03em] text-[color-mix(in_oklab,var(--text)_82%,var(--accent)_18%)]">
+              会员文章 · 当前仅展示预览
             </p>
-            <a href="/#membership" className={ui.buttonOutline}>
-              加入会员
-            </a>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a href="/#membership" className={ui.buttonOutline}>
+                加入会员
+              </a>
+              <Link to="/posts" className={ui.subtleButton}>
+                返回文章目录
+              </Link>
+            </div>
           </section>
         ) : null}
 
-        <div className="mt-7">
-          <Link to="/posts" className={ui.buttonOutline}>
-            返回文章目录
-          </Link>
-        </div>
+        {!isMemberPost || canReadFull ? (
+          <div className="mt-7">
+            <Link to="/posts" className={ui.buttonOutline}>
+              返回文章目录
+            </Link>
+          </div>
+        ) : null}
       </section>
     </main>
   )
