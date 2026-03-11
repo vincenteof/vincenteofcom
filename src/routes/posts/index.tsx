@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { getAllPostSummaries } from '@/lib/posts'
+import { ui } from '@/lib/ui'
 
 export const Route = createFileRoute('/posts/')({
   loader: () => ({
@@ -30,29 +31,38 @@ function PostsPage() {
   const { posts } = Route.useLoaderData()
 
   return (
-    <main className="site-shell posts-shell">
-      <section className="section hero reveal-up">
-        <div className="posts-back-wrap">
-          <Link to="/" className="btn-outline posts-back-btn">
+    <main className={ui.shellPosts}>
+      <section className={`${ui.section} ${ui.postsHeroSection} ${ui.reveal}`}>
+        <div className="mb-6">
+          <Link to="/" className={ui.subtleButton}>
             返回首页
           </Link>
         </div>
-        <p className="kicker">All Writings</p>
-        <h1 className="hero-title">文章目录</h1>
-        <p className="lede">所有公开文章的索引入口，按时间倒序展示。</p>
+        <p className={ui.kicker}>All Writings</p>
+        <h1 className={ui.heroTitle}>文章目录</h1>
+        <p className={ui.lede}>所有公开文章的索引入口，按时间倒序展示。</p>
       </section>
 
-      <section className="section reveal-up" style={{ animationDelay: '90ms' }}>
-        <ul className="essay-list post-list">
+      <section
+        className={`${ui.section} ${ui.reveal}`}
+        style={{ animationDelay: '90ms' }}
+      >
+        <ul className={`${ui.essayList} [&_li]:py-0`}>
           {posts.map((post) => (
             <li key={post.slug}>
-              <Link to="/posts/$slug" params={{ slug: post.slug }} className="post-link">
-                <span className="post-title">{post.title}</span>
-                <span className="post-meta">
+              <Link
+                to="/posts/$slug"
+                params={{ slug: post.slug }}
+                className="block py-4"
+              >
+                <span className="block text-(--text)">{post.title}</span>
+                <span className="mt-0.5 block text-[0.83rem] text-(--text-soft)">
                   {post.date} · {post.tags.join(' / ')}
                   {post.visibility === 'member' ? ' · 会员专享' : ''}
                 </span>
-                <span className="post-excerpt">{post.excerpt}</span>
+                <span className="mt-2 block text-[0.95rem] text-[color-mix(in_oklab,var(--text)_90%,var(--text-soft))]">
+                  {post.excerpt}
+                </span>
               </Link>
             </li>
           ))}
