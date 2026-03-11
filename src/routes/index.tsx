@@ -1,4 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
+
+import { getPublicPostSummaries } from '#/lib/posts'
 
 const themes = [
   {
@@ -15,16 +17,16 @@ const themes = [
   },
 ]
 
-const essays = [
-  '长期投资的心理结构',
-  'AI 时代的资本分配思考',
-  '心理账户与风险认知',
-  '收益结构的设计记录',
-]
-
-export const Route = createFileRoute('/')({ component: HomePage })
+export const Route = createFileRoute('/')({
+  loader: () => ({
+    selectedPosts: getPublicPostSummaries(4),
+  }),
+  component: HomePage,
+})
 
 function HomePage() {
+  const { selectedPosts } = Route.useLoaderData()
+
   return (
     <main className="site-shell">
       <section className="section hero reveal-up">
@@ -37,9 +39,9 @@ function HomePage() {
           为自己建立可以依靠的结构。
         </p>
         <div className="hero-actions">
-          <a href="#selected" className="btn-outline">
+          <Link to="/posts" className="btn-outline">
             阅读文章
-          </a>
+          </Link>
           <a href="#membership" className="btn-outline">
             加入会员
           </a>
@@ -83,18 +85,27 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="selected" className="section reveal-up" style={{ animationDelay: '280ms' }}>
+      <section
+        id="selected"
+        className="section section-selected reveal-up"
+        style={{ animationDelay: '280ms' }}
+      >
         <h2 className="section-title">精选文章</h2>
         <p className="section-subtitle">Selected Essays</p>
         <ul className="essay-list">
-          {essays.map((essay) => (
-            <li key={essay}>
-              <a href="#" aria-label={essay}>
-                {essay}
-              </a>
+          {selectedPosts.map((post) => (
+            <li key={post.slug}>
+              <Link to="/posts/$slug" params={{ slug: post.slug }} aria-label={post.title}>
+                {post.title}
+              </Link>
             </li>
           ))}
         </ul>
+        <div className="section-link-wrap">
+          <Link to="/posts" className="section-link">
+            查看全部文章
+          </Link>
+        </div>
       </section>
 
       <section id="membership" className="section membership reveal-up" style={{ animationDelay: '340ms' }}>
