@@ -63,7 +63,7 @@ function HomePage() {
         <h2 className={ui.sectionTitle}>关于我</h2>
         <div className={ui.copyBlock}>
           <p>我是一名长期的学习者，也是一名实践者。</p>
-          <p>投资、技术、结构设计，是我持续探索的方向。写作只是记录过程的一种方式。</p>
+          <p>投资、技术，以及长期系统的构建，是我持续探索的方向。写作只是记录过程的一种方式。</p>
           <p>很多判断会改变。很多观点会被修正。</p>
           <p>但对长期结构的关注，一直没有改变。</p>
           <p>这个网站，是一次公开的整理。</p>
@@ -74,11 +74,14 @@ function HomePage() {
         <h2 className={ui.sectionTitle}>主题</h2>
         <div className="grid gap-6.5 max-[860px]:gap-8 min-[861px]:grid-cols-3">
           {themes.map((theme) => (
-            <article key={theme.title}>
-              <h3 className="mb-3 text-(--text) font-medium tracking-[0.05em]">{theme.title}</h3>
-              <ul className="m-0 list-none p-0">
+            <article
+              key={theme.title}
+              className="grid gap-4 border-t border-[color-mix(in_oklab,var(--line)_65%,transparent)] pt-5 first:border-t-0 first:pt-0 min-[861px]:block min-[861px]:border-t-0 min-[861px]:pt-0 max-[860px]:grid-cols-[minmax(88px,108px)_1fr]"
+            >
+              <h3 className="m-0 text-(--text) font-medium tracking-[0.05em]">{theme.title}</h3>
+              <ul className="m-0 grid list-none gap-x-4 gap-y-2.5 p-0 max-[860px]:grid-cols-2">
                 {theme.lines.map((line) => (
-                  <li key={line} className="mb-2.5 text-(--text-soft) last:mb-0">
+                  <li key={line} className="text-(--text-soft)">
                     {line}
                   </li>
                 ))}
