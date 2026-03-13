@@ -49,7 +49,10 @@ function HomePage() {
         </div>
       </section>
 
-      <section className={`${ui.section} ${ui.reveal}`} style={{ animationDelay: '90ms' }}>
+      <section
+        className={`${ui.section} ${ui.reveal}`}
+        style={{ animationDelay: '90ms' }}
+      >
         <h2 className={ui.sectionTitle}>定位</h2>
         <div className={ui.copyBlock}>
           <p>这里记录的是一种长期的实践。</p>
@@ -59,26 +62,39 @@ function HomePage() {
         </div>
       </section>
 
-      <section className={`${ui.section} ${ui.reveal}`} style={{ animationDelay: '160ms' }}>
+      <section
+        className={`${ui.section} ${ui.reveal}`}
+        style={{ animationDelay: '160ms' }}
+      >
         <h2 className={ui.sectionTitle}>关于我</h2>
         <div className={ui.copyBlock}>
           <p>我是一名长期的学习者，也是一名实践者。</p>
-          <p>投资、技术、结构设计，是我持续探索的方向。写作只是记录过程的一种方式。</p>
+          <p>
+            投资、技术，以及长期系统的构建，是我持续探索的方向。写作只是记录过程的一种方式。
+          </p>
           <p>很多判断会改变。很多观点会被修正。</p>
           <p>但对长期结构的关注，一直没有改变。</p>
           <p>这个网站，是一次公开的整理。</p>
         </div>
       </section>
 
-      <section className={`${ui.section} ${ui.reveal}`} style={{ animationDelay: '220ms' }}>
+      <section
+        className={`${ui.section} ${ui.reveal}`}
+        style={{ animationDelay: '220ms' }}
+      >
         <h2 className={ui.sectionTitle}>主题</h2>
         <div className="grid gap-6.5 max-[860px]:gap-8 min-[861px]:grid-cols-3">
           {themes.map((theme) => (
-            <article key={theme.title}>
-              <h3 className="mb-3 text-(--text) font-medium tracking-[0.05em]">{theme.title}</h3>
-              <ul className="m-0 list-none p-0">
+            <article
+              key={theme.title}
+              className="grid gap-4 border-t border-[color-mix(in_oklab,var(--line)_65%,transparent)] pt-5 first:border-t-0 first:pt-0 min-[861px]:block min-[861px]:border-t-0 min-[861px]:pt-0 max-[860px]:grid-cols-[minmax(88px,108px)_1fr]"
+            >
+              <h3 className="m-0 text-(--text) font-medium tracking-[0.05em]">
+                {theme.title}
+              </h3>
+              <ul className="m-0 grid list-none gap-x-4 gap-y-2.5 p-0 max-[860px]:grid-cols-2">
                 {theme.lines.map((line) => (
-                  <li key={line} className="mb-2.5 text-(--text-soft) last:mb-0">
+                  <li key={line} className="text-(--text-soft)">
                     {line}
                   </li>
                 ))}
@@ -98,7 +114,11 @@ function HomePage() {
         <ul className={ui.essayList}>
           {selectedPosts.map((post) => (
             <li key={post.slug}>
-              <Link to="/posts/$slug" params={{ slug: post.slug }} aria-label={post.title}>
+              <Link
+                to="/posts/$slug"
+                params={{ slug: post.slug }}
+                aria-label={post.title}
+              >
                 {post.title}
               </Link>
             </li>
@@ -118,10 +138,13 @@ function HomePage() {
       >
         <h2 className={ui.sectionTitle}>会员</h2>
         <div className={ui.copyBlock}>
-          <p>为愿意深入的人准备。</p>
-          <p>内容更系统，也更具体。</p>
-          <p>包括投资框架的展开，结构设计的记录，以及持续的实验笔记。</p>
-          <p>不承诺结果。只记录过程。</p>
+          <p>会员部分更像一份持续更新的研究笔记。</p>
+          <p>公开文章通常是整理后的思考。</p>
+          <p>
+            这里会保留更多推演过程、框架拆解，以及一些仍在进行中的实验记录。
+          </p>
+          <p>写作不是结论，更多时候只是思考的中途。</p>
+          <p>一些更完整的记录，会放在这里。</p>
         </div>
         <button
           type="button"
@@ -140,7 +163,9 @@ function HomePage() {
         className={`${ui.section} ${ui.reveal} pb-6 text-center`}
         style={{ animationDelay: '380ms' }}
       >
-        <p className="m-0 text-(--text-soft)">未来始终不确定。结构可以被训练。</p>
+        <p className="m-0 text-(--text-soft)">
+          未来始终不确定。结构可以被训练。
+        </p>
       </section>
     </main>
   )
