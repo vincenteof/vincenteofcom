@@ -1,18 +1,18 @@
-# Progress Handover (Updated: 2026-03-11)
+# Progress Handover (Updated: 2026-03-14)
 
 ## 当前阶段状态
 - 用户已完成：Phase 0 / Task 0.1（TanStack Start 初始化、Tailwind 配置、Cloudflare 部署验证）。
 - 已完成：Landing Page + `/posts` 基础路由与视觉系统落地。
-- 本轮已完成：`mock posts` -> 真实 `posts/*.mdx` 内容源切换，并打通列表页、详情页、会员预览逻辑。
+- 本轮已完成：`posts/*.mdx` 的 markdown 渲染接入、文章 formatter 扩展，以及列表页/详情页展示统一。
 
 ## 本轮已完成内容
 1. 文章内容源从 mock 切换为 MDX 文件
-   - 新增 `posts/` 目录与示例文章（4 篇 public + 1 篇 member）
-   - frontmatter 字段已对齐：`title` / `date` / `tags` / `visibility` / `excerpt`
+   - 新增 `posts/` 目录与示例文章（当前 2 篇 public + 1 篇 member）
+   - frontmatter 字段已对齐：`title` / `subtitle` / `date` / `tags` / `visibility` / `excerpt`
 
 2. 新增内容读取与解析层
    - 新增 `src/lib/posts.ts`
-   - 实现：frontmatter 解析、按日期排序、slug 查询、摘要提取、预览文本生成
+   - 实现：frontmatter 解析、按日期排序、slug 查询、摘要提取、预览文本生成、tag 展示格式化
 
 3. 首页精选文章改为真实数据
    - `src/routes/index.tsx` 从内容层读取 public 文章，不再依赖 mock
@@ -20,13 +20,17 @@
 4. `/posts` 列表页改造
    - `src/routes/posts/index.tsx` 使用真实文章摘要数据
    - 已显示会员文章标识（`会员专享`）
+   - tag 展示统一为首字母大写格式
    - 已补基础 SEO meta（title / description / canonical）
 
 5. `/posts/$slug` 详情页改造
    - `src/routes/posts/$slug.tsx` 改为真实 slug 查询
-   - 落地可见性逻辑：
-     - `public` -> 全文
-     - `member` + 非会员 -> 预览 + CTA
+    - 落地可见性逻辑：
+      - `public` -> 全文
+      - `member` + 非会员 -> 预览 + CTA
+   - 已接入 `react-markdown + remark-gfm` 渲染 markdown 正文
+   - 已接入 `@tailwindcss/typography`，并按当前站点视觉系统做受控定制
+   - 文章头部已扩展支持 `subtitle`，并将 tag 降级为更弱的 metadata 展示
    - 已补详情页基础 SEO meta（title / description / canonical）
 
 6. 会员状态 stub 占位
@@ -37,8 +41,13 @@
    - `src/styles.css` 新增会员预览提示区块样式（与现有视觉系统一致）
    - `/posts` 列表页的会员文章标识改为独立标签，弱化重复文案，提升识别度同时保持当前站点的克制风格
    - `src/routes/posts/$slug.tsx` 调整会员预览页收尾区，将“加入会员 / 返回文章目录”并排处理，并收敛为更简洁的状态提示
+   - markdown 正文的强调、链接、列表、引用、代码块、表格样式已做基础定制
 
-8. 清理旧数据层
+8. 内容 formatter 对齐
+   - 现有文章已补齐统一 formatter：`subtitle`、tag 规范、详情页头部层级
+   - `global-investing-account-system` 已移除正文中重复的一级标题，避免与页面头部重复
+
+9. 清理旧数据层
    - 删除 `src/data/posts.ts`（已不再使用）
 
 ## 当前代码位置（关键文件）

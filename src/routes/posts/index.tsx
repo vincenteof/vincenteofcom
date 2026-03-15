@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
-import { getAllPostSummaries } from '@/lib/posts'
+import { formatTagLabel, getAllPostSummaries } from '@/lib/posts'
 import { ui } from '@/lib/ui'
 
 export const Route = createFileRoute('/posts/')({
@@ -62,7 +62,7 @@ function PostsPage() {
                 ) : null}
                 <span className="block text-(--text)">{post.title}</span>
                 <span className="mt-0.5 block text-[0.83rem] text-(--text-soft)">
-                  {post.date} · {post.tags.join(' / ')}
+                  {post.date} · {post.tags.map(formatTagLabel).join(' / ')}
                 </span>
                 <span className="mt-2 block text-[0.95rem] text-[color-mix(in_oklab,var(--text)_90%,var(--text-soft))]">
                   {post.excerpt}
