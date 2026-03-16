@@ -2,6 +2,7 @@ export type Visibility = 'public' | 'member'
 
 export type PostFrontmatter = {
   title: string
+  subtitle?: string
   date: string
   tags: string[]
   visibility: Visibility
@@ -53,13 +54,6 @@ export function getPostBySlug(slug: string): Post | undefined {
   return POSTS.find((post) => post.slug === slug)
 }
 
-export function splitBodyToParagraphs(body: string): string[] {
-  return body
-    .split(/\n\s*\n/)
-    .map((block) => stripMarkdown(block).trim())
-    .filter(Boolean)
-}
-
 export function createPreview(body: string, maxChars = 420): string {
   const plain = toPlainText(body)
 
@@ -68,6 +62,14 @@ export function createPreview(body: string, maxChars = 420): string {
   }
 
   return `${plain.slice(0, maxChars).trimEnd()}...`
+}
+
+export function formatTagLabel(tag: string): string {
+  if (!tag) {
+    return ''
+  }
+
+  return tag.charAt(0).toUpperCase() + tag.slice(1)
 }
 
 function parsePostFile(path: string, raw: string): Post {
@@ -115,6 +117,7 @@ function parseFrontmatter(frontmatter: string, path: string): PostFrontmatter {
 
   const title = map.get('title')
   const date = map.get('date')
+  const subtitle = unwrapQuote(map.get('subtitle'))
   const visibility = map.get('visibility') as Visibility | undefined
   const tags = parseTags(map.get('tags'))
   const excerpt = unwrapQuote(map.get('excerpt'))
@@ -129,6 +132,7 @@ function parseFrontmatter(frontmatter: string, path: string): PostFrontmatter {
 
   return {
     title: unwrapQuote(title),
+    subtitle: subtitle || undefined,
     date: unwrapQuote(date),
     tags,
     visibility,

@@ -1,11 +1,9 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 import { getMembershipStatus } from '@/lib/membership'
-import {
-  createPreview,
-  getPostBySlug,
-  splitBodyToParagraphs,
-} from '@/lib/posts'
+import { createPreview, formatTagLabel, getPostBySlug } from '@/lib/posts'
 import { ui } from '@/lib/ui'
 
 export const Route = createFileRoute('/posts/$slug')({
@@ -21,12 +19,10 @@ export const Route = createFileRoute('/posts/$slug')({
     const visibleBody = canReadFull ? post.body : createPreview(post.body, 460)
 
     return {
-      post: {
-        ...post,
-        paragraphs: splitBodyToParagraphs(visibleBody),
-      },
+      post,
       canReadFull,
       isMemberPost: post.visibility === 'member',
+      previewText: canReadFull ? null : visibleBody,
     }
   },
   head: ({ loaderData }) => {
@@ -56,19 +52,46 @@ export const Route = createFileRoute('/posts/$slug')({
 })
 
 function PostDetailPage() {
-  const { post, canReadFull, isMemberPost } = Route.useLoaderData()
+  const { post, canReadFull, isMemberPost, previewText } = Route.useLoaderData()
 
   return (
     <main className={ui.shellPosts}>
       <section className={`${ui.section} ${ui.postsHeroSection} ${ui.reveal}`}>
-        <p className={ui.kicker}>{post.tags.join(' / ')}</p>
-        <h1 className={`${ui.heroTitle} mb-2`}>{post.title}</h1>
-        <p className={ui.sectionSubtitle}>{post.date}</p>
-        <div className={`${ui.copyBlock} mt-6`}>
-          {post.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+        <h1 className={`${ui.heroTitle} mb-0`}>{post.title}</h1>
+        {post.subtitle ? (
+          <p className="mt-4 max-w-[34rem] text-[1.02rem] leading-[1.9] text-[color:color-mix(in_oklab,var(--text-soft)_88%,var(--text)_12%)]">
+            {post.subtitle}
+          </p>
+        ) : null}
+        <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.82rem] tracking-[0.04em] text-[color:color-mix(in_oklab,var(--text-soft)_92%,var(--text)_8%)]">
+          <p className="m-0">{post.date}</p>
+          {post.tags.length > 0 ? (
+            <>
+              <span
+                aria-hidden="true"
+                className="h-[3px] w-[3px] rounded-full bg-[color:color-mix(in_oklab,var(--text-soft)_80%,transparent)]"
+              />
+              <p className="m-0 text-[0.74rem] uppercase tracking-[0.12em] text-[color:color-mix(in_oklab,var(--text-soft)_78%,transparent)]">
+                {post.tags.map(formatTagLabel).join(' / ')}
+              </p>
+            </>
+          ) : null}
         </div>
+        {canReadFull ? (
+          <div className={`${ui.markdownProse} mt-8`}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>
+          </div>
+        ) : (
+          <div className={`${ui.copyBlock} mt-6`}>
+            {previewText
+              ?.split(/\n\s*\n/)
+              .map((paragraph) => paragraph.trim())
+              .filter(Boolean)
+              .map((paragraph) => (
+              <p key={paragraph}>{paragraph.trim()}</p>
+            ))}
+          </div>
+        )}
 
         {isMemberPost && !canReadFull ? (
           <section
