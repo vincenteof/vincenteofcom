@@ -1,4 +1,9 @@
-# Landing Page 完整版本
+# Landing Page 规格 (Landing Page Requirements)
+
+**Harness 注意**：  
+AI Agent 在修改 Landing Page 时，必须先阅读此文件 + ROADMAP.md + ARCHITECTURE.md。  
+本文档是 Landing Page 文案、结构和设计意图的**权威来源**。  
+修改文案或区块时请保持“轻微人文感”与“学习者/实践者/记录者”语气。
 
 ---
 

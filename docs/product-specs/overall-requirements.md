@@ -1,4 +1,8 @@
-# Personal Sovereign Publishing System – MVP v1
+# Overall Requirements - Personal Sovereign Publishing System (MVP v1)
+
+**Harness 注意**：  
+AI Agent 在规划、实现或修改任何功能时，必须先阅读此文件以及 ARCHITECTURE.md 和 ROADMAP.md。  
+本文档是项目整体需求、功能规格、非功能要求、核心流程和任务拆分的**权威来源**（System of Record）。
 
 ## 项目目标
 

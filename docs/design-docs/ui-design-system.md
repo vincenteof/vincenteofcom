@@ -1,6 +1,6 @@
-# Personal Site Visual System Spec
+# UI 设计系统 / 视觉风格指南 (UI Design System & Visual Style Guide)
 
-## 视觉风格说明 v2（轻微人文感）
+## 视觉风格说明 v2
 
 ---
 
