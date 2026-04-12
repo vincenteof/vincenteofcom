@@ -1,6 +1,6 @@
 # 项目路线图 (Roadmap)
 
-**最后更新**：2026-04-10  
+**最后更新**：2026-04-12  
 **当前版本**：MVP v1（Personal Sovereign Publishing System）
 
 ## 项目愿景
@@ -8,11 +8,14 @@
 **内容发布 → 用户订阅 → 支付 → 自动开通会员 → 解锁文章**
 
 核心资产：**内容 × 转化率 × 留存**  
+长期品牌主轴：**Investing · Self-Training · Sovereignty**  
 技术目标：采用 TanStack Start 全栈框架，统一部署到 Cloudflare Workers（Edge 运行），简化架构、消除跨域、充分利用 SSR / Server Functions，让个人项目快速上线和维护。
 
 ## 当前阶段
-**阶段 0 已完成**：Landing Page + 内容系统基础  
-已实现：TanStack Start 初始化、Landing Page、真实 MDX 文章渲染（列表页 + 详情页）、frontmatter 解析、preview 逻辑（stub 会员状态）、基础 SEO 与样式。
+**阶段 0 已完成**：旧版 Landing Page + 内容系统基础  
+已实现：TanStack Start 初始化、旧版 Landing Page、真实 MDX 文章渲染（列表页 + 详情页）、frontmatter 解析、preview 逻辑（stub 会员状态）、基础 SEO 与样式。
+
+**当前补充状态**：Landing 品牌定位已升级为 `Investing · Self-Training · Sovereignty`，正在进行文档对齐，随后重做 Landing 页面信息架构与表达。
 
 **当前主要目标**：完成会员与支付闭环，达成可变现 MVP v1.0。
 
@@ -20,26 +23,31 @@
 
 ### 已完成 (Done)
 - 项目初始化 + Cloudflare Workers 部署验证
-- Landing Page（Hero、CTA、精选 public 文章）
+- 旧版 Landing Page（Hero、CTA、精选 public 文章）
 - 内容系统：MDX 文件存储、解析、列表页、详情页 + 预览模式
 - 可见性控制（public / member）
 - 基础样式、SEO meta、文章 formatter
 
 ### 下一步（Next - 高优先级）
-1. **接入真实会员状态查询**  
+1. **完成 Landing 品牌文档对齐并重做首页表达**  
+   - 以 `Investing · Self-Training · Sovereignty` 作为长期品牌定位  
+   - 对齐 `core-beliefs`、`overall-requirements`、`ui-design-system` 与 Landing PRD  
+   - 在不破坏会员闭环主线的前提下，重做首页信息架构、文案与订阅转化入口
+
+2. **接入真实会员状态查询**  
    - 实现 `/api/me` + D1 查询，替换 `src/lib/membership.ts` stub  
    - 在 loader / Server Functions 中正确判断会员状态
 
-2. **强化 Member 内容权限控制**  
+3. **强化 Member 内容权限控制**  
    - Member 正文改为 server-only（避免泄露到客户端 bundle）  
    - 未授权用户仅返回 preview + CTA
 
-3. **Stripe 支付闭环**  
+4. **Stripe 支付闭环**  
    - 实现 `/api/checkout`（创建 Subscription Session）  
    - 实现 `/api/stripe-webhook`（处理关键事件，使用 `event.waitUntil()` + 幂等）  
    - 支付成功后自动更新 membership 并解锁文章
 
-4. **登录流程完善**  
+5. **登录流程完善**  
    - Magic Link + HttpOnly Cookie（`/api/login`）
 
 ### 中短期计划（v1.0 后）
