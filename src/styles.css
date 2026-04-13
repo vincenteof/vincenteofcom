@@ -1,19 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Playfair+Display:ital,wght@1,500;1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@400;500;600&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --bg: #171819;
-  --bg-soft: #1d1e1f;
-  --text: #e8e6e3;
-  --text-soft: #a6a29c;
-  --line: #3a3834;
-  --accent: #8c877f;
+  --bg: oklch(0.13 0.005 186);
+  --bg-soft: oklch(0.17 0.006 186);
+  --text: oklch(0.94 0.01 75);
+  --text-soft: oklch(0.67 0.01 75);
+  --text-muted: oklch(0.44 0.008 75);
+  --accent: oklch(0.52 0.09 186);
+  --accent-hover: oklch(0.60 0.095 186);
+  --line: oklch(0.25 0.007 186);
 }
 
 @layer base {
   * {
     box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   html,
@@ -23,30 +29,32 @@
   }
 
   body {
-    background: radial-gradient(circle at 8% -12%, #2a2a28 0%, transparent 40%),
-      radial-gradient(circle at 95% 8%, #252523 0%, transparent 32%), var(--bg);
+    background: var(--bg);
     color: var(--text);
-    font-family: "Iowan Old Style", "Palatino Linotype", "Noto Serif SC", "Songti SC",
-      "STSong", serif;
-    line-height: 1.9;
+    font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    line-height: 1.85;
     letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 0.4px, transparent 0.4px);
-    background-size: 4px 4px;
-    opacity: 0.24;
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Noto Serif SC", "EB Garamond", Georgia, serif;
+  }
+
+  ::selection {
+    background: oklch(0.52 0.09 186 / 0.30);
+    color: var(--text);
   }
 }
 
 @keyframes revealUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -62,5 +70,19 @@
   85%,
   100% {
     transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

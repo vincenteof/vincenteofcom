@@ -12,11 +12,19 @@ export type PostFrontmatter = {
 export type Post = PostFrontmatter & {
   slug: string
   body: string
+  readingMinutes: number
 }
 
 export type PostSummary = PostFrontmatter & {
   slug: string
   excerpt: string
+  readingMinutes: number
+}
+
+export type PostHeading = {
+  id: string
+  level: 2 | 3
+  title: string
 }
 
 const RAW_POST_MODULES = import.meta.glob('/posts/*.mdx', {
@@ -37,6 +45,7 @@ export function getAllPostSummaries(): PostSummary[] {
     tags: post.tags,
     visibility: post.visibility,
     excerpt: post.excerpt || createExcerpt(post.body),
+    readingMinutes: post.readingMinutes,
   }))
 }
 
@@ -52,6 +61,41 @@ export function getPublicPostSummaries(limit?: number): PostSummary[] {
 
 export function getPostBySlug(slug: string): Post | undefined {
   return POSTS.find((post) => post.slug === slug)
+}
+
+export function extractPostHeadings(body: string): PostHeading[] {
+  const headings: PostHeading[] = []
+
+  for (const line of body.split('\n')) {
+    const matched = line.match(/^(#{2,3})\s+(.+)$/)
+
+    if (!matched) {
+      continue
+    }
+
+    const level = matched[1].length as 2 | 3
+    const title = matched[2].trim()
+
+    headings.push({
+      id: slugifyHeading(title),
+      level,
+      title,
+    })
+  }
+
+  return headings
+}
+
+export function slugifyHeading(title: string): string {
+  return title
+    .trim()
+    .toLowerCase()
+    .replace(/[`*_~]/g, '')
+    .replace(/\[[^\]]+\]\([^\)]+\)/g, '')
+    .replace(/[\s/]+/g, '-')
+    .replace(/[^\p{L}\p{N}-]+/gu, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 export function createPreview(body: string, maxChars = 420): string {
@@ -87,10 +131,13 @@ function parsePostFile(path: string, raw: string): Post {
 
   const frontmatter = parseFrontmatter(matched[1], path)
 
+  const body = matched[2].trim()
+
   return {
     slug,
     ...frontmatter,
-    body: matched[2].trim(),
+    body,
+    readingMinutes: estimateReadingMinutes(body),
   }
 }
 
@@ -161,6 +208,19 @@ function toTimestamp(date: string): number {
 
 function createExcerpt(body: string): string {
   return createPreview(body, 120)
+}
+
+function estimateReadingMinutes(body: string): number {
+  const plain = toPlainText(body)
+  const chineseChars = (plain.match(/[\p{Script=Han}]/gu) || []).length
+  const latinWords = plain
+    .replace(/[\p{Script=Han}]/gu, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length
+  const readingUnits = chineseChars + latinWords * 2
+
+  return Math.max(1, Math.ceil(readingUnits / 320))
 }
 
 function toPlainText(text: string): string {

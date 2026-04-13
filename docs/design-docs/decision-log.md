@@ -1,9 +1,44 @@
 # Decision Log - 项目决策日志
 
-**最后更新**：2026-04-12
+**最后更新**：2026-04-13
 
 本文档记录项目中重要的技术、产品和设计决策，包括背景、决定、理由及后续影响。  
 新决策请按时间倒序追加在顶部。
+
+## 2026-04-13
+**决策主题**：Posts 页面一致性修复策略  
+**决定**：将 posts 页面中的导航型返回操作统一为更克制的文本链接；会员预览区在正式会员入口完成前，临时使用 `订阅长信` 作为有效 CTA，并统一 posts 交互状态与正文链接 token。  
+**理由**：当前阶段的目标是修复视觉断层与失效路径，而不是提前扩展会员支付流。导航与主 CTA 分层更清楚后，页面气质也更接近新的 Landing。  
+**影响**：`/posts` 与 `/posts/:slug` 的返回路径不再使用同级盒状按钮；member preview 中 `/#membership` 被真实可用入口替代；后续真实会员入口上线时需要替换该临时 CTA。  
+**相关文件**：`src/lib/ui.ts`、`src/routes/posts/index.tsx`、`src/routes/posts/$slug.tsx`
+
+## 2026-04-13
+**决策主题**：新增 Posts 视觉一致性审计需求  
+**决定**：在 Landing 重做后，将 `/posts` 与 `/posts/:slug` 的视觉与交互一致性检查升级为正式需求，并以独立规格文档管理。  
+**理由**：品牌视觉系统已升级，若 posts 页面不做系统性审计，容易出现视觉断层、交互状态漂移与路径不连通问题。  
+**影响**：ROADMAP Next 新增 posts 审计任务；overall requirements 增加对应条目；后续将按 P0-P3 分级修复。  
+**相关文件**：`docs/product-specs/posts-visual-consistency-requirements.md`、`docs/product-specs/overall-requirements.md`、`ROADMAP.md`
+
+## 2026-04-13
+**决策主题**：咨询入口形态选择（站内自建）  
+**决定**：Service Intake Form 采用站内自建，不依赖第三方表单服务。  
+**理由**：需求复杂度低，站内实现成本可控；避免第三方潜在付费与平台约束，保持数据与体验一致性。  
+**影响**：后续开发将新增站内咨询表单页与提交成功态；Offerings 中咨询 CTA 统一指向站内入口。  
+**相关文件**：`docs/product-specs/service-intake-requirements.md`、`docs/exec-plans/active/2026-04-13-service-intake-requirements.md`
+
+## 2026-04-13
+**决策主题**：咨询转化路径采用统一表单（先文档确认，后开发）  
+**决定**：Software Consulting 与 Global Investing Advisory 暂不拆成两个独立落地页，也不立即引入注册流程；先采用统一 `Service Intake Form` 收集结构化线索，并在确认需求后开发。  
+**理由**：当前阶段优先验证线索质量与匹配效率。直接上注册流程摩擦高；立即拆双页会增加维护与文案成本。统一表单可在低复杂度下快速建立闭环。  
+**影响**：新增规格文档 `service-intake-requirements.md`；ROADMAP Next 新增“咨询线索收集方案确认”；后续 Landing 的 Software/Advisory CTA 将指向统一咨询入口而非仅页内锚点。  
+**相关文件**：`docs/product-specs/service-intake-requirements.md`、`docs/product-specs/overall-requirements.md`、`ROADMAP.md`
+
+## 2026-04-12
+**决策主题**：Landing Page 全新实现  
+**决定**：基于 `landing-requirements.md` v2.1 完全重写 Landing Page，采用 OKLCH 色彩系统、新字体系统（Noto Serif SC + EB Garamond + Noto Sans SC）、新页面结构（Hero → Letters → About → Footer）  
+**理由**：旧版首页与更新后的品牌定位（Investing · Self-Training · Sovereignty）不匹配，且视觉系统需要升级为中文优先的编辑式暗色主题  
+**影响**：`src/styles.css` 全局色彩变量已从 hex 切换到 OKLCH 并改为 Deep Teal 色调，所有使用 `--accent` 的页面（包括 posts 页面）会自动继承新的强调色；Header 导航已更新；`#membership` 锚点已从首页移除（post 详情页中的会员 CTA 链接暂时指向不存在的锚点，需后续处理）  
+**相关文件**：`src/styles.css`、`src/routes/index.tsx`、`src/components/Header.tsx`、`src/routes/__root.tsx`
 
 ## 2026-04-12
 **决策主题**：长期品牌定位确认  

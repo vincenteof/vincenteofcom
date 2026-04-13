@@ -1,6 +1,6 @@
 # 项目路线图 (Roadmap)
 
-**最后更新**：2026-04-12  
+**最后更新**：2026-04-13  
 **当前版本**：MVP v1（Personal Sovereign Publishing System）
 
 ## 项目愿景
@@ -27,27 +27,42 @@
 - 内容系统：MDX 文件存储、解析、列表页、详情页 + 预览模式
 - 可见性控制（public / member）
 - 基础样式、SEO meta、文章 formatter
+- **Landing Page 全新重做（2026-04-12）**
+  - 基于 `landing-requirements.md` v2.1 完全重写首页
+  - 新色彩系统（OKLCH，Deep Teal 主题色）
+  - 新字体系统（Noto Serif SC + EB Garamond + Noto Sans SC）
+  - 新页面结构：Hero → Letters → About → Footer
+  - Substack 订阅 CTA 集成
+  - 导航栏更新（Letters / 关于 / 订阅按钮）
+- **Posts 页面视觉一致性修复（2026-04-13）**
+   - 修复 member preview 失效 CTA
+   - 统一 posts 按钮 / 返回链接 / focus-visible / active 状态
+   - 统一文章正文链接的交互样式
+   - 优化 `/posts` 列表 hover 节奏与会员 badge 细节
 
 ### 下一步（Next - 高优先级）
-1. **完成 Landing 品牌文档对齐并重做首页表达**  
-   - 以 `Investing · Self-Training · Sovereignty` 作为长期品牌定位  
-   - 对齐 `core-beliefs`、`overall-requirements`、`ui-design-system` 与 Landing PRD  
-   - 在不破坏会员闭环主线的前提下，重做首页信息架构、文案与订阅转化入口
+1. **完成 Landing 品牌文档全面对齐**  
+   - 对齐 `overall-requirements`、`ui-design-system` 与新 Landing 实现  
+   - 替换 Substack placeholder URL 为真实地址
 
-2. **接入真实会员状态查询**  
+2. **完成咨询线索收集方案确认（表单优先）**
+   - 确认 `service-intake-requirements.md`（字段、入口形态、响应 SLA）
+   - 确认后将 Software/Advisory CTA 接入统一咨询入口
+
+3. **接入真实会员状态查询**  
    - 实现 `/api/me` + D1 查询，替换 `src/lib/membership.ts` stub  
    - 在 loader / Server Functions 中正确判断会员状态
 
-3. **强化 Member 内容权限控制**  
+4. **强化 Member 内容权限控制**  
    - Member 正文改为 server-only（避免泄露到客户端 bundle）  
    - 未授权用户仅返回 preview + CTA
 
-4. **Stripe 支付闭环**  
+5. **Stripe 支付闭环**  
    - 实现 `/api/checkout`（创建 Subscription Session）  
    - 实现 `/api/stripe-webhook`（处理关键事件，使用 `event.waitUntil()` + 幂等）  
    - 支付成功后自动更新 membership 并解锁文章
 
-5. **登录流程完善**  
+6. **登录流程完善**  
    - Magic Link + HttpOnly Cookie（`/api/login`）
 
 ### 中短期计划（v1.0 后）

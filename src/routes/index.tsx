@@ -1,172 +1,366 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-
+import GithubIcon from '@/components/icons/Github'
+import GmailIcon from '@/components/icons/Gmail'
+import XIcon from '@/components/icons/X'
+import YoutubeIcon from '@/components/icons/Youtube'
+import type { PostSummary } from '@/lib/posts'
 import { getPublicPostSummaries } from '@/lib/posts'
-import { ui } from '@/lib/ui'
 
-const themes = [
+const SUBSTACK_URL = 'https://vincenteof.substack.com'
+const PROFILE_PHOTO_URL = '/images/profile.PNG'
+
+type ProfileLink = {
+  label: string
+  href: string
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+}
+
+const PROFILE_LINKS = [
+  { label: 'X', href: 'https://x.com/your-handle', icon: XIcon },
   {
-    title: 'Capital',
-    lines: ['资产的分配', '风险的理解', '收益的结构', '长期的纪律'],
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@your-handle',
+    icon: YoutubeIcon,
+  },
+  { label: 'GitHub', href: 'https://github.com/your-handle', icon: GithubIcon },
+  { label: 'Email', href: 'mailto:your@email.com', icon: GmailIcon },
+] satisfies ReadonlyArray<ProfileLink>
+
+const OFFERINGS = [
+  {
+    eyebrow: 'Newsletter',
+    title: '心智模型',
+    description:
+      '每周两封深度长信：一封讲认知框架，一封讲行动方法，帮助你把想法变成可执行的训练系统。',
+    actionLabel: '免费订阅',
+    href: SUBSTACK_URL,
+    external: true,
   },
   {
-    title: 'Cognition',
-    lines: ['决策的形成', '偏见的识别', '情绪与判断', '系统的训练'],
+    eyebrow: 'Consulting',
+    title: '软件开发',
+    description:
+      '面向独立创作者与小团队的软件开发咨询与系统搭建，聚焦真实业务场景，减少重复劳动并提高交付效率。',
+    actionLabel: '了解服务方式',
+    href: '#about',
+    external: false,
   },
   {
-    title: 'Sovereignty',
-    lines: ['时间与收入', '技术与能力', '结构与自由', '长期选择'],
+    eyebrow: 'Advisory',
+    title: '出海投资',
+    description:
+      '围绕全球市场与资产配置，提供长期、纪律化的投资咨询，帮助你在不确定环境中建立更稳的决策框架。',
+    actionLabel: '了解咨询方向',
+    href: '#about',
+    external: false,
   },
-]
+] as const
 
 export const Route = createFileRoute('/')({
   loader: () => ({
-    selectedPosts: getPublicPostSummaries(4),
+    posts: getPublicPostSummaries(5),
   }),
-  component: HomePage,
+  head: () => ({
+    meta: [
+      {
+        title: '构建你的选择权 | Investing. Self-Training. Sovereignty.',
+      },
+      {
+        name: 'description',
+        content:
+          '通过自我投资与系统训练，获得人生主权。每周深度 Letters，助你构建真正属于自己的自由。',
+      },
+    ],
+  }),
+  component: LandingPage,
 })
 
-function HomePage() {
-  const { selectedPosts } = Route.useLoaderData()
+function LandingPage() {
+  const { posts } = Route.useLoaderData()
 
   return (
-    <main className={ui.shell}>
-      <section className={`${ui.section} ${ui.heroSection} ${ui.reveal}`}>
-        <p className={ui.kicker}>Personal Sovereign Publishing</p>
-        <h1 className={ui.heroTitle}>构建选择权。</h1>
-        <p className={ui.heroEnglish}>Investing. Self-Training. Sovereignty.</p>
-        <p className={ui.lede}>
-          在不确定之中，
-          <br />
-          为自己建立可以依靠的结构。
+    <main>
+      <HeroSection />
+      <OfferingsSection />
+      <LettersSection posts={posts} />
+      <AboutSection />
+      <PageFooter />
+    </main>
+  )
+}
+
+/* ------------------------------------------------------------------
+   Hero — full-viewport philosophical statement
+   ------------------------------------------------------------------ */
+
+function HeroSection() {
+  return (
+    <section
+      className="flex min-h-dvh items-center justify-center px-5"
+      style={{
+        background:
+          'linear-gradient(180deg, var(--bg) 0%, oklch(0.135 0.012 186) 55%, var(--bg) 100%)',
+      }}
+    >
+      <div className="mx-auto w-full max-w-180 pb-12 pt-16 text-center">
+        <h1 className="m-0 text-[clamp(2.5rem,8vw,4.2rem)] leading-tight font-medium tracking-[0.04em] animate-[revealUp_680ms_ease-out_both]">
+          构建你的选择权。
+        </h1>
+
+        <div
+          className="mx-auto mt-5 h-px w-12 bg-(--accent) animate-[revealUp_680ms_ease-out_both]"
+          style={{ animationDelay: '100ms' }}
+          aria-hidden="true"
+        />
+
+        <p
+          className="mt-5 mb-0 text-[clamp(1rem,2.4vw,1.22rem)] tracking-[0.14em] text-(--text-soft) animate-[revealUp_680ms_ease-out_both]"
+          style={{
+            fontFamily: '"EB Garamond", Georgia, serif',
+            animationDelay: '160ms',
+          }}
+        >
+          Investing. Self-Training. Sovereignty.
         </p>
-        <div className="mt-8.5 flex flex-wrap gap-3.5">
-          <Link to="/posts" className={ui.buttonOutline}>
-            阅读文章
-          </Link>
-          <a href="#membership" className={ui.buttonOutline}>
-            加入会员
+
+        <p
+          className="mx-auto mt-10 mb-0 max-w-120 text-[clamp(0.95rem,2.2vw,1.05rem)] leading-[1.9] text-(--text-soft) animate-[revealUp_680ms_ease-out_both]"
+          style={{ animationDelay: '280ms' }}
+        >
+          每周一封深度长信，分享经实践验证的框架与方法，帮助你稳步拿回人生选择权。
+        </p>
+
+        <div
+          className="mt-10 animate-[revealUp_680ms_ease-out_both]"
+          style={{ animationDelay: '380ms' }}
+        >
+          <a
+            href={SUBSTACK_URL}
+            className="inline-flex min-h-11 items-center rounded-xs bg-(--accent) px-6 py-3 text-[0.95rem] font-medium text-[oklch(0.97_0.005_186)] no-underline transition-colors duration-200 hover:bg-(--accent-hover) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            免费订阅
           </a>
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      <section
-        className={`${ui.section} ${ui.reveal}`}
-        style={{ animationDelay: '90ms' }}
-      >
-        <h2 className={ui.sectionTitle}>定位</h2>
-        <div className={ui.copyBlock}>
-          <p>这里记录的是一种长期的实践。</p>
-          <p>关于投资。关于认知。关于在波动中保持稳定。</p>
-          <p>更多时候，是拆解结构，校准判断，反思决策。</p>
-          <p>没有标准答案。只有持续的调整与理解。</p>
-        </div>
-      </section>
+/* ------------------------------------------------------------------
+   Offerings — business lines
+   ------------------------------------------------------------------ */
 
-      <section
-        className={`${ui.section} ${ui.reveal}`}
-        style={{ animationDelay: '160ms' }}
-      >
-        <h2 className={ui.sectionTitle}>关于我</h2>
-        <div className={ui.copyBlock}>
-          <p>我是一名长期的学习者，也是一名实践者。</p>
-          <p>
-            投资、技术，以及长期系统的构建，是我持续探索的方向。写作只是记录过程的一种方式。
-          </p>
-          <p>很多判断会改变。很多观点会被修正。</p>
-          <p>但对长期结构的关注，一直没有改变。</p>
-          <p>这个网站，是一次公开的整理。</p>
-        </div>
-      </section>
+function OfferingsSection() {
+  return (
+    <section id="offerings" className="px-5 pt-16 pb-24">
+      <div className="mx-auto max-w-270">
+        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] font-medium tracking-[0.03em]">
+          Offerings · 我的服务
+        </h2>
 
-      <section
-        className={`${ui.section} ${ui.reveal}`}
-        style={{ animationDelay: '220ms' }}
-      >
-        <h2 className={ui.sectionTitle}>主题</h2>
-        <div className="grid gap-6.5 max-[860px]:gap-8 min-[861px]:grid-cols-3">
-          {themes.map((theme) => (
+        <div className="mt-12 border-t border-b border-(--line) divide-y divide-(--line)">
+          {OFFERINGS.map((offering, i) => (
             <article
-              key={theme.title}
-              className="grid gap-4 border-t border-[color-mix(in_oklab,var(--line)_65%,transparent)] pt-5 first:border-t-0 first:pt-0 min-[861px]:block min-[861px]:border-t-0 min-[861px]:pt-0 max-[860px]:grid-cols-[minmax(88px,108px)_1fr]"
+              key={offering.title}
+              className="py-8 md:grid md:grid-cols-[7rem_1fr_auto] md:items-start md:gap-x-10 md:py-10"
             >
-              <h3 className="m-0 text-(--text) font-medium tracking-[0.05em]">
-                {theme.title}
-              </h3>
-              <ul className="m-0 grid list-none gap-x-4 gap-y-2.5 p-0 max-[860px]:grid-cols-2">
-                {theme.lines.map((line) => (
-                  <li key={line} className="text-(--text-soft)">
-                    {line}
-                  </li>
-                ))}
-              </ul>
+              {/* Index + eyebrow */}
+              <div className="mb-4 flex items-center gap-2.5 md:mb-0 md:flex-col md:items-start md:gap-1.5 md:pt-0.5">
+                <span
+                  className="text-[0.72rem] tabular-nums text-(--text-muted)"
+                  style={{ fontFamily: '"EB Garamond", Georgia, serif' }}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span
+                  className="text-[0.72rem] tracking-[0.13em] uppercase text-(--accent)"
+                  style={{ fontFamily: '"EB Garamond", Georgia, serif' }}
+                >
+                  {offering.eyebrow}
+                </span>
+              </div>
+
+              {/* Title + description */}
+              <div>
+                <h3 className="m-0 text-[1.18rem] leading-snug font-medium text-(--text)">
+                  {offering.title}
+                </h3>
+                <p className="mt-3 mb-0 text-[0.95rem] leading-[1.9] text-(--text-soft)">
+                  {offering.description}
+                </p>
+              </div>
+
+              {/* CTA */}
+              <a
+                href={offering.href}
+                className="mt-5 inline-block text-[0.9rem] text-(--text-soft) no-underline whitespace-nowrap transition-colors duration-200 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2 md:mt-0 md:pt-0.5"
+                target={offering.external ? '_blank' : undefined}
+                rel={offering.external ? 'noopener noreferrer' : undefined}
+              >
+                {offering.actionLabel} →
+              </a>
             </article>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      <section
-        id="selected"
-        className={`${ui.section} ${ui.reveal} pb-8.5!`}
-        style={{ animationDelay: '280ms' }}
-      >
-        <h2 className={ui.sectionTitle}>精选文章</h2>
-        <p className={ui.sectionSubtitle}>Selected Essays</p>
-        <ul className={ui.essayList}>
-          {selectedPosts.map((post) => (
-            <li key={post.slug}>
+/* ------------------------------------------------------------------
+   Letters — editorial article list
+   ------------------------------------------------------------------ */
+
+function LettersSection({ posts }: { posts: PostSummary[] }) {
+  return (
+    <section id="letters" className="px-5 py-28">
+      <div className="mx-auto max-w-270">
+        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] font-medium tracking-[0.03em]">
+          Letters · 我的深度思考
+        </h2>
+        <p className="mt-3 mb-0 max-w-135 text-[0.98rem] leading-[1.9] text-(--text-soft)">
+          每周更新，帮你建立清晰有力的认知框架与行动系统。
+        </p>
+
+        <ul className="mt-12 m-0 list-none p-0 border-b border-(--line)">
+          {posts.map((post) => (
+            <li
+              key={post.slug}
+              className="border-t border-(--line) py-6"
+            >
               <Link
                 to="/posts/$slug"
                 params={{ slug: post.slug }}
-                aria-label={post.title}
+                className="group block rounded-xs no-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-4"
               >
-                {post.title}
+                <span
+                  className="block text-[1.08rem] leading-normal font-medium text-(--text) transition-colors duration-200 group-hover:text-(--accent)"
+                  style={{
+                    fontFamily:
+                      '"Noto Serif SC", "EB Garamond", Georgia, serif',
+                  }}
+                >
+                  {post.title}
+                </span>
+                {post.excerpt ? (
+                  <span className="mt-2 block text-[0.92rem] leading-[1.75] text-(--text-soft) line-clamp-2">
+                    {post.excerpt}
+                  </span>
+                ) : null}
+                <span className="mt-2 block text-[0.8rem] tracking-[0.04em] text-(--text-muted)">
+                  {post.date}
+                </span>
               </Link>
             </li>
           ))}
         </ul>
-        <div className="mt-4.5">
-          <Link to="/posts" className={ui.sectionLink}>
-            查看全部文章
+
+        <div className="mt-8">
+          <Link
+            to="/posts"
+            className="text-[0.92rem] text-(--text-soft) no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2"
+          >
+            查看全部文章 →
           </Link>
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      <section
-        id="membership"
-        className={`${ui.section} ${ui.reveal} relative after:absolute after:right-0 after:top-8.5 after:h-px after:w-[min(45vw,190px)] after:bg-linear-to-r after:from-transparent after:to-(--accent) max-[860px]:after:hidden`}
-        style={{ animationDelay: '340ms' }}
-      >
-        <h2 className={ui.sectionTitle}>会员</h2>
-        <div className={ui.copyBlock}>
-          <p>会员部分更像一份持续更新的研究笔记。</p>
-          <p>公开文章通常是整理后的思考。</p>
-          <p>
-            这里会保留更多推演过程、框架拆解，以及一些仍在进行中的实验记录。
-          </p>
-          <p>写作不是结论，更多时候只是思考的中途。</p>
-          <p>一些更完整的记录，会放在这里。</p>
+/* ------------------------------------------------------------------
+   About — personal narrative
+   ------------------------------------------------------------------ */
+
+function AboutSection() {
+  return (
+    <section id="about" className="px-5 py-24">
+      <div className="mx-auto max-w-270">
+        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] font-medium tracking-[0.03em]">
+          About · 关于我
+        </h2>
+
+        <div className="mt-12 grid gap-8 md:grid-cols-[280px_1fr] md:gap-12">
+          <aside>
+            <div
+              className="relative h-85 w-full rounded-2xl border border-(--line) bg-[color-mix(in_oklch,var(--bg-soft)_92%,transparent)] bg-cover bg-center"
+              style={{ backgroundImage: `url(${PROFILE_PHOTO_URL})` }}
+              role="img"
+              aria-label="Vincenteof 个人照片"
+            >
+              <span className="absolute bottom-4 left-4 rounded-xs bg-[color-mix(in_oklch,var(--bg)_70%,transparent)] px-2.5 py-1 text-[0.74rem] tracking-[0.08em] text-(--text-soft)">
+                Vincenteof
+              </span>
+            </div>
+          </aside>
+
+          <div>
+            <p
+              className="m-0 text-[1.15rem] leading-[1.8] text-(--text)"
+              style={{ fontFamily: '"Noto Serif SC", "EB Garamond", Georgia, serif' }}
+            >
+              嘿，我是 Vincenteof。一个长期主义者，也是一名持续训练的实践者。
+            </p>
+
+            <div className="mt-6 space-y-5 text-[1rem] leading-[1.95] text-[color-mix(in_oklch,var(--text)_88%,var(--text-soft))]">
+              <p className="m-0">
+                我曾经走在传统路径上，却慢慢意识到：如果不主动构建能力、资产与认知结构，人生的选择会越来越少。于是我开始把注意力转向三个长期变量：Investing、Self-Training、Sovereignty。
+              </p>
+              <p className="m-0">
+                这些年我把踩过的坑、验证过的框架、以及在 AI
+                时代依然有效的思考，沉淀成一封封长信。它不是成功学模板，更像一份不断迭代的训练记录。
+              </p>
+              <p className="m-0">
+                如果你也在寻找更稳固的人生结构，欢迎一起长期练习，逐步拿回属于自己的选择权。
+              </p>
+            </div>
+
+            <div className="mt-8 border-t border-(--line) pt-6">
+              <p className="m-0 text-[0.84rem] tracking-[0.08em] text-(--text-muted)">
+                也可以在这些平台找到我
+              </p>
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                {PROFILE_LINKS.map((item) => {
+                  const Icon = item.icon
+
+                  return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="inline-flex h-11 w-11 items-center justify-center text-(--text-soft) no-underline opacity-85 transition-[color,opacity,transform] duration-200 hover:-translate-y-px hover:opacity-100 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) md:h-9 md:w-9"
+                    aria-label={item.label}
+                    title={item.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                    <span className="sr-only">{item.label}</span>
+                  </a>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
         </div>
-        <button
-          type="button"
-          className={`${ui.buttonOutline} relative mt-6 cursor-not-allowed gap-2.5 overflow-hidden disabled:opacity-100 after:absolute after:inset-0 after:bg-[linear-gradient(120deg,transparent_14%,rgba(255,255,255,0.12)_44%,transparent_74%)] after:content-[''] after:animate-[soonSweep_2.8s_ease-in-out_infinite]`}
-          disabled
-          aria-label="加入会员（即将开放）"
-        >
-          <span className="relative z-1">加入会员</span>
-          <span className="relative z-1 border border-[color-mix(in_oklab,var(--line)_80%,#fff_20%)] px-1.75 py-0.5 text-[0.66rem] uppercase tracking-[0.08em] text-(--text-soft)">
-            Coming Soon
-          </span>
-        </button>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      <section
-        className={`${ui.section} ${ui.reveal} pb-6 text-center`}
-        style={{ animationDelay: '380ms' }}
-      >
-        <p className="m-0 text-(--text-soft)">
-          未来始终不确定。结构可以被训练。
+/* ------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------ */
+
+function PageFooter() {
+  return (
+    <footer className="border-t border-(--line) px-5 py-10">
+      <div className="mx-auto max-w-270 text-center">
+        <p className="m-0 text-[0.85rem] text-(--text-muted)">
+          © 2026 Vincenteof. All rights reserved.
         </p>
-      </section>
-    </main>
+      </div>
+    </footer>
   )
 }

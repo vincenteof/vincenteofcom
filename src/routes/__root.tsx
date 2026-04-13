@@ -18,7 +18,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Vincenteof | Personal Sovereign Publishing',
+        title: 'Vincenteof | 构建选择权',
       },
     ],
     links: [
