@@ -7,7 +7,9 @@ import type { PostSummary } from '@/lib/posts'
 import { getPublicPostSummaries } from '@/lib/posts'
 
 const SUBSTACK_URL = 'https://vincenteof.substack.com'
-const PROFILE_PHOTO_URL = '/images/profile.PNG'
+const SITE_URL = 'https://vincenteof.com'
+const OG_IMAGE_URL = `${SITE_URL}/images/profile.JPG`
+const PROFILE_PHOTO_URL = '/images/profile.JPG'
 
 type ProfileLink = {
   label: string
@@ -16,14 +18,14 @@ type ProfileLink = {
 }
 
 const PROFILE_LINKS = [
-  { label: 'X', href: 'https://x.com/your-handle', icon: XIcon },
+  { label: 'X', href: 'https://x.com/vincenteof', icon: XIcon },
   {
     label: 'YouTube',
-    href: 'https://www.youtube.com/@your-handle',
+    href: 'https://www.youtube.com/@Vincenteof',
     icon: YoutubeIcon,
   },
-  { label: 'GitHub', href: 'https://github.com/your-handle', icon: GithubIcon },
-  { label: 'Email', href: 'mailto:your@email.com', icon: GmailIcon },
+  { label: 'GitHub', href: 'https://github.com/vincenteof', icon: GithubIcon },
+  { label: 'Email', href: 'mailto:vincenteofchen@outlook.com', icon: GmailIcon },
 ] satisfies ReadonlyArray<ProfileLink>
 
 const OFFERINGS = [
@@ -63,12 +65,68 @@ export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
       {
-        title: '构建你的选择权 | Investing. Self-Training. Sovereignty.',
+        title: 'Vincenteof | 投资、自我训练与人生选择权',
       },
       {
         name: 'description',
         content:
-          '通过自我投资与系统训练，获得人生主权。每周深度 Letters，助你构建真正属于自己的自由。',
+          '关于投资、自我训练与人生选择权的中文长信。Vincenteof 分享长期主义、软件开发、全球资产配置与个人主权实践。',
+      },
+      {
+        property: 'og:title',
+        content: 'Vincenteof | 投资、自我训练与人生选择权',
+      },
+      {
+        property: 'og:description',
+        content:
+          '关于投资、自我训练与人生选择权的中文长信。Vincenteof 分享长期主义、软件开发、全球资产配置与个人主权实践。',
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:url',
+        content: SITE_URL,
+      },
+      {
+        property: 'og:site_name',
+        content: 'Vincenteof',
+      },
+      {
+        property: 'og:image',
+        content: OG_IMAGE_URL,
+      },
+      {
+        property: 'og:image:alt',
+        content: 'Vincenteof 个人网站首页预览图',
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        name: 'twitter:title',
+        content: 'Vincenteof | 投资、自我训练与人生选择权',
+      },
+      {
+        name: 'twitter:description',
+        content:
+          '关于投资、自我训练与人生选择权的中文长信。Vincenteof 分享长期主义、软件开发、全球资产配置与个人主权实践。',
+      },
+      {
+        name: 'twitter:image',
+        content: OG_IMAGE_URL,
+      },
+      {
+        name: 'twitter:creator',
+        content: '@vincenteof',
+      },
+    ],
+    links: [
+      {
+        rel: 'canonical',
+        href: SITE_URL,
       },
     ],
   }),
