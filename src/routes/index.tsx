@@ -25,7 +25,11 @@ const PROFILE_LINKS = [
     icon: YoutubeIcon,
   },
   { label: 'GitHub', href: 'https://github.com/vincenteof', icon: GithubIcon },
-  { label: 'Email', href: 'mailto:vincenteofchen@outlook.com', icon: GmailIcon },
+  {
+    label: 'Email',
+    href: 'mailto:vincenteofchen@outlook.com',
+    icon: GmailIcon,
+  },
 ] satisfies ReadonlyArray<ProfileLink>
 
 const OFFERINGS = [
@@ -33,7 +37,7 @@ const OFFERINGS = [
     eyebrow: 'Newsletter',
     title: '心智模型',
     description:
-      '每周两封深度长信：一封讲认知框架，一封讲行动方法，帮助你把想法变成可执行的训练系统。',
+      '每周两封深度长信，一封讲认知框架，一封讲行动方法，我走过的路也许可以成为你的重要参考。',
     actionLabel: '免费订阅',
     href: SUBSTACK_URL,
     external: true,
@@ -42,16 +46,16 @@ const OFFERINGS = [
     eyebrow: 'Consulting',
     title: '软件开发',
     description:
-      '面向独立创作者与小团队的软件开发咨询与系统搭建，聚焦真实业务场景，减少重复劳动并提高交付效率。',
+      '面向独立创作者的软件开发咨询与系统搭建，减少重复劳动并提高交付效率，代码是个人的最佳杠杆。',
     actionLabel: '了解服务方式',
     href: '#about',
     external: false,
   },
   {
     eyebrow: 'Advisory',
-    title: '出海投资',
+    title: '全球投资',
     description:
-      '围绕全球市场与资产配置，提供长期、纪律化的投资咨询，帮助你在不确定环境中建立更稳的决策框架。',
+      '围绕资金出海与资产配置，提供长期、纪律化的投资咨询，借助复利，为你争取更多选择权。',
     actionLabel: '了解咨询方向',
     href: '#about',
     external: false,
@@ -185,7 +189,7 @@ function HeroSection() {
           className="mx-auto mt-10 mb-0 max-w-120 text-[clamp(0.95rem,2.2vw,1.05rem)] leading-[1.9] text-(--text-soft) animate-[revealUp_680ms_ease-out_both]"
           style={{ animationDelay: '280ms' }}
         >
-          每周一封深度长信，分享经实践验证的框架与方法，帮助你稳步拿回人生选择权。
+          每周两封深度长信，用我从波动和混乱中获得的经验，帮你拿回人生选择权。
         </p>
 
         <div
@@ -279,15 +283,12 @@ function LettersSection({ posts }: { posts: PostSummary[] }) {
           Letters · 我的深度思考
         </h2>
         <p className="mt-3 mb-0 max-w-135 text-[0.98rem] leading-[1.9] text-(--text-soft)">
-          每周更新，帮你建立清晰有力的认知框架与行动系统。
+          每周更新，提供默认路径之外的新视角与可执行方案。
         </p>
 
         <ul className="mt-12 m-0 list-none p-0 border-b border-(--line)">
           {posts.map((post) => (
-            <li
-              key={post.slug}
-              className="border-t border-(--line) py-6"
-            >
+            <li key={post.slug} className="border-t border-(--line) py-6">
               <Link
                 to="/posts/$slug"
                 params={{ slug: post.slug }}
@@ -357,21 +358,26 @@ function AboutSection() {
           <div>
             <p
               className="m-0 text-[1.15rem] leading-[1.8] text-(--text)"
-              style={{ fontFamily: '"Noto Serif SC", "EB Garamond", Georgia, serif' }}
+              style={{
+                fontFamily: '"Noto Serif SC", "EB Garamond", Georgia, serif',
+              }}
             >
-              嘿，我是 Vincenteof。一个长期主义者，也是一名持续训练的实践者。
+              嘿，我是 Vincenteof。一个长期主义者，专注于投资和自我提升。
             </p>
 
             <div className="mt-6 space-y-5 text-[1rem] leading-[1.95] text-[color-mix(in_oklch,var(--text)_88%,var(--text-soft))]">
               <p className="m-0">
-                我曾经走在传统路径上，却慢慢意识到：如果不主动构建能力、资产与认知结构，人生的选择会越来越少。于是我开始把注意力转向三个长期变量：Investing、Self-Training、Sovereignty。
+                我曾经走在默认路径上，却慢慢发现自己在被系统推着走，人生的选择变得越来越少。
               </p>
               <p className="m-0">
-                这些年我把踩过的坑、验证过的框架、以及在 AI
-                时代依然有效的思考，沉淀成一封封长信。它不是成功学模板，更像一份不断迭代的训练记录。
+                我逐渐意识到，既有系统的目标并不是让个体获得自由。你需要找到属于自己的游戏。于是我开始研究投资、提升认知，并学习一切能带来个人主权的知识。
               </p>
               <p className="m-0">
-                如果你也在寻找更稳固的人生结构，欢迎一起长期练习，逐步拿回属于自己的选择权。
+                我把失败的经验、验证过的框架、以及在 AI
+                时代依然有效的思考，沉淀成了一封封长信。
+              </p>
+              <p className="m-0">
+                大多数人活在被分配的路径上，少数人开始自己设计游戏。
               </p>
             </div>
 
@@ -384,18 +390,18 @@ function AboutSection() {
                   const Icon = item.icon
 
                   return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="inline-flex h-11 w-11 items-center justify-center text-(--text-soft) no-underline opacity-85 transition-[color,opacity,transform] duration-200 hover:-translate-y-px hover:opacity-100 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) md:h-9 md:w-9"
-                    aria-label={item.label}
-                    title={item.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                    <span className="sr-only">{item.label}</span>
-                  </a>
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="inline-flex h-11 w-11 items-center justify-center text-(--text-soft) no-underline opacity-85 transition-[color,opacity,transform] duration-200 hover:-translate-y-px hover:opacity-100 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) md:h-9 md:w-9"
+                      aria-label={item.label}
+                      title={item.label}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                      <span className="sr-only">{item.label}</span>
+                    </a>
                   )
                 })}
               </div>
