@@ -1,6 +1,6 @@
 # 项目路线图 (Roadmap)
 
-**最后更新**：2026-04-13  
+**最后更新**：2026-04-14  
 **当前版本**：MVP v1（Personal Sovereign Publishing System）
 
 ## 项目愿景
@@ -15,7 +15,7 @@
 **阶段 0 已完成**：旧版 Landing Page + 内容系统基础  
 已实现：TanStack Start 初始化、旧版 Landing Page、真实 MDX 文章渲染（列表页 + 详情页）、frontmatter 解析、preview 逻辑（stub 会员状态）、基础 SEO 与样式。
 
-**当前补充状态**：Landing 品牌定位已升级为 `Investing · Self-Training · Sovereignty`，正在进行文档对齐，随后重做 Landing 页面信息架构与表达。
+**当前补充状态**：Landing 品牌定位与核心文档已完成对齐，首页与 posts 视觉系统已切换到新的品牌表达，当前进入咨询入口与会员闭环阶段。
 
 **当前主要目标**：完成会员与支付闭环，达成可变现 MVP v1.0。
 
@@ -39,31 +39,34 @@
    - 统一 posts 按钮 / 返回链接 / focus-visible / active 状态
    - 统一文章正文链接的交互样式
    - 优化 `/posts` 列表 hover 节奏与会员 badge 细节
+- **Landing 品牌文档全面对齐（2026-04-14）**
+  - 对齐 `core-beliefs.md`、`overall-requirements.md` 与 `ui-design-system.md`
+  - 确认 `Investing · Self-Training · Sovereignty` 为项目长期品牌主轴
+  - 将 Landing 重启相关决策沉淀到 `decision-log.md`
 
 ### 下一步（Next - 高优先级）
-1. **完成 Landing 品牌文档全面对齐**  
-   - 对齐 `overall-requirements`、`ui-design-system` 与新 Landing 实现  
-   - 替换 Substack placeholder URL 为真实地址
-
-2. **完成咨询线索收集方案确认（表单优先）**
+1. **完成咨询线索收集方案确认（表单优先）**
    - 确认 `service-intake-requirements.md`（字段、入口形态、响应 SLA）
    - 确认后将 Software/Advisory CTA 接入统一咨询入口
 
-3. **接入真实会员状态查询**  
+2. **接入真实会员状态查询**  
    - 实现 `/api/me` + D1 查询，替换 `src/lib/membership.ts` stub  
    - 在 loader / Server Functions 中正确判断会员状态
 
-4. **强化 Member 内容权限控制**  
+3. **强化 Member 内容权限控制**  
    - Member 正文改为 server-only（避免泄露到客户端 bundle）  
    - 未授权用户仅返回 preview + CTA
 
-5. **Stripe 支付闭环**  
+4. **Stripe 支付闭环**  
    - 实现 `/api/checkout`（创建 Subscription Session）  
    - 实现 `/api/stripe-webhook`（处理关键事件，使用 `event.waitUntil()` + 幂等）  
    - 支付成功后自动更新 membership 并解锁文章
 
-6. **登录流程完善**  
+5. **登录流程完善**  
    - Magic Link + HttpOnly Cookie（`/api/login`）
+
+6. **替换 Substack URL 为最终订阅地址**
+   - 同步首页、Header、posts member preview 中的订阅入口
 
 ### 中短期计划（v1.0 后）
 - 添加 `/account` 页面展示会员状态

@@ -1,7 +1,7 @@
 # Exec Plan - Restart Landing Requirements
 
 **日期**：2026-04-12  
-**状态**：进行中  
+**状态**：已完成  
 **范围**：文档对齐与需求重启，不进入代码实现  
 
 ## 背景
@@ -87,3 +87,8 @@
 ## 当前结论
 - 本轮适合先做“品牌定位与文档系统对齐”，不宜直接进入 UI 或代码重构。
 - 在文档没有统一前，直接实现新的 Landing 容易造成定位反复、文案漂移和路线图失真。
+
+## 完成结果
+- `core-beliefs.md`、`overall-requirements.md`、`ui-design-system.md` 已完成与新品牌定位的对齐。
+- `decision-log.md` 已记录“长期品牌定位确认”与“Landing Page 需求重启方式”两项关键决策。
+- `ROADMAP.md` 已不再将该事项视为进行中，后续优先级转入咨询入口与会员闭环。
