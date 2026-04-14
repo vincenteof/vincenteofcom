@@ -5,7 +5,7 @@ import { ui } from '@/lib/ui'
 
 export const Route = createFileRoute('/posts/')({
   loader: () => ({
-    posts: getAllPostSummaries(),
+    posts: getAllPostSummaries().filter((post) => post.visibility === 'public'),
   }),
   head: () => ({
     meta: [
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/posts/')({
       },
       {
         name: 'description',
-        content: '所有文章索引，按时间倒序展示，含公开内容与会员专享内容。',
+        content: '所有公开文章索引，按时间倒序展示。',
       },
     ],
     links: [
@@ -29,8 +29,6 @@ export const Route = createFileRoute('/posts/')({
 
 function PostsPage() {
   const { posts } = Route.useLoaderData()
-  const publicPosts = posts.filter((post) => post.visibility === 'public').length
-  const memberPosts = posts.length - publicPosts
 
   return (
     <main className={ui.shellPosts}>
@@ -42,13 +40,9 @@ function PostsPage() {
         </div>
         <p className={ui.kicker}>All Writings</p>
         <h1 className={ui.heroTitle}>文章目录</h1>
-        <p className={ui.lede}>这里收录了公开写作，也包括部分会员内容。</p>
+        <p className={ui.lede}>这里收录的是目前公开发布的全部写作与归档。</p>
         <p className="mt-5 mb-0 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.82rem] tracking-[0.04em] text-[color-mix(in_oklab,var(--text-soft)_88%,var(--text)_12%)]">
           <span>{posts.length} 篇文章</span>
-          <span aria-hidden="true" className="h-0.75 w-0.75 rounded-full bg-[color-mix(in_oklab,var(--text-soft)_80%,transparent)]" />
-          <span>{publicPosts} 篇公开</span>
-          <span aria-hidden="true" className="h-0.75 w-0.75 rounded-full bg-[color-mix(in_oklab,var(--text-soft)_80%,transparent)]" />
-          <span>{memberPosts} 篇会员归档</span>
         </p>
       </section>
 
@@ -64,11 +58,6 @@ function PostsPage() {
                 params={{ slug: post.slug }}
                 className="group -mx-2 block rounded-[10px] px-2 py-4 transition-[background-color,color] duration-180 hover:bg-[color-mix(in_oklab,var(--bg-soft)_38%,transparent)] focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-(--accent)"
               >
-                {post.visibility === 'member' ? (
-                  <span className="mb-2 inline-flex items-center rounded-xs border border-[color-mix(in_oklab,var(--accent)_54%,transparent)] bg-[color-mix(in_oklab,var(--bg-soft)_82%,var(--accent)_18%)] px-2.5 py-1 text-[0.66rem] uppercase tracking-[0.16em] text-[color-mix(in_oklab,var(--text-soft)_74%,var(--accent))] transition-[border-color,background-color,color] duration-180 group-hover:border-[color-mix(in_oklab,var(--accent)_78%,#fff_8%)] group-hover:bg-[color-mix(in_oklab,var(--bg-soft)_74%,var(--accent)_26%)] group-hover:text-[color-mix(in_oklab,var(--text)_74%,var(--accent))]">
-                    会员专享
-                  </span>
-                ) : null}
                 <span className="block text-[1.04rem] leading-normal text-(--text) transition-colors duration-180 group-hover:text-(--accent)">
                   {post.title}
                 </span>

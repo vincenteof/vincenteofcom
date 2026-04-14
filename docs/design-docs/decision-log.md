@@ -1,9 +1,23 @@
 # Decision Log - 项目决策日志
 
-**最后更新**：2026-04-13
+**最后更新**：2026-04-14
 
 本文档记录项目中重要的技术、产品和设计决策，包括背景、决定、理由及后续影响。  
 新决策请按时间倒序追加在顶部。
+
+## 2026-04-14
+**决策主题**：Phase 1 公共站点移除会员语言与路径  
+**决定**：在当前 newsletter-first 阶段，`/posts` 仅展示公开文章；member 类型内容不再通过列表页、详情页预览或用户可见徽标对外暴露。  
+**理由**：继续保留“会员文章”“会员归档”“预览开放通知”等用户可见语言，会让网站心智停留在尚未启动的会员产品上，削弱当前免费 newsletter 的单一主线。  
+**影响**：`/posts` 页面改为纯公开归档；直接访问 member slug 时返回 404；现阶段公开站点不再出现会员提示与相关入口。  
+**相关文件**：`src/routes/posts/index.tsx`、`src/routes/posts/$slug.tsx`
+
+## 2026-04-14
+**决策主题**：当前阶段从“会员闭环优先”调整为“Newsletter 增长优先”  
+**决定**：将项目当前阶段明确为免费 newsletter 增长与受众积累阶段。网站当前承担归档、品牌表达、SEO 与轻量线索收集角色；会员、付费 newsletter 与 Stripe 支付闭环延后到达到阶段里程碑后再规划。  
+**理由**：当前真实约束不是支付能力不足，而是受众规模与信任资产尚未建立。对早期个人品牌而言，优先验证稳定输出、订阅增长与高质量互动，比提前建设付费闭环更现实。  
+**影响**：`ROADMAP.md`、`overall-requirements.md`、`ARCHITECTURE.md` 与 `README.md` 需要统一改写当前阶段目标；咨询入口继续保留，但只作为辅助承接；会员系统相关工作下沉为下一阶段候选。  
+**相关文件**：`ROADMAP.md`、`ARCHITECTURE.md`、`README.md`、`docs/product-specs/overall-requirements.md`、`docs/product-specs/service-intake-requirements.md`
 
 ## 2026-04-13
 **决策主题**：Posts 页面一致性修复策略  

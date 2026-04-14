@@ -4,9 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { Components } from 'react-markdown'
 
-import { getMembershipStatus } from '@/lib/membership'
 import {
-  createPreview,
   extractPostHeadings,
   formatTagLabel,
   getPostBySlug,
@@ -14,27 +12,19 @@ import {
 } from '@/lib/posts'
 import { ui } from '@/lib/ui'
 
-const SUBSTACK_URL = 'https://vincenteof.substack.com'
-
 export const Route = createFileRoute('/posts/$slug')({
   loader: async ({ params }) => {
     const post = getPostBySlug(params.slug)
 
-    if (!post) {
+    if (!post || post.visibility !== 'public') {
       throw notFound()
     }
 
-    const membership = await getMembershipStatus()
-    const canReadFull = post.visibility === 'public' || membership.isActive
-    const visibleBody = canReadFull ? post.body : createPreview(post.body, 460)
-    const headings = canReadFull ? extractPostHeadings(post.body) : []
+    const headings = extractPostHeadings(post.body)
 
     return {
       post,
-      canReadFull,
       headings,
-      isMemberPost: post.visibility === 'member',
-      previewText: canReadFull ? null : visibleBody,
     }
   },
   head: ({ loaderData }) => {
@@ -49,7 +39,7 @@ export const Route = createFileRoute('/posts/$slug')({
         },
         {
           name: 'description',
-          content: createPreview(loaderData.post.body, 120),
+          content: loaderData.post.excerpt || loaderData.post.subtitle || loaderData.post.title,
         },
       ],
       links: [
@@ -94,8 +84,8 @@ const markdownComponents: Components = {
 }
 
 function PostDetailPage() {
-  const { post, canReadFull, headings, isMemberPost, previewText } = Route.useLoaderData()
-  const hasReadingNav = canReadFull && headings.length > 0
+  const { post, headings } = Route.useLoaderData()
+  const hasReadingNav = headings.length > 0
 
   return (
     <main className="mx-auto max-w-280 px-5 pb-25 pt-11">
@@ -154,85 +144,44 @@ function PostDetailPage() {
           ) : null}
         </div>
 
-        {canReadFull ? (
-          <div className={`mt-8 ${hasReadingNav ? 'md:grid md:grid-cols-[minmax(0,1fr)_168px] md:justify-center md:gap-x-8 lg:grid-cols-[minmax(0,780px)_220px] lg:gap-x-16' : 'mx-auto max-w-195'}`}>
-            <div className={ui.markdownProse}>
-              <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>
-                {post.body}
-              </ReactMarkdown>
-            </div>
-            {hasReadingNav ? (
-              <aside className="relative hidden md:block">
-                <div className="sticky top-24 pt-1">
-                  <div className="max-h-[calc(100vh-7.5rem)] overflow-y-auto border-t border-[color-mix(in_oklab,var(--line)_72%,transparent)] pt-4 pr-2">
-                    <p className="m-0 text-[0.74rem] uppercase tracking-[0.14em] text-(--text-muted)">
-                      本文导航
-                    </p>
-                    <nav className="mt-5 grid gap-y-2.5" aria-label="文章目录">
-                      {headings.map((heading) => (
-                        <a
-                          key={heading.id}
-                          href={`#${heading.id}`}
-                          className={`text-[0.9rem] leading-[1.75] text-(--text-soft) no-underline transition-colors duration-180 hover:text-(--accent) ${heading.level === 3 ? 'pl-3 text-[0.84rem] text-[color-mix(in_oklab,var(--text-soft)_84%,var(--text-muted)_16%)]' : ''}`}
-                        >
-                          {heading.title}
-                        </a>
-                      ))}
-                    </nav>
-                  </div>
+        <div className={`mt-8 ${hasReadingNav ? 'md:grid md:grid-cols-[minmax(0,1fr)_168px] md:justify-center md:gap-x-8 lg:grid-cols-[minmax(0,780px)_220px] lg:gap-x-16' : 'mx-auto max-w-195'}`}>
+          <div className={ui.markdownProse}>
+            <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>
+              {post.body}
+            </ReactMarkdown>
+          </div>
+          {hasReadingNav ? (
+            <aside className="relative hidden md:block">
+              <div className="sticky top-24 pt-1">
+                <div className="max-h-[calc(100vh-7.5rem)] overflow-y-auto border-t border-[color-mix(in_oklab,var(--line)_72%,transparent)] pt-4 pr-2">
+                  <p className="m-0 text-[0.74rem] uppercase tracking-[0.14em] text-(--text-muted)">
+                    本文导航
+                  </p>
+                  <nav className="mt-5 grid gap-y-2.5" aria-label="文章目录">
+                    {headings.map((heading) => (
+                      <a
+                        key={heading.id}
+                        href={`#${heading.id}`}
+                        className={`text-[0.9rem] leading-[1.75] text-(--text-soft) no-underline transition-colors duration-180 hover:text-(--accent) ${heading.level === 3 ? 'pl-3 text-[0.84rem] text-[color-mix(in_oklab,var(--text-soft)_84%,var(--text-muted)_16%)]' : ''}`}
+                      >
+                        {heading.title}
+                      </a>
+                    ))}
+                  </nav>
                 </div>
-              </aside>
-            ) : null}
-          </div>
-        ) : (
-          <div className={`${ui.copyBlock} mx-auto mt-6 max-w-195`}>
-            {previewText
-              ?.split(/\n\s*\n/)
-              .map((paragraph) => paragraph.trim())
-              .filter(Boolean)
-              .map((paragraph) => (
-                <p key={paragraph}>{paragraph.trim()}</p>
-              ))}
-          </div>
-        )}
+              </div>
+            </aside>
+          ) : null}
+        </div>
 
-        {isMemberPost && !canReadFull ? (
-          <section
-            className="mx-auto mt-8 max-w-195 border-t border-[color-mix(in_oklab,var(--line)_78%,transparent)] pt-5"
-            aria-label="会员文章提示"
-          >
-            <p className="m-0 text-[0.98rem] tracking-[0.03em] text-[color-mix(in_oklab,var(--text)_82%,var(--accent)_18%)]">
-              会员文章 · 当前仅展示预览
-            </p>
-            <p className="mt-3 mb-0 max-w-lg text-[0.95rem] leading-[1.85] text-(--text-soft)">
-              正式会员入口开放前，可以先订阅长信获取更新与后续开放通知。
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <a
-                href={SUBSTACK_URL}
-                className={ui.buttonPrimary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                订阅长信
-              </a>
-              <Link to="/posts" className={ui.subtleButton}>
-                返回文章目录
-              </Link>
-            </div>
-          </section>
-        ) : null}
-
-        {!isMemberPost || canReadFull ? (
-          <div className="mx-auto mt-9 flex max-w-195 flex-wrap items-center gap-x-5 gap-y-3 text-[0.92rem]">
-            <a href="#post-top" className={ui.sectionLink}>
-              回到顶部
-            </a>
-            <Link to="/posts" className={ui.sectionLink}>
-              返回文章目录
-            </Link>
-          </div>
-        ) : null}
+        <div className="mx-auto mt-9 flex max-w-195 flex-wrap items-center gap-x-5 gap-y-3 text-[0.92rem]">
+          <a href="#post-top" className={ui.sectionLink}>
+            回到顶部
+          </a>
+          <Link to="/posts" className={ui.sectionLink}>
+            返回文章目录
+          </Link>
+        </div>
       </section>
     </main>
   )
