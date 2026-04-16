@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import { ui } from '@/lib/ui'
 
 const SUBSTACK_URL = 'https://vincenteof.substack.com'
 
@@ -22,19 +21,20 @@ export default function Header() {
           Vincenteof
         </Link>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-5 md:gap-6">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="hidden text-[0.84rem] tracking-[0.03em] text-(--text-soft) no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3 md:inline-block"
+              className="text-[0.82rem] tracking-[0.03em] text-(--text-muted) no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3 md:text-[0.84rem] md:text-(--text-soft)"
             >
               {item.label}
             </a>
           ))}
+          <span className="h-3 w-px bg-(--line)" aria-hidden="true" />
           <a
             href={SUBSTACK_URL}
-            className={`${ui.sectionLink} inline-flex items-center border-transparent pb-px text-[0.88rem] font-medium text-(--text)! hover:text-[color-mix(in_oklab,var(--text)_84%,#fff_16%)]! hover:border-[color-mix(in_oklab,var(--accent)_78%,transparent)]`}
+            className="text-[0.82rem] font-medium text-(--accent) no-underline transition-colors duration-200 hover:text-(--accent-hover) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3 md:text-[0.88rem]"
             target="_blank"
             rel="noopener noreferrer"
           >

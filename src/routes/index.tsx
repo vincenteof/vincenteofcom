@@ -158,13 +158,14 @@ function LandingPage() {
 function HeroSection() {
   return (
     <section
-      className="relative flex min-h-dvh items-center px-5"
+      className="hero-noise relative flex min-h-dvh items-center px-5"
       style={{
         background:
           'linear-gradient(180deg, var(--bg) 0%, oklch(0.135 0.012 186) 55%, var(--bg) 100%)',
       }}
     >
-      <div className="mx-auto w-full max-w-270 pb-20 pt-24">
+      <div className="relative z-2 mx-auto w-full max-w-270 pb-20 pt-24 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12">
+        <div>
         {/* Kicker — the three pillars as a visual frame */}
         <p
           className="m-0 text-[0.72rem] tracking-[0.22em] uppercase text-(--accent) animate-[revealUp_680ms_ease-out_both]"
@@ -218,11 +219,39 @@ function HeroSection() {
             </svg>
           </a>
         </div>
+        </div>
+
+        {/* Abstract geometric — desktop only */}
+        <div
+          className="hidden md:flex items-center justify-center animate-[revealUp_680ms_ease-out_both]"
+          style={{ animationDelay: '500ms' }}
+          aria-hidden="true"
+        >
+          <svg
+            className="h-56 w-56 lg:h-72 lg:w-72 text-(--accent)"
+            viewBox="0 0 280 280"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Concentric rings */}
+            <circle cx="140" cy="140" r="130" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
+            <circle cx="140" cy="140" r="95" stroke="currentColor" strokeWidth="0.5" opacity="0.18" />
+            <circle cx="140" cy="140" r="58" stroke="currentColor" strokeWidth="0.5" opacity="0.25" />
+            {/* Cross axis */}
+            <line x1="140" y1="4" x2="140" y2="276" stroke="currentColor" strokeWidth="0.5" opacity="0.08" />
+            <line x1="4" y1="140" x2="276" y2="140" stroke="currentColor" strokeWidth="0.5" opacity="0.08" />
+            {/* Diagonal accents */}
+            <line x1="46" y1="46" x2="234" y2="234" stroke="currentColor" strokeWidth="0.5" opacity="0.06" />
+            <line x1="234" y1="46" x2="46" y2="234" stroke="currentColor" strokeWidth="0.5" opacity="0.06" />
+            {/* Center dot */}
+            <circle cx="140" cy="140" r="2.5" fill="currentColor" opacity="0.3" />
+          </svg>
+        </div>
       </div>
 
       {/* Scroll indicator */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-[revealUp_680ms_ease-out_both]"
+        className="absolute bottom-8 left-1/2 z-2 -translate-x-1/2 animate-[revealUp_680ms_ease-out_both]"
         style={{ animationDelay: '600ms' }}
         aria-hidden="true"
       >
@@ -420,7 +449,7 @@ function AboutSection() {
                     <a
                       key={item.label}
                       href={item.href}
-                      className="inline-flex h-11 w-11 items-center justify-center text-(--text-soft) no-underline opacity-85 transition-[color,opacity,transform] duration-200 hover:-translate-y-px hover:opacity-100 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) md:h-9 md:w-9"
+                      className="inline-flex h-11 w-11 items-center justify-center text-(--text-soft) no-underline opacity-85 transition-[color,opacity,transform] duration-200 hover:-translate-y-px hover:opacity-100 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent)"
                       aria-label={item.label}
                       title={item.label}
                       target="_blank"
