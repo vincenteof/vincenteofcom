@@ -228,7 +228,7 @@ function HeroSection() {
       >
         <div className="flex flex-col items-center gap-2 text-(--text-muted)">
           <span className="text-[0.68rem] tracking-[0.16em] uppercase">Scroll</span>
-          <svg className="h-4 w-4 animate-bounce" viewBox="0 0 16 16" fill="none">
+          <svg className="h-4 w-4 animate-[gentleFloat_2.4s_ease-in-out_infinite]" viewBox="0 0 16 16" fill="none">
             <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>

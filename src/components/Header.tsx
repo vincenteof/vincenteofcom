@@ -3,6 +3,12 @@ import { ui } from '@/lib/ui'
 
 const SUBSTACK_URL = 'https://vincenteof.substack.com'
 
+const NAV_ITEMS = [
+  { label: '长信', href: '/#letters' },
+  { label: '服务', href: '/#offerings' },
+  { label: '关于', href: '/#about' },
+] as const
+
 export default function Header() {
   return (
     <header className="sticky top-0 z-20 border-b border-[color-mix(in_oklch,var(--line)_60%,transparent)] bg-[color-mix(in_oklch,var(--bg)_82%,transparent)] backdrop-blur-md">
@@ -15,14 +21,26 @@ export default function Header() {
         >
           Vincenteof
         </Link>
-        <a
-          href={SUBSTACK_URL}
-          className={`${ui.sectionLink} inline-flex items-center border-transparent pb-px text-[0.88rem] font-medium text-(--text)! hover:text-[color-mix(in_oklab,var(--text)_84%,#fff_16%)]! hover:border-[color-mix(in_oklab,var(--accent)_78%,transparent)]`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          阅读每周长信
-        </a>
+
+        <nav className="flex items-center gap-6">
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="hidden text-[0.84rem] tracking-[0.03em] text-(--text-soft) no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3 md:inline-block"
+            >
+              {item.label}
+            </a>
+          ))}
+          <a
+            href={SUBSTACK_URL}
+            className={`${ui.sectionLink} inline-flex items-center border-transparent pb-px text-[0.88rem] font-medium text-(--text)! hover:text-[color-mix(in_oklab,var(--text)_84%,#fff_16%)]! hover:border-[color-mix(in_oklab,var(--accent)_78%,transparent)]`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            订阅
+          </a>
+        </nav>
       </div>
     </header>
   )
