@@ -46,11 +46,12 @@
 1. `timeline`：期望开始时间（如：立即 / 1 个月内 / 3 个月内）
 2. `contactAlt`：其他联系方式（微信/Telegram）
 
-### 预算区间枚举（建议）
-- below_5k
-- 5k_to_20k
-- 20k_to_50k
-- 50k_plus
+### 预算区间枚举（USD）
+- below_500
+- 500_to_2k
+- 2k_to_5k
+- 5k_to_15k
+- 15k_plus
 - undecided
 
 ## 5. 文案与语气要求
@@ -81,7 +82,19 @@
 - 结合受众规模与咨询质量，评估是否将服务产品进一步标准化。
 - 再决定是否与付费 newsletter / 会员体系形成更清晰的阶梯关系。
 
-## 9. 待确认项
-1. 入口形态：**已定为站内自建表单页**（不依赖第三方付费服务）
+## 9. 实现方案（当前）
+### Phase 1（验证期）
+- 入口形态：**Tally 嵌入方案**
+  - 在 Tally 创建表单，设为暗色主题 + Deep Teal 强调色
+  - 站内新建 `/consult` 路由页，通过 iframe 嵌入 Tally 表单
+  - Tally 免费版无品牌水印、无提交数量限制、支持邮件通知
+- Landing Offerings 中 Software Consulting 与 Global Investing Advisory CTA 指向 `/consult`
+
+### Phase 2（验证有效后）
+- 评估是否自建表单页（D1 存储 + 自定义 UI）
+- 根据线索质量决定是否拆分为独立服务落地页
+
+## 10. 待确认项
+1. ~~入口形态~~ → 已确认为 Tally 嵌入（Phase 1）
 2. 预算区间字段是否保留为必填
 3. 响应 SLA 文案是否固定为「48 小时内回复」

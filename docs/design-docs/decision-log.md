@@ -1,9 +1,16 @@
 # Decision Log - 项目决策日志
 
-**最后更新**：2026-04-14
+**最后更新**：2026-04-16
 
 本文档记录项目中重要的技术、产品和设计决策，包括背景、决定、理由及后续影响。  
 新决策请按时间倒序追加在顶部。
+
+## 2026-04-16
+**决策主题**：咨询入口从站内自建改为 Tally 嵌入（Phase 1 验证期）  
+**决定**：Phase 1 使用 Tally 免费版通过 iframe 嵌入站内 `/consult` 页面，替代原计划的站内自建表单 + D1 存储方案。  
+**理由**：当前目标是验证线索质量而非打磨技术方案。Tally 免费版无品牌水印、无提交数量限制、支持暗色主题与邮件通知，开发成本从 1-2 天压缩到 30 分钟。验证有效后再评估自建。  
+**影响**：新增 `/consult` 路由页；Landing Offerings 中 Software/Advisory CTA 从 `#about` 改为 `/consult`；原"站内自建"决策降级为 Phase 2 候选。  
+**相关文件**：`src/routes/consult.tsx`、`src/routes/index.tsx`、`docs/product-specs/service-intake-requirements.md`
 
 ## 2026-04-14
 **决策主题**：Phase 1 公共站点移除会员语言与路径  

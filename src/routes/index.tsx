@@ -47,8 +47,8 @@ const OFFERINGS = [
     title: '软件开发',
     description:
       '面向独立创作者的软件开发咨询与系统搭建，减少重复劳动并提高交付效率，代码是个人的最佳杠杆。',
-    actionLabel: '了解服务方式',
-    href: '#about',
+    actionLabel: '开始咨询',
+    href: '/consult',
     external: false,
   },
   {
@@ -56,8 +56,8 @@ const OFFERINGS = [
     title: '全球投资',
     description:
       '围绕资金出海与资产配置，提供长期、纪律化的投资咨询，借助复利，为你争取更多选择权。',
-    actionLabel: '了解咨询方向',
-    href: '#about',
+    actionLabel: '开始咨询',
+    href: '/consult',
     external: false,
   },
 ] as const
@@ -143,8 +143,8 @@ function LandingPage() {
   return (
     <main>
       <HeroSection />
-      <OfferingsSection />
       <LettersSection posts={posts} />
+      <OfferingsSection />
       <AboutSection />
       <PageFooter />
     </main>
@@ -198,11 +198,26 @@ function HeroSection() {
         >
           <a
             href={SUBSTACK_URL}
-            className="inline-flex min-h-11 items-center rounded-xs bg-(--accent) px-6 py-3 text-[0.95rem] font-medium text-[oklch(0.97_0.005_186)] no-underline transition-colors duration-200 hover:bg-(--accent-hover) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
+            className="group inline-flex min-h-11 items-center gap-2 rounded-xs bg-(--accent) px-6 py-3 text-[0.95rem] font-medium text-[oklch(0.97_0.005_186)] no-underline transition-colors duration-200 hover:bg-(--accent-hover) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
             target="_blank"
             rel="noopener noreferrer"
           >
             免费订阅
+            <svg
+              className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-px group-hover:translate-x-px"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 12L12 4M6 4H12V10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -221,6 +236,9 @@ function OfferingsSection() {
         <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] font-medium tracking-[0.03em]">
           Offerings · 我的服务
         </h2>
+        <p className="mt-3 mb-0 max-w-135 text-[0.98rem] leading-[1.9] text-(--text-soft)">
+          三条路径，帮你拿回时间与资源的主动权。
+        </p>
 
         <div className="mt-12 border-t border-b border-(--line) divide-y divide-(--line)">
           {OFFERINGS.map((offering, i) => (
@@ -337,9 +355,12 @@ function AboutSection() {
   return (
     <section id="about" className="px-5 py-24">
       <div className="mx-auto max-w-270">
-        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] font-medium tracking-[0.03em]">
+        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] leading-[1.24] font-medium tracking-[0.03em]">
           About · 关于我
         </h2>
+        <p className="mt-3 mb-0 max-w-135 text-[0.98rem] leading-[1.9] text-(--text-soft)">
+          一个从默认路径走出来的长期主义者。
+        </p>
 
         <div className="mt-12 grid gap-8 md:grid-cols-[280px_1fr] md:gap-12">
           <aside>
@@ -356,16 +377,17 @@ function AboutSection() {
           </aside>
 
           <div>
-            <p
-              className="m-0 text-[1.15rem] leading-[1.8] text-(--text)"
+            <div
+              className="max-w-[42ch] space-y-2 text-[clamp(1.12rem,1.6vw,1.24rem)] leading-[1.86] tracking-[0.01em] text-[color:color-mix(in_oklch,var(--text)_94%,#fff_6%)]"
               style={{
                 fontFamily: '"Noto Serif SC", "EB Garamond", Georgia, serif',
               }}
             >
-              嘿，我是 Vincenteof。一个长期主义者，专注于投资和自我提升。
-            </p>
+              <p className="m-0">嘿，我是 Vincenteof。</p>
+              <p className="m-0">一个专注于投资和自我提升的长期主义者。</p>
+            </div>
 
-            <div className="mt-6 space-y-5 text-[1rem] leading-[1.95] text-[color-mix(in_oklch,var(--text)_88%,var(--text-soft))]">
+            <div className="mt-7 max-w-[64ch] space-y-6 text-[1.02rem] leading-[2.02] text-[color:color-mix(in_oklch,var(--text)_86%,var(--text-soft)_14%)]">
               <p className="m-0">
                 我曾经走在默认路径上，却慢慢发现自己在被系统推着走，人生的选择变得越来越少。
               </p>
@@ -377,12 +399,12 @@ function AboutSection() {
                 时代依然有效的思考，沉淀成了一封封长信。
               </p>
               <p className="m-0">
-                大多数人活在被分配的路径上，少数人开始自己设计游戏。
+                如果你也开始觉得路有点窄，这里或许有你想要的东西。
               </p>
             </div>
 
             <div className="mt-8 border-t border-(--line) pt-6">
-              <p className="m-0 text-[0.84rem] tracking-[0.08em] text-(--text-muted)">
+              <p className="m-0 text-[0.86rem] tracking-[0.07em] text-(--text-muted)">
                 也可以在这些平台找到我
               </p>
               <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">

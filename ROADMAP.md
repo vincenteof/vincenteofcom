@@ -1,6 +1,6 @@
 # 项目路线图 (Roadmap)
 
-**最后更新**：2026-04-14  
+**最后更新**：2026-04-16  
 **当前版本**：MVP v1（Personal Sovereign Publishing System）
 
 ## 项目愿景
@@ -78,9 +78,10 @@
    - 同步首页、Header 与 posts 中的订阅入口
    - 确保所有 CTA 最终都指向真实可用的 newsletter 订阅路径
 
-3. **完成咨询线索收集方案确认并开发轻量入口**
-   - 确认 `service-intake-requirements.md`（字段、入口形态、响应 SLA）
-   - 将 Software/Advisory CTA 接入统一咨询入口
+3. **完成咨询线索收集方案确认并开发轻量入口** ✅ (Phase 1: Tally 嵌入)
+   - ~~确认 `service-intake-requirements.md`（字段、入口形态、响应 SLA）~~
+   - ~~将 Software/Advisory CTA 接入统一咨询入口~~
+   - 已上线 `/consult` 页面（Tally iframe 嵌入），待创建 Tally 表单后替换 URL
 
 4. **建立公开能力证明素材**
    - 规划并上线 1-2 个可展示的软件独立作品

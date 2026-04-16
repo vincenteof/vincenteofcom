@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { ui } from '@/lib/ui'
 
 const SUBSTACK_URL = 'https://vincenteof.substack.com'
 
@@ -8,19 +9,19 @@ export default function Header() {
       <div className="mx-auto flex max-w-270 items-center justify-between px-5 py-3">
         <Link
           to="/"
-          style={{ fontFamily: '"Noto Serif SC", "EB Garamond", Georgia, serif' }}
-          className="text-[1.15rem] leading-none font-medium tracking-[0.02em] text-(--text) no-underline transition-colors duration-200 hover:text-(--accent) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
+          style={{ fontFamily: 'Allura, "EB Garamond", Georgia, serif' }}
+          className="-translate-y-px text-[1.5rem] leading-none text-(--text) no-underline transition-colors duration-200 hover:text-(--accent) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
           aria-label="首页"
         >
           Vincenteof
         </Link>
         <a
           href={SUBSTACK_URL}
-          className="inline-flex min-h-11 items-center text-[0.88rem] text-(--text-soft) no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
+          className={`${ui.sectionLink} inline-flex items-center border-transparent pb-px text-[0.88rem] font-medium text-(--text)! hover:text-[color-mix(in_oklab,var(--text)_84%,#fff_16%)]! hover:border-[color-mix(in_oklab,var(--accent)_78%,transparent)]`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          阅读长信
+          阅读每周长信
         </a>
       </div>
     </header>
