@@ -9,8 +9,8 @@ export default function Header() {
       <div className="mx-auto flex max-w-270 items-center justify-between px-5 py-3">
         <Link
           to="/"
-          style={{ fontFamily: 'Allura, "EB Garamond", Georgia, serif' }}
-          className="-translate-y-px text-[1.5rem] leading-none text-(--text) no-underline transition-colors duration-200 hover:text-(--accent) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
+          style={{ fontFamily: '"Noto Serif SC", "EB Garamond", Georgia, serif' }}
+          className="text-[1.2rem] leading-none font-medium tracking-[0.04em] text-(--text) no-underline transition-colors duration-200 hover:text-(--accent) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
           aria-label="首页"
         >
           Vincenteof

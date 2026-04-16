@@ -158,40 +158,38 @@ function LandingPage() {
 function HeroSection() {
   return (
     <section
-      className="flex min-h-dvh items-center justify-center px-5"
+      className="relative flex min-h-dvh items-center px-5"
       style={{
         background:
           'linear-gradient(180deg, var(--bg) 0%, oklch(0.135 0.012 186) 55%, var(--bg) 100%)',
       }}
     >
-      <div className="mx-auto w-full max-w-180 pb-12 pt-16 text-center">
-        <h1 className="m-0 text-[clamp(2.5rem,8vw,4.2rem)] leading-tight font-medium tracking-[0.04em] animate-[revealUp_680ms_ease-out_both]">
+      <div className="mx-auto w-full max-w-270 pb-20 pt-24">
+        {/* Kicker — the three pillars as a visual frame */}
+        <p
+          className="m-0 text-[0.72rem] tracking-[0.22em] uppercase text-(--accent) animate-[revealUp_680ms_ease-out_both]"
+          style={{ fontFamily: '"EB Garamond", Georgia, serif' }}
+        >
+          Investing&ensp;·&ensp;Self-Training&ensp;·&ensp;Sovereignty
+        </p>
+
+        {/* Main heading — dramatic scale, left-aligned */}
+        <h1
+          className="mt-8 mb-0 max-w-[14ch] text-[clamp(3rem,10vw,5.6rem)] leading-[1.1] font-semibold tracking-[0.02em] animate-[revealUp_680ms_ease-out_both]"
+          style={{ animationDelay: '120ms' }}
+        >
           构建你的选择权。
         </h1>
 
-        <div
-          className="mx-auto mt-5 h-px w-12 bg-(--accent) animate-[revealUp_680ms_ease-out_both]"
-          style={{ animationDelay: '100ms' }}
-          aria-hidden="true"
-        />
-
+        {/* Body — narrower measure, editorial feel */}
         <p
-          className="mt-5 mb-0 text-[clamp(1rem,2.4vw,1.22rem)] tracking-[0.14em] text-(--text-soft) animate-[revealUp_680ms_ease-out_both]"
-          style={{
-            fontFamily: '"EB Garamond", Georgia, serif',
-            animationDelay: '160ms',
-          }}
-        >
-          Investing. Self-Training. Sovereignty.
-        </p>
-
-        <p
-          className="mx-auto mt-10 mb-0 max-w-120 text-[clamp(0.95rem,2.2vw,1.05rem)] leading-[1.9] text-(--text-soft) animate-[revealUp_680ms_ease-out_both]"
-          style={{ animationDelay: '280ms' }}
+          className="mt-10 mb-0 max-w-[36ch] text-[clamp(1rem,2.4vw,1.12rem)] leading-[2] text-(--text-soft) animate-[revealUp_680ms_ease-out_both]"
+          style={{ animationDelay: '260ms' }}
         >
           每周两封深度长信，用我从波动和混乱中获得的经验，帮你拿回人生选择权。
         </p>
 
+        {/* CTA */}
         <div
           className="mt-10 animate-[revealUp_680ms_ease-out_both]"
           style={{ animationDelay: '380ms' }}
@@ -221,6 +219,20 @@ function HeroSection() {
           </a>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-[revealUp_680ms_ease-out_both]"
+        style={{ animationDelay: '600ms' }}
+        aria-hidden="true"
+      >
+        <div className="flex flex-col items-center gap-2 text-(--text-muted)">
+          <span className="text-[0.68rem] tracking-[0.16em] uppercase">Scroll</span>
+          <svg className="h-4 w-4 animate-bounce" viewBox="0 0 16 16" fill="none">
+            <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
     </section>
   )
 }
@@ -233,10 +245,10 @@ function OfferingsSection() {
   return (
     <section id="offerings" className="px-5 pt-16 pb-24">
       <div className="mx-auto max-w-270">
-        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] font-medium tracking-[0.03em]">
+        <h2 className="m-0 text-[clamp(1.3rem,2.6vw,1.65rem)] font-medium tracking-[0.03em] text-(--text-soft)">
           Offerings · 我的服务
         </h2>
-        <p className="mt-3 mb-0 max-w-135 text-[0.98rem] leading-[1.9] text-(--text-soft)">
+        <p className="mt-3 mb-0 max-w-135 text-[0.92rem] leading-[1.9] text-(--text-muted)">
           三条路径，帮你拿回时间与资源的主动权。
         </p>
 
@@ -275,7 +287,7 @@ function OfferingsSection() {
               {/* CTA */}
               <a
                 href={offering.href}
-                className="mt-5 inline-block text-[0.9rem] text-(--text-soft) no-underline whitespace-nowrap transition-colors duration-200 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2 md:mt-0 md:pt-0.5"
+                className="mt-5 inline-block border-b border-transparent text-[0.9rem] text-(--accent) no-underline whitespace-nowrap transition-[color,border-color] duration-200 hover:border-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2 md:mt-0 md:pt-0.5"
                 target={offering.external ? '_blank' : undefined}
                 rel={offering.external ? 'noopener noreferrer' : undefined}
               >
@@ -297,10 +309,10 @@ function LettersSection({ posts }: { posts: PostSummary[] }) {
   return (
     <section id="letters" className="px-5 py-28">
       <div className="mx-auto max-w-270">
-        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] font-medium tracking-[0.03em]">
+        <h2 className="m-0 text-[clamp(1.8rem,3.5vw,2.4rem)] font-semibold tracking-[0.02em]">
           Letters · 我的深度思考
         </h2>
-        <p className="mt-3 mb-0 max-w-135 text-[0.98rem] leading-[1.9] text-(--text-soft)">
+        <p className="mt-4 mb-0 max-w-135 text-[1rem] leading-[1.9] text-(--text-soft)">
           每周更新，提供默认路径之外的新视角与可执行方案。
         </p>
 
@@ -355,10 +367,10 @@ function AboutSection() {
   return (
     <section id="about" className="px-5 py-24">
       <div className="mx-auto max-w-270">
-        <h2 className="m-0 text-[clamp(1.5rem,3vw,1.95rem)] leading-[1.24] font-medium tracking-[0.03em]">
+        <h2 className="m-0 text-[clamp(1.2rem,2.4vw,1.5rem)] leading-[1.24] font-normal tracking-[0.04em] text-(--text-soft)">
           About · 关于我
         </h2>
-        <p className="mt-3 mb-0 max-w-135 text-[0.98rem] leading-[1.9] text-(--text-soft)">
+        <p className="mt-3 mb-0 max-w-135 text-[0.92rem] leading-[1.9] text-(--text-muted)">
           一个从默认路径走出来的长期主义者。
         </p>
 
@@ -389,17 +401,10 @@ function AboutSection() {
 
             <div className="mt-7 max-w-[64ch] space-y-6 text-[1.02rem] leading-[2.02] text-[color:color-mix(in_oklch,var(--text)_86%,var(--text-soft)_14%)]">
               <p className="m-0">
-                我曾经走在默认路径上，却慢慢发现自己在被系统推着走，人生的选择变得越来越少。
+                我曾经走在默认路径上，直到发现既有系统的目标并不是让个体获得自由。于是我开始研究投资、提升认知，学习一切能带来个人主权的知识。
               </p>
               <p className="m-0">
-                我逐渐意识到，既有系统的目标并不是让个体获得自由。你需要找到属于自己的游戏。于是我开始研究投资、提升认知，并学习一切能带来个人主权的知识。
-              </p>
-              <p className="m-0">
-                我把失败的经验、验证过的框架、以及在 AI
-                时代依然有效的思考，沉淀成了一封封长信。
-              </p>
-              <p className="m-0">
-                如果你也开始觉得路有点窄，这里或许有你想要的东西。
+                这些长信记录了我从波动和混乱中验证过的框架与思考。如果你也觉得路有点窄，这里或许有你想要的东西。
               </p>
             </div>
 
@@ -441,10 +446,21 @@ function AboutSection() {
 
 function PageFooter() {
   return (
-    <footer className="border-t border-(--line) px-5 py-10">
+    <footer className="border-t border-(--line) px-5 py-16">
       <div className="mx-auto max-w-270 text-center">
-        <p className="m-0 text-[0.85rem] text-(--text-muted)">
-          © 2026 Vincenteof. All rights reserved.
+        <p className="m-0 text-[0.95rem] leading-[1.9] text-(--text-soft)">
+          每周两封长信，免费订阅。
+        </p>
+        <a
+          href={SUBSTACK_URL}
+          className="mt-4 inline-block border-b border-transparent text-[0.9rem] text-(--accent) no-underline transition-[color,border-color] duration-200 hover:border-(--accent) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          前往订阅 →
+        </a>
+        <p className="mt-8 m-0 text-[0.8rem] text-(--text-muted)">
+          © 2026 Vincenteof
         </p>
       </div>
     </footer>
