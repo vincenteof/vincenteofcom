@@ -1,6 +1,6 @@
 # 系统架构 (Architecture)
 
-**最后更新**：2026-04-14  
+**最后更新**：2026-04-17  
 **项目**：Personal Sovereign Publishing System (MVP v1)
 
 ## 整体架构概述
@@ -81,9 +81,10 @@ CREATE TABLE memberships (
 - 外部分发渠道（X / YouTube）负责导流，网站负责沉淀与归档。
 
 ### 2. 服务咨询线索收集（当前阶段）
-- 通过统一 service intake form 收集结构化线索。
+- 通过 `/consult` 页面收集结构化线索，当前使用 Tally 免费版 iframe 嵌入（Phase 1 验证期）。
+- Landing Offerings 中 Software Consulting 与 Advisory CTA 均指向 `/consult`。
 - 保持低摩擦，不引入注册流程。
-- 成功态应明确说明预计响应时间与下一步。
+- 验证线索质量后再评估是否自建表单（Phase 2 候选）。
 
 ### 3. 文章访问控制（未来阶段，在 loader / Server Function 中执行）
 ```ts
