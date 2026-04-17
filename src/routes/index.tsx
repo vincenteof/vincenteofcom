@@ -437,7 +437,7 @@ function AboutSection() {
 
             <div className="mt-7 max-w-[64ch] space-y-6 text-[1.02rem] leading-[2.02] text-[color:color-mix(in_oklch,var(--text)_86%,var(--text-soft)_14%)]">
               <p className="m-0">
-                我曾经走在默认路径上，直到发现既有系统的目标并不是让个体获得自由。于是我开始研究投资、提升认知，学习一切能带来个人主权的知识。
+                我在科技行业写了近十年代码，也曾觉得这就是全部。直到我开始投资加密货币和美股，六年多的实践让我意识到，真正的自由不来自某一份收入，而来自对时间和资本的主权。
               </p>
               <p className="m-0">
                 这些长信记录了我从波动和混乱中验证过的框架与思考。如果你也觉得路有点窄，这里或许有你想要的东西。
