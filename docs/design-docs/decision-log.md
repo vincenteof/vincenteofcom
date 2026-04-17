@@ -41,11 +41,11 @@
 **相关文件**：`docs/product-specs/posts-visual-consistency-requirements.md`、`docs/product-specs/overall-requirements.md`、`ROADMAP.md`
 
 ## 2026-04-13
-**决策主题**：咨询入口形态选择（站内自建）  
+**决策主题**：咨询入口形态选择（站内自建）（已被 2026-04-16 Tally 嵌入方案取代）  
 **决定**：Service Intake Form 采用站内自建，不依赖第三方表单服务。  
 **理由**：需求复杂度低，站内实现成本可控；避免第三方潜在付费与平台约束，保持数据与体验一致性。  
 **影响**：后续开发将新增站内咨询表单页与提交成功态；Offerings 中咨询 CTA 统一指向站内入口。  
-**相关文件**：`docs/product-specs/service-intake-requirements.md`、`docs/exec-plans/active/2026-04-13-service-intake-requirements.md`
+**相关文件**：`docs/product-specs/service-intake-requirements.md`、`docs/exec-plans/completed/2026-04-13-service-intake-requirements.md`
 
 ## 2026-04-13
 **决策主题**：咨询转化路径采用统一表单（先文档确认，后开发）  

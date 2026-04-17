@@ -1,7 +1,7 @@
 # Exec Plan - Service Intake Requirements (Pre-Dev)
 
 **日期**：2026-04-13  
-**状态**：Draft for confirmation  
+**状态**：Completed（需求已确认，后续实施见 2026-04-16-service-intake-tally-embed.md）  
 **负责人**：AI Agent + Human review
 
 ## 任务背景
