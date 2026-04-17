@@ -75,17 +75,6 @@
   }
 }
 
-@keyframes soonSweep {
-  0%,
-  52% {
-    transform: translateX(-120%);
-  }
-  85%,
-  100% {
-    transform: translateX(120%);
-  }
-}
-
 @keyframes gentleFloat {
   0%, 100% {
     transform: translateY(0);

@@ -39,6 +39,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only fixed top-2 left-2 z-50 rounded-xs bg-(--accent) px-4 py-2 text-[0.85rem] font-medium text-[oklch(0.97_0.005_186)] no-underline focus:outline focus:outline-1 focus:outline-(--accent) focus:outline-offset-2"
+        >
+          跳至主内容
+        </a>
         <Header />
         {children}
         <TanStackDevtools

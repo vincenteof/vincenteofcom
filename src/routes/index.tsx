@@ -8,8 +8,8 @@ import { getPublicPostSummaries } from '@/lib/posts'
 
 const SUBSTACK_URL = 'https://vincenteof.substack.com'
 const SITE_URL = 'https://vincenteof.com'
-const OG_IMAGE_URL = `${SITE_URL}/images/profile.JPG`
-const PROFILE_PHOTO_URL = '/images/profile.JPG'
+const OG_IMAGE_URL = `${SITE_URL}/images/profile.jpg`
+const PROFILE_PHOTO_URL = '/images/profile.jpg'
 
 type ProfileLink = {
   label: string
@@ -141,8 +141,8 @@ function LandingPage() {
   const { posts } = Route.useLoaderData()
 
   return (
-    <main>
-      <HeroSection />
+    <main id="main">
+      <HeroSection latestPost={posts[0]} />
       <LettersSection posts={posts} />
       <OfferingsSection />
       <AboutSection />
@@ -155,7 +155,7 @@ function LandingPage() {
    Hero — full-viewport philosophical statement
    ------------------------------------------------------------------ */
 
-function HeroSection() {
+function HeroSection({ latestPost }: { latestPost?: PostSummary }) {
   return (
     <section
       className="hero-noise relative flex min-h-dvh items-center px-5"
@@ -164,9 +164,9 @@ function HeroSection() {
           'linear-gradient(180deg, var(--bg) 0%, oklch(0.135 0.012 186) 55%, var(--bg) 100%)',
       }}
     >
-      <div className="relative z-2 mx-auto w-full max-w-270 pb-20 pt-24 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12">
+      <div className="relative z-2 mx-auto w-full max-w-270 pb-20 pt-24 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-16">
         <div>
-        {/* Kicker — the three pillars as a visual frame */}
+        {/* Kicker — the three pillars */}
         <p
           className="m-0 text-[0.72rem] tracking-[0.22em] uppercase text-(--accent) animate-[revealUp_680ms_ease-out_both]"
           style={{ fontFamily: '"EB Garamond", Georgia, serif' }}
@@ -184,17 +184,13 @@ function HeroSection() {
 
         {/* Body — narrower measure, editorial feel */}
         <p
-          className="mt-10 mb-0 max-w-[36ch] text-[clamp(1rem,2.4vw,1.12rem)] leading-[2] text-(--text-soft) animate-[revealUp_680ms_ease-out_both]"
-          style={{ animationDelay: '260ms' }}
+          className="mt-10 mb-0 max-w-[36ch] text-[clamp(1rem,2.4vw,1.12rem)] leading-[2] text-(--text-soft)"
         >
           每周两封深度长信，用我从波动和混乱中获得的经验，帮你拿回人生选择权。
         </p>
 
         {/* CTA */}
-        <div
-          className="mt-10 animate-[revealUp_680ms_ease-out_both]"
-          style={{ animationDelay: '380ms' }}
-        >
+        <div className="mt-10 animate-[revealUp_680ms_ease-out_both]" style={{ animationDelay: '260ms' }}>
           <a
             href={SUBSTACK_URL}
             className="group inline-flex min-h-11 items-center gap-2 rounded-xs bg-(--accent) px-6 py-3 text-[0.95rem] font-medium text-[oklch(0.97_0.005_186)] no-underline transition-colors duration-200 hover:bg-(--accent-hover) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
@@ -219,44 +215,55 @@ function HeroSection() {
             </svg>
           </a>
         </div>
+        {/* Mobile: low-commitment read link */}
+        {latestPost ? (
+          <div className="mt-5 md:hidden">
+            <Link
+              to="/posts/$slug"
+              params={{ slug: latestPost.slug }}
+              className="text-[0.88rem] text-(--text-soft) no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2"
+            >
+              或者先读一封 →
+            </Link>
+          </div>
+        ) : null}
         </div>
 
-        {/* Abstract geometric — desktop only */}
-        <div
-          className="hidden md:flex items-center justify-center animate-[revealUp_680ms_ease-out_both]"
-          style={{ animationDelay: '500ms' }}
-          aria-hidden="true"
-        >
-          <svg
-            className="h-56 w-56 lg:h-72 lg:w-72 text-(--accent)"
-            viewBox="0 0 280 280"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        {/* Latest letter — desktop only */}
+        {latestPost ? (
+          <Link
+            to="/posts/$slug"
+            params={{ slug: latestPost.slug }}
+            className="group hidden md:flex flex-col gap-2.5 max-w-60 border-l border-(--line) pl-6 no-underline transition-[border-color] duration-200 hover:border-(--accent) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3 animate-[revealUp_680ms_ease-out_both]"
+            style={{ animationDelay: '380ms' }}
           >
-            {/* Concentric rings */}
-            <circle cx="140" cy="140" r="130" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
-            <circle cx="140" cy="140" r="95" stroke="currentColor" strokeWidth="0.5" opacity="0.18" />
-            <circle cx="140" cy="140" r="58" stroke="currentColor" strokeWidth="0.5" opacity="0.25" />
-            {/* Cross axis */}
-            <line x1="140" y1="4" x2="140" y2="276" stroke="currentColor" strokeWidth="0.5" opacity="0.08" />
-            <line x1="4" y1="140" x2="276" y2="140" stroke="currentColor" strokeWidth="0.5" opacity="0.08" />
-            {/* Diagonal accents */}
-            <line x1="46" y1="46" x2="234" y2="234" stroke="currentColor" strokeWidth="0.5" opacity="0.06" />
-            <line x1="234" y1="46" x2="46" y2="234" stroke="currentColor" strokeWidth="0.5" opacity="0.06" />
-            {/* Center dot */}
-            <circle cx="140" cy="140" r="2.5" fill="currentColor" opacity="0.3" />
-          </svg>
-        </div>
+            <span className="text-[0.7rem] tracking-[0.14em] uppercase text-(--accent)" style={{ fontFamily: '"EB Garamond", Georgia, serif' }}>
+              最新长信
+            </span>
+            <span
+              className="text-[1.02rem] leading-[1.55] font-medium text-(--text) transition-colors duration-200 group-hover:text-(--accent)"
+              style={{ fontFamily: '"Noto Serif SC", "EB Garamond", Georgia, serif' }}
+            >
+              {latestPost.title}
+            </span>
+            {latestPost.excerpt ? (
+              <span className="text-[0.84rem] leading-[1.7] text-(--text-soft) line-clamp-2">
+                {latestPost.excerpt}
+              </span>
+            ) : null}
+            <span className="text-[0.78rem] text-(--text-muted)">
+              {latestPost.date}
+            </span>
+          </Link>
+        ) : null}
       </div>
 
       {/* Scroll indicator */}
       <div
-        className="absolute bottom-8 left-1/2 z-2 -translate-x-1/2 animate-[revealUp_680ms_ease-out_both]"
-        style={{ animationDelay: '600ms' }}
+        className="absolute bottom-8 left-1/2 z-2 -translate-x-1/2"
         aria-hidden="true"
       >
-        <div className="flex flex-col items-center gap-2 text-(--text-muted)">
-          <span className="text-[0.68rem] tracking-[0.16em] uppercase">Scroll</span>
+        <div className="flex flex-col items-center text-(--text-muted)">
           <svg className="h-4 w-4 animate-[gentleFloat_2.4s_ease-in-out_infinite]" viewBox="0 0 16 16" fill="none">
             <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -275,7 +282,7 @@ function OfferingsSection() {
     <section id="offerings" className="px-5 pt-16 pb-24">
       <div className="mx-auto max-w-270">
         <h2 className="m-0 text-[clamp(1.3rem,2.6vw,1.65rem)] font-medium tracking-[0.03em] text-(--text-soft)">
-          Offerings · 我的服务
+          我的服务
         </h2>
         <p className="mt-3 mb-0 max-w-135 text-[0.92rem] leading-[1.9] text-(--text-muted)">
           三条路径，帮你拿回时间与资源的主动权。
@@ -316,11 +323,11 @@ function OfferingsSection() {
               {/* CTA */}
               <a
                 href={offering.href}
-                className="mt-5 inline-block border-b border-transparent text-[0.9rem] text-(--accent) no-underline whitespace-nowrap transition-[color,border-color] duration-200 hover:border-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2 md:mt-0 md:pt-0.5"
+                className="mt-5 inline-flex min-h-11 items-center gap-1.5 rounded-xs border border-(--accent) px-4 py-2 text-[0.85rem] font-medium text-(--accent) no-underline whitespace-nowrap transition-[color,background-color,border-color] duration-200 hover:bg-(--accent) hover:text-[oklch(0.97_0.005_186)] active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2 md:mt-0"
                 target={offering.external ? '_blank' : undefined}
                 rel={offering.external ? 'noopener noreferrer' : undefined}
               >
-                {offering.actionLabel} →
+                {offering.actionLabel}
               </a>
             </article>
           ))}
@@ -336,10 +343,10 @@ function OfferingsSection() {
 
 function LettersSection({ posts }: { posts: PostSummary[] }) {
   return (
-    <section id="letters" className="px-5 py-28">
+    <section id="letters" className="px-5 py-28 bg-(--bg-soft)">
       <div className="mx-auto max-w-270">
         <h2 className="m-0 text-[clamp(1.8rem,3.5vw,2.4rem)] font-semibold tracking-[0.02em]">
-          Letters · 我的深度思考
+          深度思考
         </h2>
         <p className="mt-4 mb-0 max-w-135 text-[1rem] leading-[1.9] text-(--text-soft)">
           每周更新，提供默认路径之外的新视角与可执行方案。
@@ -397,7 +404,7 @@ function AboutSection() {
     <section id="about" className="px-5 py-24">
       <div className="mx-auto max-w-270">
         <h2 className="m-0 text-[clamp(1.2rem,2.4vw,1.5rem)] leading-[1.24] font-normal tracking-[0.04em] text-(--text-soft)">
-          About · 关于我
+          关于我
         </h2>
         <p className="mt-3 mb-0 max-w-135 text-[0.92rem] leading-[1.9] text-(--text-muted)">
           一个从默认路径走出来的长期主义者。
@@ -406,7 +413,7 @@ function AboutSection() {
         <div className="mt-12 grid gap-8 md:grid-cols-[280px_1fr] md:gap-12">
           <aside>
             <div
-              className="relative h-85 w-full rounded-2xl border border-(--line) bg-[color-mix(in_oklch,var(--bg-soft)_92%,transparent)] bg-cover bg-center"
+              className="relative aspect-[3/4] w-full rounded-2xl border border-(--line) bg-[color-mix(in_oklch,var(--bg-soft)_92%,transparent)] bg-cover bg-center"
               style={{ backgroundImage: `url(${PROFILE_PHOTO_URL})` }}
               role="img"
               aria-label="Vincenteof 个人照片"
@@ -437,31 +444,7 @@ function AboutSection() {
               </p>
             </div>
 
-            <div className="mt-8 border-t border-(--line) pt-6">
-              <p className="m-0 text-[0.86rem] tracking-[0.07em] text-(--text-muted)">
-                也可以在这些平台找到我
-              </p>
-              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-                {PROFILE_LINKS.map((item) => {
-                  const Icon = item.icon
 
-                  return (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="inline-flex h-11 w-11 items-center justify-center text-(--text-soft) no-underline opacity-85 transition-[color,opacity,transform] duration-200 hover:-translate-y-px hover:opacity-100 hover:text-(--accent) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent)"
-                      aria-label={item.label}
-                      title={item.label}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Icon className="h-4 w-4" aria-hidden="true" />
-                      <span className="sr-only">{item.label}</span>
-                    </a>
-                  )
-                })}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -475,20 +458,52 @@ function AboutSection() {
 
 function PageFooter() {
   return (
-    <footer className="border-t border-(--line) px-5 py-16">
+    <footer
+      className="border-t border-(--line) px-5 py-20"
+      style={{
+        background:
+          'linear-gradient(180deg, var(--bg) 0%, oklch(0.135 0.012 186) 100%)',
+      }}
+    >
       <div className="mx-auto max-w-270 text-center">
-        <p className="m-0 text-[0.95rem] leading-[1.9] text-(--text-soft)">
+        <p
+          className="m-0 text-[0.74rem] tracking-[0.18em] uppercase text-(--accent)"
+          style={{ fontFamily: '"EB Garamond", Georgia, serif' }}
+        >
+          Investing · Self-Training · Sovereignty
+        </p>
+        <p className="mt-4 m-0 text-[1.1rem] leading-[1.9] text-(--text-soft)">
           每周两封长信，免费订阅。
         </p>
         <a
           href={SUBSTACK_URL}
-          className="mt-4 inline-block border-b border-transparent text-[0.9rem] text-(--accent) no-underline transition-[color,border-color] duration-200 hover:border-(--accent) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-2"
+          className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xs bg-(--accent) px-6 py-3 text-[0.92rem] font-medium text-[oklch(0.97_0.005_186)] no-underline transition-colors duration-200 hover:bg-(--accent-hover) active:translate-y-px focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3"
           target="_blank"
           rel="noopener noreferrer"
         >
-          前往订阅 →
+          前往订阅
         </a>
-        <p className="mt-8 m-0 text-[0.8rem] text-(--text-muted)">
+
+        <div className="mt-10 flex justify-center gap-x-5">
+          {PROFILE_LINKS.map((item) => {
+            const Icon = item.icon
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                className="inline-flex h-11 w-11 items-center justify-center text-(--text-muted) no-underline transition-[color,opacity] duration-200 hover:text-(--accent) focus-visible:outline focus-visible:outline-1 focus-visible:outline-(--accent)"
+                aria-label={item.label}
+                title={item.label}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon className="h-4 w-4" aria-hidden="true" />
+              </a>
+            )
+          })}
+        </div>
+
+        <p className="mt-8 m-0 text-[0.78rem] text-(--text-muted)">
           © 2026 Vincenteof
         </p>
       </div>

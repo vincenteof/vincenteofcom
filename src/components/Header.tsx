@@ -1,14 +1,45 @@
 import { Link } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 
 const SUBSTACK_URL = 'https://vincenteof.substack.com'
 
 const NAV_ITEMS = [
-  { label: '长信', href: '/#letters' },
-  { label: '服务', href: '/#offerings' },
-  { label: '关于', href: '/#about' },
+  { label: '长信', href: '/#letters', sectionId: 'letters' },
+  { label: '服务', href: '/#offerings', sectionId: 'offerings' },
+  { label: '关于', href: '/#about', sectionId: 'about' },
 ] as const
 
+function useActiveSection() {
+  const [active, setActive] = useState<string | null>(null)
+
+  useEffect(() => {
+    const ids = NAV_ITEMS.map((n) => n.sectionId)
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[]
+    if (els.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id)
+          }
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px' },
+    )
+
+    for (const el of els) observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return active
+}
+
 export default function Header() {
+  const activeSection = useActiveSection()
+
   return (
     <header className="sticky top-0 z-20 border-b border-[color-mix(in_oklch,var(--line)_60%,transparent)] bg-[color-mix(in_oklch,var(--bg)_82%,transparent)] backdrop-blur-md">
       <div className="mx-auto flex max-w-270 items-center justify-between px-5 py-3">
@@ -26,7 +57,7 @@ export default function Header() {
             <a
               key={item.label}
               href={item.href}
-              className="text-[0.82rem] tracking-[0.03em] text-(--text-muted) no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3 md:text-[0.84rem] md:text-(--text-soft)"
+              className={`text-[0.82rem] tracking-[0.03em] no-underline transition-colors duration-200 hover:text-(--text) focus-visible:outline-1 focus-visible:outline-(--accent) focus-visible:outline-offset-3 md:text-[0.84rem] ${activeSection === item.sectionId ? 'text-(--text)' : 'text-(--text-muted) md:text-(--text-soft)'}`}
             >
               {item.label}
             </a>
