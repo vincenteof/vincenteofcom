@@ -1,12 +1,34 @@
-# Personal Sovereign Publishing System – MVP v1
+# Overall Requirements - Personal Sovereign Publishing System (MVP v1)
+
+**Harness 注意**：  
+AI Agent 在规划、实现或修改任何功能时，必须先阅读此文件以及 ARCHITECTURE.md 和 ROADMAP.md。  
+本文档是项目整体需求、功能规格、非功能要求、核心流程和任务拆分的**权威来源**（System of Record）。
+
+## 品牌定位补充
+
+项目的长期品牌定位为：
+
+> **Investing · Self-Training · Sovereignty**
+
+说明：
+- `Investing` 指向对时间、精力、资源与能力的长期投入，不等同于塑造“投资导师”身份。
+- `Self-Training` 指向系统化自我训练、认知校准与长期纪律。
+- `Sovereignty` 指向最终想要获得的人生选择权，包括时间、财务、心智与结构上的自主性。
+- 该定位适用于 Landing Page、内容组织、Newsletter 叙事与整体品牌表达。
 
 ## 项目目标
 
-构建一个可持续变现的个人内容网站，形成最小闭环：
+构建一个以 newsletter 为核心的个人内容网站，先验证内容分发、受众积累与信任沉淀，再进入商业化深化阶段。
+
+### 当前阶段主线（Phase 1）
+
+> 内容发布 → Newsletter 订阅 → 网站归档 → 渠道分发 → 早期线索收集
+
+### 下一阶段候选闭环（Phase 2）
 
 > 内容发布 → 用户订阅 → 支付 → 自动开通会员 → 解锁文章
 
-本版本为 MVP（最小可行版本），优先保证可上线与可变现。
+本版本为 MVP（最小可行版本），当前优先保证稳定输出与早期受众增长，而不是提前展开付费系统。
 
 **技术原则**：采用 TanStack Start 全栈框架，统一部署到 Cloudflare Workers，简化架构、消除跨域问题、充分利用 SSR / Server Functions / Edge 运行时，让个人项目更快上线、更易维护。
 
@@ -16,14 +38,31 @@
 
 ## 1. 功能需求
 
+### 1.0 阶段策略（当前权威定义）
+
+* 当前阶段主产品为 **免费 newsletter**。
+* 网站当前职责是：品牌表达、内容归档、SEO 入口、订阅承接与轻量线索收集。
+* `X` 与 `YouTube` 属于外部分发渠道，不属于站内核心功能，但需要通过文案与链接承接形成回流。
+* 在达到阶段里程碑前，不开启付费 newsletter，不将会员系统作为当前开发主线。
+
+### 阶段切换里程碑
+
+以下信号满足大部分时，进入下一阶段规划：
+
+* Newsletter 订阅数达到 `300`
+* 连续 `8-12 周` 稳定发布
+* 至少 `3` 条真实线索或高质量回复/私信
+* 至少 `2` 个可公开展示的软件作品或研究型证明材料
+
 ### 1.1 Landing Page（优先级最高）
 
-* 个人定位
-* 价值主张
-* CTA（订阅 / 加入会员）
-* 精选文章展示（public 文章，支持 SSR 以提升 SEO）
+* 明确传达长期品牌定位：`Investing · Self-Training · Sovereignty`
+* 在 10 秒内让访客理解项目的核心价值主张
+* 以 Newsletter / Letters 订阅为主要 CTA，会员与付费转化为后续阶段承接
+* 展示精选文章或 Letters 内容（public 文章，支持 SSR 以提升 SEO）
+* 页面结构至少包含：Header、Hero、Letters、About、Footer
 
-> Landing 页面完成后即可发布 v0.1，即使会员系统尚未完成。
+> Landing 页面完成后即可发布 v0.1；当前阶段无需等待会员系统。
 
 ---
 
@@ -38,11 +77,14 @@
   * `visibility: public | member`
 * 文章列表页（SSR）
 * 文章详情页（SSR）
-* 会员文章支持预览模式（前 300–500 字 + 会员专享提示）
+* 当前阶段以 public 内容与 newsletter 归档为主
+* 若保留 member 字段，现阶段仅作为未来扩展保留，不推动成为主产品能力
 
 ---
 
 ### 1.3 会员系统
+
+**状态**：Phase 2 候选，当前不作为开发主线
 
 * 邮箱登录（Magic Link 简化实现，MVP 可不发送真实邮件）
 * Stripe 订阅支付
@@ -54,6 +96,8 @@
 
 ### 1.4 支付系统
 
+**状态**：Phase 2 候选，当前不作为开发主线
+
 * Stripe Checkout
 * Stripe Subscription
 * Webhook 自动处理
@@ -61,11 +105,41 @@
 
 ---
 
+### 1.5 服务咨询线索收集（新增）
+
+* 为 Software Consulting 与 Global Investing Advisory 提供统一咨询入口（Service Intake Form）
+* 当前阶段不引入注册流程，优先使用轻量提交路径收集结构化线索
+* 当前阶段目标是建立早期线索通道，而不是形成复杂销售漏斗
+* MVP 字段至少包含：需求类型、当前目标、预算区间、联系方式
+* 提交成功后必须反馈下一步与预计响应时间
+
+详细规格见：`docs/product-specs/service-intake-requirements.md`
+
+---
+
+### 1.6 能力证明内容（新增阶段要求）
+
+* 通过公开的软件独立作品、案例或研究型内容，建立咨询能力证明
+* 这些内容应能被网站归档并用于外部渠道回流承接
+* 当前阶段至少规划 `2` 个可公开展示的证明材料
+
+---
+
+### 1.7 Posts 视觉一致性审计（新增）
+
+* Landing 重做后，需对 `/posts` 与 `/posts/:slug` 执行视觉一致性检查
+* 检查维度至少包含：视觉 token、排版层级、间距节奏、交互状态、CTA 路径连通性
+* 发现项按 P0-P3 分级，P0/P1 必须优先修复
+
+详细规格见：`docs/product-specs/posts-visual-consistency-requirements.md`
+
+---
+
 ## 2. 非功能需求
 
 * 部署于 Cloudflare Workers（全栈应用）
 * Edge 运行
-* 使用 D1 数据库
+* 当前阶段不强依赖 D1，后续会员/支付阶段可接入
 * 支持 SSR（public 页面/文章）
 * 结构具备扩展能力
 * 保持代码简洁、可读
@@ -84,12 +158,11 @@ User
 Cloudflare Workers (TanStack Start 全栈应用)
   ├── SSR 页面
   ├── Server Functions / API Routes
-      - /api/me
-      - /api/login
-      - /api/checkout
-      - /api/stripe-webhook
-  ├── D1 Database Binding
-  └── Stripe
+      - newsletter 承接与跳转
+      - service intake 提交
+      - 未来阶段预留：/api/me / /api/login / /api/checkout / /api/stripe-webhook
+  ├── 可选数据层（当前阶段可最小化）
+  └── 外部渠道与后续支付基础设施
 ```
 
 说明：整个应用作为一个 Worker 部署。无独立 Pages 项目，无 CORS。
@@ -107,8 +180,8 @@ Cloudflare Workers (TanStack Start 全栈应用)
 职责：
 
 * 页面 SSR 渲染
-* loader 中执行权限判断
-* 会员状态展示与文章预览控制
+* newsletter 订阅与归档承接
+* 未来阶段在 loader 中执行权限判断
 
 ---
 
@@ -116,16 +189,15 @@ Cloudflare Workers (TanStack Start 全栈应用)
 
 负责：
 
-* 登录（set HttpOnly cookie）
-* 创建 Stripe Checkout Session
-* 处理 Stripe Webhook
-* 查询会员状态
+* newsletter 订阅承接或跳转
+* service intake 提交
+* 未来阶段的登录、支付与会员状态查询
 
 所有敏感操作在 server 环境执行。
 
 ---
 
-## 2.4 数据库设计（Cloudflare D1）
+## 2.4 数据库设计（Cloudflare D1，Phase 2 预留）
 
 ### users 表
 

@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ConsultRouteImport } from './routes/consult'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as PostsSlugRouteImport } from './routes/posts/$slug'
 
+const ConsultRoute = ConsultRouteImport.update({
+  id: '/consult',
+  path: '/consult',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +37,47 @@ const PostsSlugRoute = PostsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/consult': typeof ConsultRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/posts/': typeof PostsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/consult': typeof ConsultRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/posts': typeof PostsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/consult': typeof ConsultRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/posts/': typeof PostsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/posts/$slug' | '/posts/'
+  fullPaths: '/' | '/consult' | '/posts/$slug' | '/posts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/posts/$slug' | '/posts'
-  id: '__root__' | '/' | '/posts/$slug' | '/posts/'
+  to: '/' | '/consult' | '/posts/$slug' | '/posts'
+  id: '__root__' | '/' | '/consult' | '/posts/$slug' | '/posts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsultRoute: typeof ConsultRoute
   PostsSlugRoute: typeof PostsSlugRoute
   PostsIndexRoute: typeof PostsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/consult': {
+      id: '/consult'
+      path: '/consult'
+      fullPath: '/consult'
+      preLoaderRoute: typeof ConsultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsultRoute: ConsultRoute,
   PostsSlugRoute: PostsSlugRoute,
   PostsIndexRoute: PostsIndexRoute,
 }
