@@ -1,7 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
-const SUBSTACK_URL = 'https://vincenteof.substack.com'
+import { SITE_CONFIG } from '@/lib/site-config'
+
+const SUBSTACK_URL = SITE_CONFIG.newsletterUrl
 
 const NAV_ITEMS = [
   { label: '长信', href: '/#letters', sectionId: 'letters' },

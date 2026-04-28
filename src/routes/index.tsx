@@ -5,9 +5,10 @@ import XIcon from '@/components/icons/X'
 import YoutubeIcon from '@/components/icons/Youtube'
 import type { PostSummary } from '@/lib/posts'
 import { getPublicPostSummaries } from '@/lib/posts'
+import { SITE_CONFIG } from '@/lib/site-config'
 
-const SUBSTACK_URL = 'https://vincenteof.substack.com'
-const SITE_URL = 'https://vincenteof.com'
+const SUBSTACK_URL = SITE_CONFIG.newsletterUrl
+const SITE_URL = SITE_CONFIG.siteUrl
 const OG_IMAGE_URL = `${SITE_URL}/images/profile.jpg`
 const PROFILE_PHOTO_URL = '/images/profile.jpg'
 
