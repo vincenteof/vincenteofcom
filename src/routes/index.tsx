@@ -187,7 +187,7 @@ function HeroSection({ latestPost }: { latestPost?: PostSummary }) {
         <p
           className="mt-10 mb-0 max-w-[36ch] text-[clamp(1rem,2.4vw,1.12rem)] leading-[2] text-(--text-soft)"
         >
-          每周两封深度长信，用我从波动和混乱中获得的经验，帮你拿回人生选择权。
+          每周两封深度长信，记录我对投资、非共识认知和人生选择权的思考。
         </p>
 
         {/* CTA */}
