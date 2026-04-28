@@ -1,8 +1,9 @@
 # AGENTS.md - Navigation Map for Coding Agents
 
 **项目名称**：Personal Sovereign Publishing System (MVP v1)  
-**技术栈**：TanStack Start 全栈框架，部署于 Cloudflare Workers + D1 + Stripe  
-**核心闭环**：内容发布 → 用户订阅支付 → 自动开通会员 → 解锁会员文章
+**技术栈**：TanStack Start 全栈框架，部署于 Cloudflare Workers；D1 + Stripe 为长期候选能力  
+**当前核心闭环**：内容发布 → 免费 Newsletter 订阅 → 网站归档 → 渠道分发 → 早期线索收集  
+**长期商业化候选**：优先评估外部平台承接付费内容或服务转化；仅在必要时再建设站内会员与支付系统。
 
 ## 必须遵守的读取顺序（每次任务开始时优先阅读）
 1. 本文件（AGENTS.md）
@@ -74,4 +75,4 @@
 
 ---
 
-**最后更新**：2026-04-11
+**最后更新**：2026-04-28
