@@ -11,17 +11,23 @@ const postModules = import.meta.glob('../../../content/posts/*.md', {
   eager: true,
 }) as Record<string, string>
 
-function slugFromPath(path: string): string {
+export function slugFromPath(path: string): string {
   const filename = path.split('/').pop() ?? path
   return filename.replace(/\.md$/, '')
 }
 
-function loadPosts(): Post[] {
-  const posts = Object.entries(postModules).map(([path, raw]) =>
+export function collectPostsFromModules(
+  modules: Record<string, string>,
+): Post[] {
+  const posts = Object.entries(modules).map(([path, raw]) =>
     buildPostFromRaw({ slug: slugFromPath(path), raw }),
   )
 
   return sortPostsByDate(posts) as Post[]
+}
+
+function loadPosts(): Post[] {
+  return collectPostsFromModules(postModules)
 }
 
 let cachedPosts: Post[] | null = null
