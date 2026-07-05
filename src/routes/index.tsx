@@ -1,18 +1,8 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { filterPostsByTag, sortPostsByDate } from '#/lib/posts/posts'
-import { getAllPostSummaries } from '#/lib/posts/load'
+import { getHomePageDataFn } from '#/lib/posts/posts.functions'
 
 export const Route = createFileRoute('/')({
-  loader: () => {
-    const posts = getAllPostSummaries()
-    const recent = sortPostsByDate(posts).slice(0, 2)
-
-    return {
-      recent,
-      fullStackCount: filterPostsByTag(posts, 'full-stack').length,
-      tradingCount: filterPostsByTag(posts, 'trading').length,
-    }
-  },
+  loader: () => getHomePageDataFn(),
   component: Home,
 })
 

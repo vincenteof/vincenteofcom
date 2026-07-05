@@ -1,16 +1,8 @@
-import { Link, createFileRoute, notFound } from '@tanstack/react-router'
-import { getPostBySlug } from '#/lib/posts/load'
+import { Link, createFileRoute } from '@tanstack/react-router'
+import { getPostBySlugFn } from '#/lib/posts/posts.functions'
 
 export const Route = createFileRoute('/blog/$slug')({
-  loader: ({ params }) => {
-    const post = getPostBySlug(params.slug)
-
-    if (!post) {
-      throw notFound()
-    }
-
-    return post
-  },
+  loader: ({ params }) => getPostBySlugFn({ data: { slug: params.slug } }),
   component: BlogPost,
 })
 

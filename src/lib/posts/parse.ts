@@ -1,3 +1,5 @@
+import '@tanstack/react-start/server-only'
+
 import matter from 'gray-matter'
 import { marked } from 'marked'
 import type { PostFrontmatter } from './types'
