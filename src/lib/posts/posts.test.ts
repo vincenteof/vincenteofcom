@@ -10,7 +10,7 @@ const fullStackRaw = `---
 title: "Type safety from database to browser"
 date: "2026-03-15"
 tags:
-  - full-stack
+  - tech
   - typescript
 ---
 
@@ -20,7 +20,7 @@ const tradingRaw = `---
 title: "Position sizing before entry timing"
 date: "2026-02-28"
 tags:
-  - trading
+  - investing
   - risk
 ---
 
@@ -35,7 +35,7 @@ describe('buildPostFromRaw', () => {
 
     expect(post.title).toBe('Type safety from database to browser')
     expect(post.date).toBe('2026-03-15')
-    expect(post.tags).toEqual(['full-stack', 'typescript'])
+    expect(post.tags).toEqual(['tech', 'typescript'])
     expect(post.body).toContain('Modern full-stack work')
     expect(post.html).toContain('<p>Modern full-stack work')
     expect(post.excerpt).toContain('Modern full-stack work')
@@ -79,13 +79,13 @@ describe('filterPostsByTag', () => {
       buildPostFromRaw({ slug: 'trade', raw: tradingRaw }),
     ]
 
-    const fullStackPosts = filterPostsByTag(posts, 'Full-Stack')
-    const tradingPosts = filterPostsByTag(posts, 'trading')
+    const techPosts = filterPostsByTag(posts, 'Tech')
+    const investingPosts = filterPostsByTag(posts, 'investing')
 
-    expect(fullStackPosts).toHaveLength(1)
-    expect(fullStackPosts[0]?.slug).toBe('dev')
-    expect(tradingPosts).toHaveLength(1)
-    expect(tradingPosts[0]?.slug).toBe('trade')
+    expect(techPosts).toHaveLength(1)
+    expect(techPosts[0]?.slug).toBe('dev')
+    expect(investingPosts).toHaveLength(1)
+    expect(investingPosts[0]?.slug).toBe('trade')
   })
 })
 

@@ -2,7 +2,7 @@
 title: "Position sizing before entry timing"
 date: "2026-02-28"
 tags:
-  - trading
+  - investing
   - risk
 ---
 
