@@ -1,3 +1,4 @@
+import { Monitor, Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 type ThemeMode = 'light' | 'dark' | 'auto'
@@ -31,6 +32,18 @@ function applyThemeMode(mode: ThemeMode) {
   document.documentElement.style.colorScheme = resolved
 }
 
+const modeLabels: Record<ThemeMode, string> = {
+  light: 'Light mode. Click to switch to dark mode.',
+  dark: 'Dark mode. Click to switch to system mode.',
+  auto: 'System theme. Click to switch to light mode.',
+}
+
+const modeIcons: Record<ThemeMode, typeof Sun> = {
+  light: Sun,
+  dark: Moon,
+  auto: Monitor,
+}
+
 export default function ThemeToggle() {
   const [mode, setMode] = useState<ThemeMode>('auto')
 
@@ -62,10 +75,8 @@ export default function ThemeToggle() {
     window.localStorage.setItem('theme', nextMode)
   }
 
-  const label =
-    mode === 'auto'
-      ? 'Theme mode: auto (system). Click to switch to light mode.'
-      : `Theme mode: ${mode}. Click to switch mode.`
+  const label = modeLabels[mode]
+  const Icon = modeIcons[mode]
 
   return (
     <button
@@ -75,7 +86,7 @@ export default function ThemeToggle() {
       title={label}
       className="theme-toggle"
     >
-      {mode === 'auto' ? 'Auto' : mode === 'dark' ? 'Dark' : 'Light'}
+      <Icon aria-hidden="true" strokeWidth={1.75} />
     </button>
   )
 }
