@@ -20,10 +20,10 @@ function Home() {
         </h1>
         <p className="hero-lead">
           A personal blog on <strong>full-stack development</strong> and{' '}
-          <strong>投资交易</strong> — building reliable systems and making
+          <strong>investing & trading</strong> — building reliable systems and making
           risk-aware decisions.
         </p>
-        <p className="hero-meta">Full-stack dev · 投资交易</p>
+        <p className="hero-meta">Full-stack dev · Investing & trading</p>
       </section>
 
       <hr className="divider" />

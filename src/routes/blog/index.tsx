@@ -15,7 +15,7 @@ function BlogIndex() {
       <section className="mb-12">
         <h1 className="hero-title">Blog</h1>
         <p className="hero-lead">
-          Notes on full-stack development and 投资交易 — experiments, mental
+          Notes on full-stack development and investing & trading — experiments, mental
           models, and things worth keeping.
         </p>
       </section>

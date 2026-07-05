@@ -16,6 +16,6 @@ My baseline rules:
 2. **Size from stop distance.** Wider invalidation means smaller share count — not a wider mental stop.
 3. **Cap correlated exposure.** Multiple positions in the same macro theme are one bet until proven otherwise.
 
-投资交易里，仓位管理比预测方向更重要。先活下来，再优化胜率。
+In trading, position sizing matters more than predicting direction. Survive first, then optimize win rate.
 
 This is written thinking, not financial advice — but the habit of sizing first has made my journal quieter and my decisions slower in a good way.
