@@ -27,8 +27,8 @@ tags:
 Most traders obsess over entries.`
 
 describe('buildPostFromRaw', () => {
-  it('parses frontmatter and renders markdown html', () => {
-    const post = buildPostFromRaw({
+  it('parses frontmatter and renders markdown html', async () => {
+    const post = await buildPostFromRaw({
       slug: 'full-stack-type-safety',
       raw: fullStackRaw,
     })
@@ -43,11 +43,11 @@ describe('buildPostFromRaw', () => {
 })
 
 describe('sortPostsByDate', () => {
-  it('orders posts newest first by default', () => {
-    const posts = [
+  it('orders posts newest first by default', async () => {
+    const posts = await Promise.all([
       buildPostFromRaw({ slug: 'older', raw: tradingRaw }),
       buildPostFromRaw({ slug: 'newer', raw: fullStackRaw }),
-    ]
+    ])
 
     const sorted = sortPostsByDate(posts)
 
@@ -57,11 +57,11 @@ describe('sortPostsByDate', () => {
     ])
   })
 
-  it('orders posts oldest first when requested', () => {
-    const posts = [
+  it('orders posts oldest first when requested', async () => {
+    const posts = await Promise.all([
       buildPostFromRaw({ slug: 'older', raw: tradingRaw }),
       buildPostFromRaw({ slug: 'newer', raw: fullStackRaw }),
-    ]
+    ])
 
     const sorted = sortPostsByDate(posts, 'asc')
 
@@ -73,11 +73,11 @@ describe('sortPostsByDate', () => {
 })
 
 describe('filterPostsByTag', () => {
-  it('returns posts that match a tag case-insensitively', () => {
-    const posts = [
+  it('returns posts that match a tag case-insensitively', async () => {
+    const posts = await Promise.all([
       buildPostFromRaw({ slug: 'dev', raw: fullStackRaw }),
       buildPostFromRaw({ slug: 'trade', raw: tradingRaw }),
-    ]
+    ])
 
     const techPosts = filterPostsByTag(posts, 'Tech')
     const investingPosts = filterPostsByTag(posts, 'investing')
@@ -90,11 +90,11 @@ describe('filterPostsByTag', () => {
 })
 
 describe('findPostBySlug', () => {
-  it('returns the matching post when the slug exists', () => {
-    const posts = [
+  it('returns the matching post when the slug exists', async () => {
+    const posts = await Promise.all([
       buildPostFromRaw({ slug: 'dev', raw: fullStackRaw }),
       buildPostFromRaw({ slug: 'trade', raw: tradingRaw }),
-    ]
+    ])
 
     const found = findPostBySlug(posts, 'trade')
 

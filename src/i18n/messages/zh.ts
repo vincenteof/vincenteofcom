@@ -29,6 +29,11 @@ export const zh: Record<keyof typeof en, (typeof en)[keyof typeof en]> = {
     lead: '关于软件开发与投资的笔记——实验、思维模型，以及值得留存的想法。',
     back: '← 博客',
   },
+  article: {
+    copy: '复制',
+    copied: '已复制',
+    copyFailed: '失败',
+  },
   about: {
     title: '关于',
     lead: '我是 Vincenteof，一个撰写软件开发与投资思考的作者。',

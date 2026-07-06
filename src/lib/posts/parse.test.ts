@@ -27,10 +27,20 @@ Second paragraph.`
 })
 
 describe('renderMarkdownToHtml', () => {
-  it('renders paragraphs and emphasis from markdown', () => {
-    const html = renderMarkdownToHtml('Hello **world**.')
+  it('renders paragraphs and emphasis from markdown', async () => {
+    const html = await renderMarkdownToHtml('Hello **world**.')
 
     expect(html).toContain('<p>Hello <strong>world</strong>.</p>')
+  })
+
+  it('highlights fenced code blocks with copy affordances', async () => {
+    const html = await renderMarkdownToHtml(
+      '```typescript\nconst total = 1\n```',
+    )
+
+    expect(html).toContain('data-code-block')
+    expect(html).toContain('data-copy-button')
+    expect(html).toContain('shiki')
   })
 })
 

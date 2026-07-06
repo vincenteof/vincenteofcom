@@ -2,12 +2,44 @@ import '@tanstack/react-start/server-only'
 
 import matter from 'gray-matter'
 import { marked } from 'marked'
+import { highlightCodeBlock } from './highlight'
 import type { PostFrontmatter } from './types'
+
+const CODE_BLOCK_PATTERN =
+  /<pre><code(?: class="language-([^"]*)")?>([\s\S]*?)<\/code><\/pre>/g
 
 marked.setOptions({
   gfm: true,
   breaks: false,
 })
+
+function decodeHtmlEntities(value: string) {
+  return value
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&amp;', '&')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+}
+
+async function enrichCodeBlocks(html: string) {
+  const matches = Array.from(html.matchAll(CODE_BLOCK_PATTERN))
+
+  if (matches.length === 0) {
+    return html
+  }
+
+  let result = html
+
+  for (const match of matches) {
+    const lang = match[1] || 'text'
+    const code = decodeHtmlEntities(match[2] ?? '')
+    const highlighted = await highlightCodeBlock(code, lang)
+    result = result.replace(match[0], highlighted)
+  }
+
+  return result
+}
 
 export function parseFrontmatter(raw: string): {
   frontmatter: Partial<PostFrontmatter>
@@ -26,8 +58,9 @@ export function parseFrontmatter(raw: string): {
   }
 }
 
-export function renderMarkdownToHtml(body: string): string {
-  return marked.parse(body) as string
+export async function renderMarkdownToHtml(body: string): Promise<string> {
+  const html = marked.parse(body) as string
+  return enrichCodeBlocks(html)
 }
 
 export function buildExcerpt(body: string, maxLength = 160): string {

@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
+import ArticleProse from '#/components/ArticleProse'
 import { useI18n } from '#/i18n/I18nProvider'
 import { getPostBySlugFn } from '#/lib/posts/posts.functions'
 
@@ -30,10 +31,7 @@ function BlogPost() {
           </div>
         </header>
 
-        <div
-          className="article-prose"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        <ArticleProse html={post.html} />
       </article>
     </main>
   )

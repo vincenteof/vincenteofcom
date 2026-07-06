@@ -33,7 +33,7 @@ describe('slugFromPath', () => {
 })
 
 describe('collectPostsFromModules', () => {
-  it('loads and sorts posts from a module map shaped like import.meta.glob output', () => {
+  it('loads and sorts posts from a module map shaped like import.meta.glob output', async () => {
     const diskPosts = readPostsFromDisk()
     const modules = Object.fromEntries(
       diskPosts.map(({ filename, raw }) => [
@@ -42,7 +42,7 @@ describe('collectPostsFromModules', () => {
       ]),
     )
 
-    const posts = collectPostsFromModules(modules)
+    const posts = await collectPostsFromModules(modules)
 
     expect(posts.map((post) => post.slug)).toEqual([
       'full-stack-type-safety',
@@ -54,20 +54,19 @@ describe('collectPostsFromModules', () => {
 })
 
 describe('getAllPosts', () => {
-  it('loads every markdown source file from content/posts', () => {
+  it('loads every markdown source file from content/posts', async () => {
     const diskSlugs = readPostsFromDisk()
       .map((post) => post.slug)
       .sort()
-    const loadedSlugs = getAllPosts()
-      .map((post) => post.slug)
-      .sort()
+    const loadedPosts = await getAllPosts()
+    const loadedSlugs = loadedPosts.map((post) => post.slug).sort()
 
     expect(loadedSlugs).toEqual(diskSlugs)
-    expect(getAllPosts().length).toBe(diskSlugs.length)
+    expect(loadedPosts.length).toBe(diskSlugs.length)
   })
 
-  it('returns posts sorted newest first for the blog listing path', () => {
-    const posts = getAllPosts()
+  it('returns posts sorted newest first for the blog listing path', async () => {
+    const posts = await getAllPosts()
 
     expect(posts.map((post) => post.slug)).toEqual([
       'full-stack-type-safety',
@@ -77,9 +76,9 @@ describe('getAllPosts', () => {
 })
 
 describe('getAllPostSummaries', () => {
-  it('returns index listing data sourced from markdown files on disk', () => {
+  it('returns index listing data sourced from markdown files on disk', async () => {
     const diskPosts = readPostsFromDisk()
-    const summaries = getAllPostSummaries()
+    const summaries = await getAllPostSummaries()
 
     for (const { slug, raw } of diskPosts) {
       const summary = summaries.find((entry) => entry.slug === slug)
@@ -93,14 +92,14 @@ describe('getAllPostSummaries', () => {
 })
 
 describe('getPostBySlug', () => {
-  it('returns the full post with markdown body rendered from disk source', () => {
+  it('returns the full post with markdown body rendered from disk source', async () => {
     const diskPost = readPostsFromDisk().find(
       (post) => post.slug === 'full-stack-type-safety',
     )
 
     expect(diskPost).toBeDefined()
 
-    const loaded = getPostBySlug('full-stack-type-safety')
+    const loaded = await getPostBySlug('full-stack-type-safety')
 
     expect(loaded?.title).toBe('Type safety from database to browser')
     expect(loaded?.body).toContain(
@@ -112,7 +111,7 @@ describe('getPostBySlug', () => {
     expect(diskPost!.raw).toContain(loaded?.body ?? '')
   })
 
-  it('returns undefined when the slug has no markdown source', () => {
-    expect(getPostBySlug('this-slug-does-not-exist')).toBeUndefined()
+  it('returns undefined when the slug has no markdown source', async () => {
+    expect(await getPostBySlug('this-slug-does-not-exist')).toBeUndefined()
   })
 })

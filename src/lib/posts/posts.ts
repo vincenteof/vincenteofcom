@@ -1,7 +1,10 @@
 import { buildExcerpt, parseFrontmatter, renderMarkdownToHtml } from './parse'
 import type { Post, PostSummary, RawPostInput } from './types'
 
-export function buildPostFromRaw({ slug, raw }: RawPostInput): Post {
+export async function buildPostFromRaw({
+  slug,
+  raw,
+}: RawPostInput): Promise<Post> {
   const { frontmatter, body } = parseFrontmatter(raw)
 
   if (!frontmatter.title) {
@@ -19,7 +22,7 @@ export function buildPostFromRaw({ slug, raw }: RawPostInput): Post {
     tags: frontmatter.tags ?? [],
     excerpt: buildExcerpt(body),
     body,
-    html: renderMarkdownToHtml(body),
+    html: await renderMarkdownToHtml(body),
   }
 }
 

@@ -16,4 +16,18 @@ A few practices that have saved me from late-night regressions:
 - **Validate at the boundary.** Parse unknown input before it touches business logic.
 - **Prefer small pure modules.** Sorting posts, formatting dates, and markdown rendering should be testable without booting a server.
 
+```typescript
+type PostSummary = {
+  slug: string
+  title: string
+  date: string
+}
+
+export function sortPostsByDate(posts: PostSummary[]) {
+  return [...posts].sort(
+    (left, right) => Date.parse(right.date) - Date.parse(left.date),
+  )
+}
+```
+
 The goal is not perfection on day one. It is a codebase where changing one layer does not silently break another.

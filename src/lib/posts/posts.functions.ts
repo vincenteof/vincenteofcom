@@ -10,7 +10,7 @@ export const getAllPostSummariesFn = createServerFn({ method: 'GET' }).handler(
 export const getPostBySlugFn = createServerFn({ method: 'GET' })
   .validator((data: { slug: string }) => data)
   .handler(async ({ data }) => {
-    const post = getPostBySlug(data.slug)
+    const post = await getPostBySlug(data.slug)
 
     if (!post) {
       throw notFound()
@@ -21,7 +21,7 @@ export const getPostBySlugFn = createServerFn({ method: 'GET' })
 
 export const getHomePageDataFn = createServerFn({ method: 'GET' }).handler(
   async () => {
-    const posts = getAllPostSummaries()
+    const posts = await getAllPostSummaries()
     const recent = sortPostsByDate(posts).slice(0, 2)
 
     return { recent }

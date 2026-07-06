@@ -29,6 +29,11 @@ export const en = {
       'Notes on software development and investing — experiments, mental models, and things worth keeping.',
     back: '← Blog',
   },
+  article: {
+    copy: 'Copy',
+    copied: 'Copied',
+    copyFailed: 'Failed',
+  },
   about: {
     title: 'About',
     lead:
