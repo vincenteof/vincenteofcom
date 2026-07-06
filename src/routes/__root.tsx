@@ -4,7 +4,6 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import { I18nProvider } from '../i18n/I18nProvider'
-import { LOCALE_INIT_SCRIPT } from '../i18n/locale'
 
 import appCss from '../styles.css?url'
 
@@ -38,7 +37,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: LOCALE_INIT_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>

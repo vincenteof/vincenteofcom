@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { detectLocale, persistLocale } from './locale'
+import { applyDocumentLocale, defaultLocale } from './locale'
 import {
   formatLocalizedDate,
   getMessages,
@@ -28,17 +28,11 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null)
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en')
-
-  useEffect(() => {
-    const initialLocale = detectLocale()
-    setLocaleState(initialLocale)
-    persistLocale(initialLocale)
-  }, [])
+  const [locale, setLocaleState] = useState<Locale>(defaultLocale)
 
   function setLocale(nextLocale: Locale) {
     setLocaleState(nextLocale)
-    persistLocale(nextLocale)
+    applyDocumentLocale(nextLocale)
   }
 
   const value = useMemo<I18nContextValue>(
