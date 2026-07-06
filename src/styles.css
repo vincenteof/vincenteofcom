@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/700.css";
 
 @theme {
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
@@ -8,8 +11,8 @@
   --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Segoe UI Mono",
-    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono",
+    Menlo, Monaco, Consolas, monospace;
 }
 
 :root {
@@ -682,7 +685,7 @@ a:hover {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.65;
-  font-variant-ligatures: none;
+  font-feature-settings: "calt" 1;
 }
 
 .article-prose :where(.shiki),
