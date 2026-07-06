@@ -1,14 +1,14 @@
-export type ThemeMode = 'light' | 'dark' | 'auto'
+export type ThemeMode = 'light' | 'dark'
 
 export const THEME_COOKIE = 'theme'
-export const defaultThemeMode: ThemeMode = 'auto'
+export const defaultThemeMode: ThemeMode = 'light'
 
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365
 
 export function resolveThemeMode(
   stored: string | null | undefined,
 ): ThemeMode {
-  if (stored === 'light' || stored === 'dark' || stored === 'auto') {
+  if (stored === 'light' || stored === 'dark') {
     return stored
   }
 
@@ -16,23 +16,9 @@ export function resolveThemeMode(
 }
 
 export function getHtmlThemeProps(mode: ThemeMode) {
-  if (mode === 'light') {
-    return {
-      dataTheme: 'light' as const,
-      colorScheme: 'light' as const,
-    }
-  }
-
-  if (mode === 'dark') {
-    return {
-      dataTheme: 'dark' as const,
-      colorScheme: 'dark' as const,
-    }
-  }
-
   return {
-    dataTheme: undefined,
-    colorScheme: 'light dark' as const,
+    dataTheme: mode,
+    colorScheme: mode,
   }
 }
 
@@ -44,12 +30,7 @@ export function applyThemeMode(mode: ThemeMode) {
   const { dataTheme, colorScheme } = getHtmlThemeProps(mode)
   const root = document.documentElement
 
-  if (dataTheme) {
-    root.setAttribute('data-theme', dataTheme)
-  } else {
-    root.removeAttribute('data-theme')
-  }
-
+  root.setAttribute('data-theme', dataTheme)
   root.style.colorScheme = colorScheme
 }
 

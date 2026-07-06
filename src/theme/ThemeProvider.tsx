@@ -30,11 +30,7 @@ export function ThemeProvider({ initialMode, children }: ThemeProviderProps) {
 
   useEffect(() => {
     const legacyTheme = window.localStorage.getItem('theme')
-    if (
-      legacyTheme === 'light' ||
-      legacyTheme === 'dark' ||
-      legacyTheme === 'auto'
-    ) {
+    if (legacyTheme === 'light' || legacyTheme === 'dark') {
       window.localStorage.removeItem('theme')
       setClientThemeCookie(legacyTheme)
       setModeState(legacyTheme)
@@ -45,20 +41,6 @@ export function ThemeProvider({ initialMode, children }: ThemeProviderProps) {
     setModeState(initialMode)
     applyThemeMode(initialMode)
   }, [initialMode])
-
-  useEffect(() => {
-    if (mode !== 'auto') {
-      return
-    }
-
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => applyThemeMode('auto')
-
-    media.addEventListener('change', onChange)
-    return () => {
-      media.removeEventListener('change', onChange)
-    }
-  }, [mode])
 
   const value = useMemo(
     () => ({
