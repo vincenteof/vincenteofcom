@@ -44,7 +44,7 @@ function escapeHtml(value: string) {
 export function wrapCodeBlock(innerHtml: string, lang: string) {
   const label = lang.trim() || 'text'
 
-  return `<div class="code-block" data-code-block><div class="code-block__toolbar"><span class="code-block__lang">${escapeHtml(label)}</span><button type="button" class="code-block__copy" data-copy-button>Copy</button></div><div class="code-block__body">${innerHtml}</div></div>`
+  return `<div class="code-block" data-code-block><div class="code-block__toolbar"><span class="code-block__lang">${escapeHtml(label)}</span><button type="button" class="code-block__copy" data-copy-button aria-live="polite"><span class="code-block__copy-label">Copy</span></button></div><div class="code-block__body">${innerHtml}</div></div>`
 }
 
 export async function highlightCodeBlock(code: string, lang: string) {

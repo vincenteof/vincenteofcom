@@ -7,6 +7,7 @@ describe('wrapCodeBlock', () => {
 
     expect(html).toContain('data-code-block')
     expect(html).toContain('data-copy-button')
+    expect(html).toContain('code-block__copy-label')
     expect(html).toContain('typescript')
     expect(html).toContain('<pre><code>const x = 1</code></pre>')
   })
