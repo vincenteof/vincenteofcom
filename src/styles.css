@@ -8,6 +8,8 @@
   --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Segoe UI Mono",
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 :root {
@@ -591,7 +593,8 @@ a:hover {
 }
 
 .article-prose :where(:not(pre) > code) {
-  font-size: 0.9em;
+  font-family: var(--font-mono);
+  font-size: 0.84em;
   padding: 0.15em 0.4em;
   border-radius: 4px;
   background: color-mix(in oklab, var(--text) 6%, transparent);
@@ -672,11 +675,14 @@ a:hover {
   background: transparent;
 }
 
-.article-prose :where(.code-block__body pre code) {
-  padding: 0;
-  background: transparent;
-  font-size: 0.875rem;
-  line-height: 1.6;
+.article-prose :where(.code-block__body pre),
+.article-prose :where(.code-block__body pre code),
+.article-prose :where(.shiki),
+.article-prose :where(.shiki span) {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  font-variant-ligatures: none;
 }
 
 .article-prose :where(.shiki),
