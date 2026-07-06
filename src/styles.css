@@ -154,18 +154,6 @@ a:hover {
   backdrop-filter: saturate(180%) blur(20px);
 }
 
-.reading-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  pointer-events: none;
-}
-
 .site-nav {
   display: flex;
   align-items: center;

@@ -1,17 +1,13 @@
-import { Link, useMatchRoute } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { useI18n } from '#/i18n/I18nProvider'
 import LanguageToggle from './LanguageToggle'
-import ReadingProgress from './ReadingProgress'
 import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   const { t } = useI18n()
-  const matchRoute = useMatchRoute()
-  const isArticle = Boolean(matchRoute({ to: '/blog/$slug' }))
 
   return (
     <header className="site-header px-4">
-      {isArticle ? <ReadingProgress /> : null}
       <nav className="site-nav page-wrap">
         <Link to="/" className="site-logo">
           Vincenteof
