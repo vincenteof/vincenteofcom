@@ -4,7 +4,7 @@ const STORAGE_KEY = 'locale'
 
 export function detectLocale(): Locale {
   if (typeof window === 'undefined') {
-    return 'en'
+    return 'zh'
   }
 
   const stored = window.localStorage.getItem(STORAGE_KEY)
@@ -12,7 +12,7 @@ export function detectLocale(): Locale {
     return stored
   }
 
-  return navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'
+  return 'zh'
 }
 
 export function persistLocale(locale: Locale) {
@@ -20,4 +20,4 @@ export function persistLocale(locale: Locale) {
   document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en'
 }
 
-export const LOCALE_INIT_SCRIPT = `(function(){try{var stored=localStorage.getItem('locale');var locale=(stored==='en'||stored==='zh')?stored:(navigator.language.toLowerCase().startsWith('zh')?'zh':'en');document.documentElement.lang=locale==='zh'?'zh-CN':'en'}catch(e){}})();`
+export const LOCALE_INIT_SCRIPT = `(function(){try{var stored=localStorage.getItem('locale');var locale=(stored==='en'||stored==='zh')?stored:'zh';document.documentElement.lang=locale==='zh'?'zh-CN':'en'}catch(e){}})();`
