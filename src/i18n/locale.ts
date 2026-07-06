@@ -2,17 +2,34 @@ import type { Locale } from './types'
 
 const STORAGE_KEY = 'locale'
 
-export function detectLocale(): Locale {
-  if (typeof window === 'undefined') {
-    return 'zh'
-  }
+export function localeFromLanguageTag(language: string): Locale {
+  return language.toLowerCase().startsWith('zh') ? 'zh' : 'en'
+}
 
-  const stored = window.localStorage.getItem(STORAGE_KEY)
+export function resolveLocale(
+  stored: string | null,
+  systemLanguage?: string,
+): Locale {
   if (stored === 'en' || stored === 'zh') {
     return stored
   }
 
-  return 'zh'
+  if (systemLanguage) {
+    return localeFromLanguageTag(systemLanguage)
+  }
+
+  return 'en'
+}
+
+export function detectLocale(): Locale {
+  if (typeof window === 'undefined') {
+    return 'en'
+  }
+
+  return resolveLocale(
+    window.localStorage.getItem(STORAGE_KEY),
+    navigator.language,
+  )
 }
 
 export function persistLocale(locale: Locale) {
@@ -20,4 +37,4 @@ export function persistLocale(locale: Locale) {
   document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en'
 }
 
-export const LOCALE_INIT_SCRIPT = `(function(){try{var stored=localStorage.getItem('locale');var locale=(stored==='en'||stored==='zh')?stored:'zh';document.documentElement.lang=locale==='zh'?'zh-CN':'en'}catch(e){}})();`
+export const LOCALE_INIT_SCRIPT = `(function(){try{var stored=localStorage.getItem('locale');var locale=(stored==='en'||stored==='zh')?stored:(navigator.language.toLowerCase().startsWith('zh')?'zh':'en');document.documentElement.lang=locale==='zh'?'zh-CN':'en'}catch(e){}})();`
