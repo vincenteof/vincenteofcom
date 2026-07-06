@@ -1,6 +1,7 @@
 {
   "name": "vincenteofcom",
   "private": true,
+  "packageManager": "pnpm@10.26.2",
   "type": "module",
   "imports": {
     "#/*": "./src/*"
