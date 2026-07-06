@@ -1,6 +1,6 @@
-import { Globe } from 'lucide-react'
+import { Languages } from 'lucide-react'
 import { useI18n } from '#/i18n/I18nProvider'
-import type { Locale } from '#/i18n/types'
+import { localeLabels, type Locale } from '#/i18n/types'
 
 const nextLocale: Record<Locale, Locale> = {
   en: 'zh',
@@ -20,7 +20,8 @@ export default function LanguageToggle() {
       title={label}
       className="language-toggle"
     >
-      <Globe aria-hidden="true" strokeWidth={1.75} />
+      <Languages aria-hidden="true" strokeWidth={1.75} />
+      <span className="language-toggle__label">{localeLabels[target]}</span>
     </button>
   )
 }
