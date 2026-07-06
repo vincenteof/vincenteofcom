@@ -8,9 +8,7 @@ import {
 } from 'react'
 import {
   applyDocumentLocale,
-  defaultLocale,
-  getStoredLocale,
-  persistLocale,
+  setClientLocaleCookie,
 } from './locale'
 import {
   formatLocalizedDate,
@@ -32,18 +30,32 @@ type I18nContextValue = {
 
 const I18nContext = createContext<I18nContextValue | null>(null)
 
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(defaultLocale)
+type I18nProviderProps = {
+  initialLocale: Locale
+  children: ReactNode
+}
+
+export function I18nProvider({ initialLocale, children }: I18nProviderProps) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale)
 
   useEffect(() => {
-    const storedLocale = getStoredLocale()
-    setLocaleState(storedLocale)
-    applyDocumentLocale(storedLocale)
-  }, [])
+    const legacyLocale = window.localStorage.getItem('locale')
+    if (legacyLocale === 'en' || legacyLocale === 'zh') {
+      window.localStorage.removeItem('locale')
+      setClientLocaleCookie(legacyLocale)
+      setLocaleState(legacyLocale)
+      applyDocumentLocale(legacyLocale)
+      return
+    }
+
+    setLocaleState(initialLocale)
+    applyDocumentLocale(initialLocale)
+  }, [initialLocale])
 
   function setLocale(nextLocale: Locale) {
     setLocaleState(nextLocale)
-    persistLocale(nextLocale)
+    setClientLocaleCookie(nextLocale)
+    applyDocumentLocale(nextLocale)
   }
 
   const value = useMemo<I18nContextValue>(

@@ -9,6 +9,7 @@ describe('resolveLocale', () => {
 
   it('defaults to English when nothing is stored', () => {
     expect(resolveLocale(null)).toBe('en')
+    expect(resolveLocale(undefined)).toBe('en')
     expect(resolveLocale('fr')).toBe('en')
   })
 })
