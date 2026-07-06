@@ -175,6 +175,37 @@ a:hover {
   background: color-mix(in oklab, var(--text) 6%, transparent);
 }
 
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  height: 2rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  padding: 0 0.5rem;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.language-toggle svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.language-toggle__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.language-toggle:hover {
+  color: var(--text);
+  background: color-mix(in oklab, var(--text) 6%, transparent);
+}
+
 .site-main {
   padding-block: clamp(3rem, 8vw, 5.5rem);
 }

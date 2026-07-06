@@ -1,34 +1,23 @@
 import { Link } from '@tanstack/react-router'
+import { useI18n } from '#/i18n/I18nProvider'
 import type { PostSummary } from '#/lib/posts/types'
 
 type PostListProps = {
   posts: PostSummary[]
 }
 
-function formatDate(date: string) {
-  const parsed = new Date(date)
-
-  if (Number.isNaN(parsed.getTime())) {
-    return date
-  }
-
-  return parsed.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
-}
-
 export default function PostList({ posts }: PostListProps) {
+  const { formatDate, tag } = useI18n()
+
   return (
     <ul className="post-list">
       {posts.map((post) => (
         <li key={post.slug} className="post-item">
           <div className="post-item__meta">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
-            {post.tags.map((tag) => (
-              <span key={tag} className="tag">
-                {tag}
+            {post.tags.map((postTag) => (
+              <span key={postTag} className="tag">
+                {tag(postTag)}
               </span>
             ))}
           </div>
