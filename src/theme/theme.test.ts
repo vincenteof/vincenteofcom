@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { getHtmlThemeProps, resolveThemeMode } from './theme'
+import {
+  canUseThemeViewTransition,
+  getHtmlThemeProps,
+  resolveThemeMode,
+} from './theme'
 
 describe('resolveThemeMode', () => {
   it('returns stored theme modes when valid', () => {
@@ -31,5 +35,30 @@ describe('getHtmlThemeProps', () => {
       dataTheme: undefined,
       colorScheme: 'light dark',
     })
+  })
+})
+
+describe('canUseThemeViewTransition', () => {
+  it('returns false when reduced motion is preferred', () => {
+    expect(
+      canUseThemeViewTransition(
+        { startViewTransition: () => ({ finished: Promise.resolve() }) },
+        true,
+      ),
+    ).toBe(false)
+  })
+
+  it('returns false when view transitions are unavailable', () => {
+    expect(canUseThemeViewTransition({}, false)).toBe(false)
+    expect(canUseThemeViewTransition(null, false)).toBe(false)
+  })
+
+  it('returns true when transitions are supported and motion is allowed', () => {
+    expect(
+      canUseThemeViewTransition(
+        { startViewTransition: () => ({ finished: Promise.resolve() }) },
+        false,
+      ),
+    ).toBe(true)
   })
 })

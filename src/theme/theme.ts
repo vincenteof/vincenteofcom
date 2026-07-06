@@ -53,6 +53,36 @@ export function applyThemeMode(mode: ThemeMode) {
   root.style.colorScheme = colorScheme
 }
 
+export function canUseThemeViewTransition(
+  doc: Pick<Document, 'startViewTransition'> | null | undefined,
+  prefersReducedMotion: boolean,
+) {
+  return Boolean(
+    doc &&
+      typeof doc.startViewTransition === 'function' &&
+      !prefersReducedMotion,
+  )
+}
+
+export function applyThemeModeWithTransition(mode: ThemeMode) {
+  if (typeof document === 'undefined') {
+    return
+  }
+
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches
+
+  if (!canUseThemeViewTransition(document, prefersReducedMotion)) {
+    applyThemeMode(mode)
+    return
+  }
+
+  document.startViewTransition(() => {
+    applyThemeMode(mode)
+  })
+}
+
 export function setClientThemeCookie(mode: ThemeMode) {
   if (typeof document === 'undefined') {
     return

@@ -8,6 +8,7 @@ import {
 } from 'react'
 import {
   applyThemeMode,
+  applyThemeModeWithTransition,
   setClientThemeCookie,
   type ThemeMode,
 } from './theme'
@@ -65,7 +66,7 @@ export function ThemeProvider({ initialMode, children }: ThemeProviderProps) {
       setMode(nextMode: ThemeMode) {
         setModeState(nextMode)
         setClientThemeCookie(nextMode)
-        applyThemeMode(nextMode)
+        applyThemeModeWithTransition(nextMode)
       },
     }),
     [mode],
