@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useI18n } from '#/i18n/I18nProvider'
+import { getTagClassName } from '#/lib/posts/tag-tone'
 import type { PostSummary } from '#/lib/posts/types'
 
 type PostListProps = {
@@ -28,7 +29,7 @@ export default function PostList({ posts, revealFrom }: PostListProps) {
           <div className="post-item__meta">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
             {post.tags.map((postTag) => (
-              <span key={postTag} className="tag">
+              <span key={postTag} className={getTagClassName(postTag)}>
                 {tag(postTag)}
               </span>
             ))}

@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { getMessages } from '../i18n/translate'
 import type { Locale } from '../i18n/types'
+import { getSiteStatsFn } from '../lib/site/site.functions'
 import { getShellPreferencesFn } from '../theme/shell.functions'
 import { ThemeProvider } from '../theme/ThemeProvider'
 import { getHtmlThemeProps } from '../theme/theme'
@@ -13,7 +14,17 @@ import { getHtmlThemeProps } from '../theme/theme'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
-  loader: () => getShellPreferencesFn(),
+  loader: async () => {
+    const [preferences, siteStats] = await Promise.all([
+      getShellPreferencesFn(),
+      getSiteStatsFn(),
+    ])
+
+    return {
+      ...preferences,
+      siteStats,
+    }
+  },
   head: ({ loaderData }) => {
     const locale: Locale = loaderData?.locale === 'zh' ? 'zh' : 'en'
 
@@ -42,7 +53,7 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { locale, theme } = Route.useLoaderData()
+  const { locale, theme, siteStats } = Route.useLoaderData()
   const { dataTheme, colorScheme } = getHtmlThemeProps(theme)
 
   return (
@@ -60,7 +71,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <I18nProvider initialLocale={locale}>
             <Header />
             {children}
-            <Footer />
+            <Footer stats={siteStats} />
           </I18nProvider>
         </ThemeProvider>
         <TanStackDevtools

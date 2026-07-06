@@ -27,6 +27,7 @@
   --accent-hover: #0077ed;
   --header-bg: rgba(251, 251, 253, 0.82);
   --selection: rgba(0, 113, 227, 0.18);
+  --tag-investing: #8f6b2f;
 }
 
 :root[data-theme="dark"] {
@@ -41,6 +42,7 @@
   --accent-hover: #40a9ff;
   --header-bg: rgba(0, 0, 0, 0.72);
   --selection: rgba(41, 151, 255, 0.28);
+  --tag-investing: #c9a06a;
 }
 
 * {
@@ -264,6 +266,14 @@ a:hover {
   font-size: 0.75rem;
 }
 
+.site-footer__stats {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  color: var(--text-tertiary);
+}
+
 .hero-title {
   margin: 0 0 1.25rem;
   font-family: var(--font-display);
@@ -457,7 +467,9 @@ a:hover {
 }
 
 .post-item__title {
+  position: relative;
   margin: 0 0 0.5rem;
+  padding-left: 0.85rem;
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   font-weight: 600;
@@ -465,13 +477,36 @@ a:hover {
   letter-spacing: -0.02em;
 }
 
-.post-item__title a {
-  color: var(--text);
-  transition: color 160ms ease;
+.post-item__title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.12em;
+  bottom: 0.12em;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.post-item__title a:hover {
+.post-item:hover .post-item__title::before,
+.post-item:focus-within .post-item__title::before {
+  transform: scaleY(1);
+}
+
+.post-item__title a {
+  color: var(--text);
+  transition:
+    color 160ms ease,
+    letter-spacing 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.post-item:hover .post-item__title a,
+.post-item:focus-within .post-item__title a {
   color: var(--accent);
+  letter-spacing: -0.01em;
 }
 
 .post-item__excerpt {
@@ -498,6 +533,29 @@ a:hover {
 
 .tag:first-child::before {
   display: none;
+}
+
+.tag--tech {
+  color: var(--accent);
+}
+
+.tag--investing {
+  color: var(--tag-investing);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-item__title::before {
+    transition: none;
+  }
+
+  .post-item__title a {
+    transition: color 160ms ease;
+  }
+
+  .post-item:hover .post-item__title a,
+  .post-item:focus-within .post-item__title a {
+    letter-spacing: -0.02em;
+  }
 }
 
 .back-link {

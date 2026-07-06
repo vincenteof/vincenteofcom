@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import ArticleProse from '#/components/ArticleProse'
 import { useI18n } from '#/i18n/I18nProvider'
+import { getTagClassName } from '#/lib/posts/tag-tone'
 import { getPostBySlugFn } from '#/lib/posts/posts.functions'
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -24,7 +25,7 @@ function BlogPost() {
           <div className="article-meta">
             <time dateTime={post.date}>{formatDate(post.date, 'long')}</time>
             {post.tags.map((postTag) => (
-              <span key={postTag} className="tag">
+              <span key={postTag} className={getTagClassName(postTag)}>
                 {tag(postTag)}
               </span>
             ))}

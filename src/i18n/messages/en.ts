@@ -9,6 +9,7 @@ export const en = {
   },
   footer: {
     topics: 'Tech · Investing',
+    stats: '{count} posts · {topics} topics · since {year}',
   },
   home: {
     titleLine1: 'Thoughts on tech,',
