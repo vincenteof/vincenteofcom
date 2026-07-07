@@ -122,6 +122,12 @@ body {
     animation: none;
     transform: none;
   }
+
+  .article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block) {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 ::selection {
@@ -607,6 +613,54 @@ a:hover {
   font-size: 1.0625rem;
   line-height: 1.75;
   color: var(--text-secondary);
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block) {
+  animation: prose-reveal 460ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(1) {
+  animation-delay: 50ms;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(3) {
+  animation-delay: 150ms;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(4) {
+  animation-delay: 200ms;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(5) {
+  animation-delay: 250ms;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(6) {
+  animation-delay: 300ms;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(7) {
+  animation-delay: 350ms;
+}
+
+.article-prose--enter > :where(p, h2, h3, h4, ul, ol, blockquote, .code-block):nth-child(n + 8) {
+  animation-delay: 400ms;
+}
+
+@keyframes prose-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .article-prose :where(p, ul, ol, blockquote) {

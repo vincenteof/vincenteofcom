@@ -107,7 +107,7 @@ export default function ArticleProse({ html }: ArticleProseProps) {
   return (
     <div
       ref={rootRef}
-      className="article-prose"
+      className="article-prose article-prose--enter"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )

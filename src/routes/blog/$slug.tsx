@@ -32,7 +32,7 @@ function BlogPost() {
           </div>
         </header>
 
-        <ArticleProse html={post.html} />
+        <ArticleProse key={post.slug} html={post.html} />
       </article>
     </main>
   )
