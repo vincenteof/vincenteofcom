@@ -26,20 +26,22 @@ export default function PostList({ posts, revealFrom }: PostListProps) {
                 } as CSSProperties)
           }
         >
-          <div className="post-item__meta">
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            {post.tags.map((postTag) => (
-              <span key={postTag} className={getTagClassName(postTag)}>
-                {tag(postTag)}
-              </span>
-            ))}
-          </div>
-          <h2 className="post-item__title">
-            <Link to="/blog/$slug" params={{ slug: post.slug }}>
-              {post.title}
-            </Link>
-          </h2>
-          <p className="post-item__excerpt">{post.excerpt}</p>
+          <Link
+            to="/blog/$slug"
+            params={{ slug: post.slug }}
+            className="post-item__link"
+          >
+            <div className="post-item__meta">
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+              {post.tags.map((postTag) => (
+                <span key={postTag} className={getTagClassName(postTag)}>
+                  {tag(postTag)}
+                </span>
+              ))}
+            </div>
+            <h2 className="post-item__title">{post.title}</h2>
+            <p className="post-item__excerpt">{post.excerpt}</p>
+          </Link>
         </li>
       ))}
     </ul>
