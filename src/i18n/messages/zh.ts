@@ -15,11 +15,12 @@ export const zh: Record<keyof typeof en, (typeof en)[keyof typeof en]> = {
   home: {
     titleLine1: '关于技术、',
     titleLine2: '投资，以及二者之间的思考。',
-    leadPrefix: '个人博客，专注于',
-    leadTech: '软件开发',
+    leadPrefix: '个人博客，关于',
+    leadTech: '打造出色的软件',
     leadAnd: '与',
     leadInvesting: '投资',
-    leadSuffix: '——构建可靠系统，做出有风险意识的决策。',
+    leadSuffix:
+      '——做值得留下的作品；耐心等待，只在击球区内的机会出现时，打出完美一击。',
     meta: '技术 · 投资',
     writing: '写作',
     viewAll: '查看全部',

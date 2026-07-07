@@ -14,11 +14,11 @@ export const en = {
     titleLine1: 'Thoughts on tech,',
     titleLine2: 'investing, and the space between.',
     leadPrefix: 'A personal blog on',
-    leadTech: 'software development',
+    leadTech: 'building software',
     leadAnd: 'and',
     leadInvesting: 'investing',
     leadSuffix:
-      '— building reliable systems and making risk-aware decisions.',
+      '— making things I\'m proud of, and swinging only when the pitch sits in the sweet spot.',
     meta: 'Tech · Investing',
     writing: 'Writing',
     viewAll: 'View all',
