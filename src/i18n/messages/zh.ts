@@ -10,7 +10,6 @@ export const zh: Record<keyof typeof en, (typeof en)[keyof typeof en]> = {
     about: '关于',
   },
   footer: {
-    topics: '技术 · 投资',
     stats: '{count} 篇 · {topics} 个主题 · 自 {year} 年',
   },
   home: {

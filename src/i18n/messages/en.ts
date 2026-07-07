@@ -8,7 +8,6 @@ export const en = {
     about: 'About',
   },
   footer: {
-    topics: 'Tech · Investing',
     stats: '{count} posts · {topics} topics · since {year}',
   },
   home: {

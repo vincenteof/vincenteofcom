@@ -22,10 +22,7 @@ export default function Footer({ stats }: FooterProps) {
   return (
     <footer className="site-footer px-4">
       <div className="page-wrap">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <p className="m-0">&copy; {year} Vincenteof</p>
-          <p className="m-0">{t('footer.topics')}</p>
-        </div>
+        <p className="m-0">&copy; {year} Vincenteof</p>
         <p className="site-footer__stats m-0">
           {formatFooterStats(t('footer.stats'), stats)}
         </p>
