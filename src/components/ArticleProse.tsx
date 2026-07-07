@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useI18n } from '#/i18n/I18nProvider'
 
 type ArticleProseProps = {
@@ -33,9 +33,35 @@ function getCopyLabel(button: HTMLButtonElement) {
   return button.querySelector<HTMLElement>('.code-block__copy-label')
 }
 
+function syncCopyLabels(root: HTMLElement, label: string) {
+  root.querySelectorAll<HTMLButtonElement>('[data-copy-button]').forEach((button) => {
+    if (button.classList.contains('is-copied') || button.classList.contains('is-failed')) {
+      return
+    }
+
+    const copyLabel = getCopyLabel(button)
+    if (copyLabel) {
+      copyLabel.textContent = label
+    }
+  })
+}
+
 export default function ArticleProse({ html }: ArticleProseProps) {
   const rootRef = useRef<HTMLDivElement>(null)
+  const resetTimersRef = useRef(new Map<HTMLButtonElement, number>())
   const { t } = useI18n()
+  const tRef = useRef(t)
+
+  tRef.current = t
+
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!root) {
+      return
+    }
+
+    syncCopyLabels(root, t('article.copy'))
+  }, [html, t])
 
   useEffect(() => {
     const root = rootRef.current
@@ -43,66 +69,66 @@ export default function ArticleProse({ html }: ArticleProseProps) {
       return
     }
 
-    const copyButtons = root.querySelectorAll<HTMLButtonElement>(
-      '[data-copy-button]',
-    )
-    const resetTimers = new Map<HTMLButtonElement, number>()
+    async function onClick(event: MouseEvent) {
+      const button = (event.target as Element).closest<HTMLButtonElement>(
+        '[data-copy-button]',
+      )
 
-    const cleanups = Array.from(copyButtons).map((button) => {
+      if (!button || !root.contains(button)) {
+        return
+      }
+
       const block = button.closest<HTMLElement>('[data-code-block]')
       const code = block?.querySelector('code')
       const label = getCopyLabel(button)
 
       if (!code || !label) {
-        return () => {}
+        return
       }
 
-      label.textContent = t('article.copy')
+      event.preventDefault()
 
-      const onClick = async () => {
-        const existingTimer = resetTimers.get(button)
-        if (existingTimer) {
-          window.clearTimeout(existingTimer)
-          resetTimers.delete(button)
-        }
+      const timers = resetTimersRef.current
+      const existingTimer = timers.get(button)
 
-        const copied = await copyText(code.textContent ?? '')
+      if (existingTimer) {
+        window.clearTimeout(existingTimer)
+        timers.delete(button)
+      }
 
+      const copied = await copyText(code.textContent ?? '')
+
+      button.classList.remove('is-copied', 'is-failed')
+
+      if (copied) {
+        label.textContent = tRef.current('article.copied')
+        button.classList.add('is-copied')
+      } else {
+        label.textContent = tRef.current('article.copyFailed')
+        button.classList.add('is-failed')
+      }
+
+      const timer = window.setTimeout(() => {
+        label.textContent = tRef.current('article.copy')
         button.classList.remove('is-copied', 'is-failed')
+        timers.delete(button)
+      }, 1800)
 
-        if (copied) {
-          label.textContent = t('article.copied')
-          button.classList.add('is-copied')
-        } else {
-          label.textContent = t('article.copyFailed')
-          button.classList.add('is-failed')
-        }
+      timers.set(button, timer)
+    }
 
-        const timer = window.setTimeout(() => {
-          label.textContent = t('article.copy')
-          button.classList.remove('is-copied', 'is-failed')
-          resetTimers.delete(button)
-        }, 1800)
-
-        resetTimers.set(button, timer)
-      }
-
-      button.addEventListener('click', onClick)
-
-      return () => {
-        button.removeEventListener('click', onClick)
-        const timer = resetTimers.get(button)
-        if (timer) {
-          window.clearTimeout(timer)
-          resetTimers.delete(button)
-        }
-      }
-    })
+    root.addEventListener('click', onClick)
 
     return () => {
-      cleanups.forEach((cleanup) => cleanup())
+      root.removeEventListener('click', onClick)
+
+      for (const timer of resetTimersRef.current.values()) {
+        window.clearTimeout(timer)
+      }
+
+      resetTimersRef.current.clear()
     }
-  }, [html, t])
+  }, [])
 
   return (
     <div
