@@ -1,8 +1,8 @@
-import { en } from './messages/en'
+import { en, type MessageTree } from './messages/en'
 import { zh } from './messages/zh'
 import type { Locale } from './types'
 
-export type MessageTree = typeof en
+export type { MessageTree }
 
 const catalogs: Record<Locale, MessageTree> = {
   en,
