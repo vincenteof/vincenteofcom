@@ -16,6 +16,8 @@ function About() {
       </section>
 
       <div className="article-prose">
+        <p>{t('about.bio')}</p>
+
         <p>
           {t('about.introPrefix')}{' '}
           <Link to="/blog">{t('about.introLink')}</Link>
@@ -23,9 +25,11 @@ function About() {
         </p>
 
         <h2>{t('about.techTitle')}</h2>
+        <p>{t('about.techContext')}</p>
         <p>{t('about.techBody')}</p>
 
         <h2>{t('about.investingTitle')}</h2>
+        <p>{t('about.investingOrigin')}</p>
         <p>{t('about.investingBody')}</p>
 
         <h2>{t('about.whyTitle')}</h2>

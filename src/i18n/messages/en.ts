@@ -36,18 +36,22 @@ export const en = {
   },
   about: {
     title: 'About',
-    lead:
-      "I'm Vincenteof — a builder who writes about software development and investing.",
+    lead: "I'm Vincenteof.",
+    bio: "I've spent nearly a decade writing code in tech and now build frontends at an exchange. In my spare time, I ship software of my own and keep investing notes.",
     introPrefix: 'This site is a personal blog. Most of what I publish lives under',
     introLink: 'Blog',
     introSuffix:
       ", where I collect notes I want to keep: things I'm learning, frameworks I'm testing, and mistakes worth remembering.",
     techTitle: 'Tech',
+    techContext:
+      'Most of my day goes into designing complex web apps — performance, state management, and the full arc of frontend engineering are always in play.',
     techBody:
-      'On the software side, I care about full-stack craft — type safety across boundaries, small testable modules, and shipping systems that stay understandable as they grow. I write about architecture, tooling, and the habits that make codebases easier to trust.',
+      'I lean toward simple over complicated: defining the problem matters more than jumping to a solution. Side projects are where I build products that match my own aesthetic — and hopefully discover niches where something small can genuinely help people. I write about architecture, tooling, and the habits that make codebases easier to trust.',
     investingTitle: 'Investing',
+    investingOrigin:
+      "It started with curiosity about crypto — a small bet that, with some luck, worked out. That led me to U.S. equities, where patience and process matter more than hot takes. Since then I've been studying systematically and reviewing every decision I make.",
     investingBody:
-      'On the investing side, I focus on process over prediction: position sizing, risk limits, and the psychology of sticking to a plan when markets get loud. These posts are written thinking, not financial advice.',
+      "I only size up when I have real conviction in the underlying business — doing the work to understand it well enough to hold through noise. On top of that, I focus on process over prediction: position sizing, risk limits, and the psychology of sticking to a plan when markets get loud. These posts are written thinking, not financial advice.",
     whyTitle: 'Why this site',
     whyBody:
       "Writing forces clarity. Publishing here is a way to think in public, connect ideas across tech and markets, and build a record I can return to later. If something here is useful to you, that's a bonus.",
