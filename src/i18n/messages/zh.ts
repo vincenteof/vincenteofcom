@@ -11,7 +11,8 @@ export const zh: MessageTree = {
     about: '关于',
   },
   footer: {
-    stats: '{count} 篇 · {topics} 个主题 · 自 {year} 年',
+    copyright: '© {year} Vincenteof. All rights reserved.',
+    socialNav: '社交链接',
   },
   home: {
     titleLine1: '关于技术、',
@@ -57,6 +58,11 @@ export const zh: MessageTree = {
     whyTitle: '为什么写这个站',
     whyBody:
       '写作逼着你把想法说清楚。发在这里，是一种公开思考：把技术和市场连起来，也给自己留一份以后能回看的记录。对你有用的话，那就更好了。',
+    elsewhereTitle: '其他地方',
+    elsewhereLead: '也可以在',
+    elsewhereSeparator: '、',
+    elsewhereSeparatorLast: '、',
+    elsewhereEnd: '找到我。',
     cta: '阅读博客 →',
   },
   tags: {

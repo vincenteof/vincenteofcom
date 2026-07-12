@@ -163,27 +163,34 @@
 ### 4.3 Footer（极简）
 
 ```
-© {year} Vincenteof
-{count} 篇 · {topics} 个主题 · 自 {year} 年
+© {year} Vincenteof. All rights reserved.          [GH] [X] [YT] [抖]
 ```
 
-- 统计行使用 `--font-mono`
-- 数据由 `computeSiteStats()` 从文章自动计算
+- 左侧版权一行；右侧单色社交图标（GitHub · X · YouTube · 抖音）
+- 图标用 `--text-tertiary`，hover 为 accent + 轻微上移；不用平台品牌色
+- 链接配置集中在 `src/lib/site/social.ts`；外链 `target="_blank"` + `rel="noopener noreferrer"`
+- 不做 Footer 文章统计、定位标语或「Follow me」文案
 
-### 4.4 PostList
+### 4.4 About — Elsewhere
+
+- 在「为什么写这个站」与 CTA 之间：`其他地方` / `Elsewhere`
+- 正文内嵌文字链接（同一 `socialLinks` 配置），不用图标墙
+- 中文：也可以在 A、B、C、D找到我。 / 英文：You can also find me on A, B, C, and D.
+
+### 4.5 PostList
 
 - 整行可点击（`Link` 包裹 meta + 标题 + 摘要）
 - Hover：标题左侧竖线、标题变 accent 色
 - 首页列表支持 `revealFrom` 错开入场
 
-### 4.5 文章页
+### 4.6 文章页
 
 - **Header 区**：标题 + 日期 + 语义色标签（静态，无动效）
 - **正文**：`ArticleProse` — Shiki 双主题高亮 + 块级 stagger 入场
 - **代码块**：工具栏（语言标签 + Copy）+ JetBrains Mono 高亮
 - **复制**：根节点事件委托（兼容 SPA 导航后 innerHTML 重建）
 
-### 4.6 链接样式
+### 4.7 链接样式
 
 - 默认无 underline
 - Hover：accent 色 + 下划线从左向右绘制（`background-image` 技巧）

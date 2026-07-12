@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
+import { SocialTextLinks } from '#/components/SocialLinks'
 import { useI18n } from '#/i18n/I18nProvider'
 
 export const Route = createFileRoute('/about')({
@@ -6,7 +7,7 @@ export const Route = createFileRoute('/about')({
 })
 
 function About() {
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
 
   return (
     <main className="site-main page-wrap--narrow px-4">
@@ -34,6 +35,15 @@ function About() {
 
         <h2>{t('about.whyTitle')}</h2>
         <p>{t('about.whyBody')}</p>
+
+        <h2>{t('about.elsewhereTitle')}</h2>
+        <SocialTextLinks
+          locale={locale}
+          lead={t('about.elsewhereLead')}
+          separator={t('about.elsewhereSeparator')}
+          separatorLast={t('about.elsewhereSeparatorLast')}
+          end={t('about.elsewhereEnd')}
+        />
 
         <p>
           <Link to="/blog" className="section-link">

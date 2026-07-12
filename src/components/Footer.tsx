@@ -1,31 +1,17 @@
 import { useI18n } from '#/i18n/I18nProvider'
-import type { SiteStats } from '#/lib/site/stats'
+import SocialLinks from './SocialLinks'
 
-type FooterProps = {
-  stats: SiteStats
-}
-
-function formatFooterStats(
-  template: string,
-  stats: SiteStats,
-) {
-  return template
-    .replace('{count}', String(stats.postCount))
-    .replace('{topics}', String(stats.topicCount))
-    .replace('{year}', String(stats.since))
-}
-
-export default function Footer({ stats }: FooterProps) {
+export default function Footer() {
   const year = new Date().getFullYear()
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
 
   return (
     <footer className="site-footer px-4">
-      <div className="page-wrap">
-        <p className="m-0">&copy; {year} Vincenteof</p>
-        <p className="site-footer__stats m-0">
-          {formatFooterStats(t('footer.stats'), stats)}
+      <div className="page-wrap site-footer__inner">
+        <p className="site-footer__copy m-0">
+          {t('footer.copyright').replace('{year}', String(year))}
         </p>
+        <SocialLinks locale={locale} ariaLabel={t('footer.socialNav')} />
       </div>
     </footer>
   )
