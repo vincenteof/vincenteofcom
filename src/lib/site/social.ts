@@ -19,7 +19,7 @@ export const socialLinks: readonly SocialLink[] = [
   },
   {
     id: 'x',
-    label: { en: 'X', zh: 'X' },
+    label: { en: 'Twitter', zh: '推特' },
     href: 'https://x.com/vincenteof',
   },
   {

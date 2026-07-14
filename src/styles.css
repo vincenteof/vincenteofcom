@@ -143,6 +143,50 @@ a:hover {
   color: var(--accent);
 }
 
+/**
+ * Content link interaction language (design system).
+ * Default: no underline. Hover: accent + underline draws L→R.
+ * Use for prose, CTAs, and labeled social links — not chrome (nav/footer icons).
+ */
+.link-draw,
+.section-link,
+.back-link,
+.article-prose :where(a) {
+  color: var(--accent);
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition:
+    color 160ms ease,
+    background-size 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-draw:hover,
+.section-link:hover,
+.back-link:hover,
+.article-prose :where(a:hover) {
+  color: var(--accent-hover);
+  background-image: linear-gradient(var(--accent-hover), var(--accent-hover));
+  background-size: 100% 1px;
+}
+
+/**
+ * Quiet link variant: default body-secondary color, no accent.
+ * Hover still uses the same underline draw + accent.
+ * Use for peer groups (e.g. social bar) where full accent would be loud.
+ */
+.link-draw--quiet,
+.article-prose :where(a.link-draw--quiet) {
+  color: var(--text-secondary);
+}
+
+.link-draw--quiet:hover,
+.article-prose :where(a.link-draw--quiet:hover) {
+  color: var(--accent-hover);
+}
+
 .page-wrap {
   width: min(980px, calc(100% - 3rem));
   margin-inline: auto;
@@ -317,6 +361,37 @@ a:hover {
   transform: translateY(-1px);
 }
 
+/* About “Elsewhere” — horizontal icon + label bar.
+ * Uses .link-draw--quiet: secondary by default, accent + underline on hover. */
+.social-labeled {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.35rem;
+  margin-block: 1.25rem 1.5rem;
+}
+
+.social-labeled__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.social-labeled__icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.social-labeled__label {
+  white-space: nowrap;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .social-link {
     transition: color 160ms ease, background-color 160ms ease;
@@ -324,6 +399,14 @@ a:hover {
 
   .social-link:hover {
     transform: none;
+  }
+
+  .link-draw,
+  .link-draw--quiet,
+  .section-link,
+  .back-link,
+  .article-prose :where(a) {
+    transition: color 160ms ease;
   }
 }
 
@@ -475,22 +558,7 @@ a:hover {
 
 .section-link {
   font-size: 0.8125rem;
-  color: var(--accent);
   white-space: nowrap;
-  text-decoration: none;
-  background-image: linear-gradient(var(--accent), var(--accent));
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  transition:
-    color 160ms ease,
-    background-size 220ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.section-link:hover {
-  color: var(--accent-hover);
-  background-image: linear-gradient(var(--accent-hover), var(--accent-hover));
-  background-size: 100% 1px;
 }
 
 .post-list {
@@ -625,21 +693,6 @@ a:hover {
   display: inline-block;
   margin-bottom: 2.5rem;
   font-size: 0.8125rem;
-  color: var(--accent);
-  text-decoration: none;
-  background-image: linear-gradient(var(--accent), var(--accent));
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  transition:
-    color 160ms ease,
-    background-size 220ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.back-link:hover {
-  color: var(--accent-hover);
-  background-image: linear-gradient(var(--accent-hover), var(--accent-hover));
-  background-size: 100% 1px;
 }
 
 .article-header {
@@ -746,23 +799,7 @@ a:hover {
   font-weight: 600;
 }
 
-.article-prose :where(a) {
-  color: var(--accent);
-  text-decoration: none;
-  background-image: linear-gradient(var(--accent), var(--accent));
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  transition:
-    color 160ms ease,
-    background-size 220ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.article-prose :where(a:hover) {
-  color: var(--accent-hover);
-  background-image: linear-gradient(var(--accent-hover), var(--accent-hover));
-  background-size: 100% 1px;
-}
+/* Link color / underline: see shared .link-draw block above */
 
 .article-prose :where(:not(pre) > code) {
   font-family: var(--font-mono);

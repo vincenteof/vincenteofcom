@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { SocialTextLinks } from '#/components/SocialLinks'
+import { SocialLabeledLinks } from '#/components/SocialLinks'
 import { useI18n } from '#/i18n/I18nProvider'
 
 export const Route = createFileRoute('/about')({
@@ -37,12 +37,9 @@ function About() {
         <p>{t('about.whyBody')}</p>
 
         <h2>{t('about.elsewhereTitle')}</h2>
-        <SocialTextLinks
+        <SocialLabeledLinks
           locale={locale}
-          lead={t('about.elsewhereLead')}
-          separator={t('about.elsewhereSeparator')}
-          separatorLast={t('about.elsewhereSeparatorLast')}
-          end={t('about.elsewhereEnd')}
+          ariaLabel={t('footer.socialNav')}
         />
 
         <p>

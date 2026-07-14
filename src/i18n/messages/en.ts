@@ -57,10 +57,6 @@ export const en = {
     whyBody:
       "Writing forces clarity. Publishing here is a way to think in public, connect ideas across tech and markets, and build a record I can return to later. If something here is useful to you, that's a bonus.",
     elsewhereTitle: 'Elsewhere',
-    elsewhereLead: 'You can also find me on',
-    elsewhereSeparator: ', ',
-    elsewhereSeparatorLast: ', and ',
-    elsewhereEnd: '.',
     cta: 'Read the blog →',
   },
   tags: {

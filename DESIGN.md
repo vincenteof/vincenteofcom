@@ -174,8 +174,10 @@
 ### 4.4 About — Elsewhere
 
 - 在「为什么写这个站」与 CTA 之间：`其他地方` / `Elsewhere`
-- 正文内嵌文字链接（同一 `socialLinks` 配置），不用图标墙
-- 中文：也可以在 A、B、C、D找到我。 / 英文：You can also find me on A, B, C, and D.
+- **布局**：横排 icon + 平台名（同一 `socialLinks` 配置），非句子内嵌
+- **交互**：`.link-draw--quiet` — 默认 `text-secondary`、无下划线；hover 才变 accent 并绘制下划线
+- 一排并列链接若默认全是 accent 会过吵；quiet 变体专给这种 peer group
+- Footer 仅图标、此处为图标+文案：同一配置，不同信息密度
 
 ### 4.5 PostList
 
@@ -190,11 +192,18 @@
 - **代码块**：工具栏（语言标签 + Copy）+ JetBrains Mono 高亮
 - **复制**：根节点事件委托（兼容 SPA 导航后 innerHTML 重建）
 
-### 4.7 链接样式
+### 4.7 链接样式（设计系统）
 
-- 默认无 underline
-- Hover：accent 色 + 下划线从左向右绘制（`background-image` 技巧）
-- 适用于：正文链接、`.back-link`、`.section-link`
+两套角色，不要混用：
+
+| 角色 | 默认 | Hover | 用途 |
+|---|---|---|---|
+| **内容链接** `.link-draw` | accent，无下划线 | accent-hover + 下划线 L→R | 正文、`section-link`、`back-link` |
+| **安静内容链接** `.link-draw--quiet` | text-secondary，无下划线 | accent-hover + 下划线 L→R | About 社交标签等并列链接组 |
+| **Chrome** | secondary/tertiary | 变深或 accent，无下划线 | Header nav、Footer 图标、主题/语言控件 |
+
+- 下划线用 `background-image` + `background-size` 绘制，不用 `text-decoration`
+- 不做「常驻底部分隔线」式 link bar（那是另一套视觉语言）
 
 ---
 

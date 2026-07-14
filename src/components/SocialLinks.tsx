@@ -113,50 +113,39 @@ export default function SocialLinks({
   )
 }
 
-type SocialTextLinksProps = {
+type SocialLabeledLinksProps = {
   locale: Locale
-  separator: string
-  separatorLast: string
-  lead: string
-  end: string
+  /** Accessible name for the nav landmark */
+  ariaLabel: string
 }
 
-/** Inline linked names for About “Elsewhere”. */
-export function SocialTextLinks({
+/**
+ * Horizontal icon + label row for About “Elsewhere”.
+ * Layout matches common personal-site link bars (not inline prose).
+ */
+export function SocialLabeledLinks({
   locale,
-  separator,
-  separatorLast,
-  lead,
-  end,
-}: SocialTextLinksProps) {
-  const last = socialLinks.length - 1
-
+  ariaLabel,
+}: SocialLabeledLinksProps) {
   return (
-    <p>
-      {lead}{' '}
-      {socialLinks.map((link, index) => {
+    <nav className="social-labeled" aria-label={ariaLabel}>
+      {socialLinks.map((link) => {
+        const Icon = icons[link.id]
         const label = link.label[locale]
-        const sep =
-          index === 0
-            ? null
-            : index === last
-              ? separatorLast
-              : separator
 
         return (
-          <span key={link.id}>
-            {sep}
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {label}
-            </a>
-          </span>
+          <a
+            key={link.id}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-draw link-draw--quiet social-labeled__link"
+          >
+            <Icon className="social-labeled__icon" />
+            <span className="social-labeled__label">{label}</span>
+          </a>
         )
       })}
-      {end}
-    </p>
+    </nav>
   )
 }
