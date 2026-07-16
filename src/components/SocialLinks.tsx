@@ -42,7 +42,7 @@ function GithubIcon(props: IconProps) {
 }
 
 /** X (Twitter) wordmark */
-function XIcon(props: IconProps) {
+export function XIcon(props: IconProps) {
   return (
     <BrandMark
       {...props}

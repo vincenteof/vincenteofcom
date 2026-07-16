@@ -33,3 +33,11 @@ export const socialLinks: readonly SocialLink[] = [
     href: 'https://www.douyin.com/user/self',
   },
 ] as const
+
+export function getSocialLink(id: SocialId) {
+  const link = socialLinks.find((item) => item.id === id)
+  if (!link) {
+    throw new Error(`Unknown social id: ${id}`)
+  }
+  return link
+}

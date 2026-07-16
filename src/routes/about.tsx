@@ -12,6 +12,14 @@ function About() {
   return (
     <main className="site-main page-wrap--narrow px-4">
       <section className="mb-12">
+        <img
+          src="/logo512.png"
+          alt=""
+          width={96}
+          height={96}
+          className="about-avatar"
+          decoding="async"
+        />
         <h1 className="hero-title">{t('about.title')}</h1>
         <p className="hero-lead">{t('about.lead')}</p>
       </section>

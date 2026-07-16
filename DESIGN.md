@@ -155,10 +155,21 @@
 
 ### 4.2 Header
 
-- Logo：`Vincenteof`（左）
+- Logo：头像（`logo192` 小图）+ `Vincenteof`（左），链到首页
 - 导航：Home / Blog / About
 - 控件：语言切换（EN/中）、主题切换（☀️ / 🌙）
 - 主题：仅 `light` ↔ `dark`，默认 `light`
+
+### 4.2.1 站点图标 / 头像
+
+- 主视觉：粉笔画风自画像（礼帽 + 单片镜），源文件 `public/me.png`
+- 由 `pnpm icons`（`scripts/generate-icons.mjs`）生成：
+  - 透明底压到**纯白**（favicon / Header 一致，避免透出黑底）
+  - 自动检测主体并裁成正方形，favicon 裁得更紧
+  - `favicon.ico` / `favicon-16x16.png` / `favicon-32x32.png`
+  - `apple-touch-icon.png`、`logo192.png`、`logo512.png`
+- About / Header 展示裁切后的白底图，圆角方图（不用圆形，避免裁掉帽檐）
+- 替换头像：覆盖 `public/me.png` 后执行 `pnpm icons`
 
 ### 4.3 Footer（极简）
 
@@ -179,20 +190,26 @@
 - 一排并列链接若默认全是 accent 会过吵；quiet 变体专给这种 peer group
 - Footer 仅图标、此处为图标+文案：同一配置，不同信息密度
 
-### 4.5 PostList
+### 4.5 Blog — 短想法
+
+- 列表页 hero lead 下方一条 quiet 外链：X 图标 +「短想法在推特 →」
+- 链接来自 `getSocialLink('x')`；交互用 `.link-draw--quiet`
+- 长文在站内，短想法去推特 — 分工一句话说清，不另做短动态流
+
+### 4.6 PostList
 
 - 整行可点击（`Link` 包裹 meta + 标题 + 摘要）
 - Hover：标题左侧竖线、标题变 accent 色
 - 首页列表支持 `revealFrom` 错开入场
 
-### 4.6 文章页
+### 4.7 文章页
 
 - **Header 区**：标题 + 日期 + 语义色标签（静态，无动效）
 - **正文**：`ArticleProse` — Shiki 双主题高亮 + 块级 stagger 入场
 - **代码块**：工具栏（语言标签 + Copy）+ JetBrains Mono 高亮
 - **复制**：根节点事件委托（兼容 SPA 导航后 innerHTML 重建）
 
-### 4.7 链接样式（设计系统）
+### 4.8 链接样式（设计系统）
 
 两套角色，不要混用：
 

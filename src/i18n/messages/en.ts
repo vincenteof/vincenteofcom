@@ -28,6 +28,7 @@ export const en = {
     title: 'Blog',
     lead:
       'Notes on software development and investing — experiments, mental models, and things worth keeping.',
+    shortTakes: 'Short takes on Twitter →',
     back: '← Blog',
   },
   article: {

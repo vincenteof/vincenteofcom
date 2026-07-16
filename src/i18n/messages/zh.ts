@@ -30,6 +30,7 @@ export const zh: MessageTree = {
   blog: {
     title: '博客',
     lead: '关于软件开发与投资的笔记——实验、思维模型，以及值得留存的想法。',
+    shortTakes: '短想法在推特 →',
     back: '← 博客',
   },
   article: {

@@ -10,7 +10,15 @@ export default function Header() {
     <header className="site-header px-4">
       <nav className="site-nav page-wrap">
         <Link to="/" className="site-logo">
-          Vincenteof
+          <img
+            src="/logo192.png"
+            alt=""
+            width={28}
+            height={28}
+            className="site-logo__avatar"
+            decoding="async"
+          />
+          <span className="site-logo__name">Vincenteof</span>
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-3">
