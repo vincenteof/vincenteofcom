@@ -21,7 +21,7 @@ function BlogIndex() {
         <ShortTakesLink />
       </section>
 
-      <PostList posts={posts} />
+      <PostList posts={posts} showCover />
     </main>
   )
 }

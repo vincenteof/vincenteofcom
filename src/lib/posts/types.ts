@@ -2,6 +2,9 @@ export type PostFrontmatter = {
   title: string
   date: string
   tags: string[]
+  /** Public URL path, e.g. `/covers/slug.webp` */
+  cover?: string
+  coverAlt?: string
 }
 
 export type PostSummary = PostFrontmatter & {

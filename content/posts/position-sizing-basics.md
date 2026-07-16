@@ -4,6 +4,8 @@ date: "2026-02-28"
 tags:
   - investing
   - risk
+cover: https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80
+coverAlt: "Candlestick chart on a trading screen"
 ---
 
 Most traders obsess over entries. The durable edge usually lives in **how much** you risk when the setup appears.

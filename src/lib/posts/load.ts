@@ -55,12 +55,14 @@ export async function getAllPosts(): Promise<Post[]> {
 export async function getAllPostSummaries(): Promise<PostSummary[]> {
   const posts = await getAllPosts()
 
-  return posts.map(({ slug, title, date, tags, excerpt }) => ({
+  return posts.map(({ slug, title, date, tags, excerpt, cover, coverAlt }) => ({
     slug,
     title,
     date,
     tags,
     excerpt,
+    ...(cover ? { cover } : {}),
+    ...(coverAlt ? { coverAlt } : {}),
   }))
 }
 

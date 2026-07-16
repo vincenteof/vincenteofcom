@@ -4,6 +4,8 @@ date: "2026-03-15"
 tags:
   - tech
   - typescript
+cover: https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=80
+coverAlt: "Close-up of code on a monitor"
 ---
 
 Modern full-stack work is less about picking a framework and more about keeping contracts honest across boundaries.

@@ -23,6 +23,8 @@ export async function buildPostFromRaw({
     excerpt: buildExcerpt(body),
     body,
     html: await renderMarkdownToHtml(body),
+    ...(frontmatter.cover ? { cover: frontmatter.cover } : {}),
+    ...(frontmatter.coverAlt ? { coverAlt: frontmatter.coverAlt } : {}),
   }
 }
 

@@ -40,6 +40,23 @@ describe('buildPostFromRaw', () => {
     expect(post.html).toContain('<p>Modern full-stack work')
     expect(post.excerpt).toContain('Modern full-stack work')
   })
+
+  it('passes through optional cover fields', async () => {
+    const post = await buildPostFromRaw({
+      slug: 'with-cover',
+      raw: `---
+title: "Covered"
+date: "2026-04-01"
+cover: /covers/covered.svg
+coverAlt: "Bars of risk"
+---
+
+Hello.`,
+    })
+
+    expect(post.cover).toBe('/covers/covered.svg')
+    expect(post.coverAlt).toBe('Bars of risk')
+  })
 })
 
 describe('sortPostsByDate', () => {

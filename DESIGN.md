@@ -104,7 +104,7 @@
 
 ### 2.4 间距与布局
 
-- 主内容区上下留白：`clamp(3rem, 8vw, 5.5rem)`
+- 主内容区上下留白：`clamp(2rem, 5vw, 3.5rem)`（偏紧，少「头顶大空」）
 - 移动端左右边距：`2rem`（`< 640px`）
 - 列表项间距：`padding-block: 1.75rem` + 顶部分隔线
 - Header：sticky，`backdrop-filter: saturate(180%) blur(20px)`
@@ -201,13 +201,30 @@
 - 整行可点击（`Link` 包裹 meta + 标题 + 摘要）
 - Hover：标题左侧竖线、标题变 accent 色
 - 首页列表支持 `revealFrom` 错开入场
+- Blog 列表可 `showCover`：有 `cover` 时 **右侧小方图**（~5.75rem），文案优先、图作辨认；无封面不留空位
+- 首页 **不** 开封面，避免与 Hero 抢视线
+- 列表图 hover：边框略加强，不做大图 scale（保扫描密度）
 
 ### 4.7 文章页
 
-- **Header 区**：标题 + 日期 + 语义色标签（静态，无动效）
+- **阅读顺序**：返回 → 标题/日期/标签 → 封面 → 正文（标题在图上方，不叠字）
+- **封面**（可选）：2:1，**与正文等宽**（同 `page-wrap--narrow`），圆角 12px + `--border`
+- 有封面时 header 去掉底部分隔线，由图承担节奏断点；标题在上时不再拉宽封面（避免头窄身宽）
 - **正文**：`ArticleProse` — Shiki 双主题高亮 + 块级 stagger 入场
 - **代码块**：工具栏（语言标签 + Copy）+ JetBrains Mono 高亮
 - **复制**：根节点事件委托（兼容 SPA 导航后 innerHTML 重建）
+- 有 cover 时写入 `og:image` / `twitter:image`
+
+### 4.7.1 封面约定
+
+```yaml
+cover: https://… 或 /covers/{slug}.webp   # 可选
+coverAlt: "短描述"                         # 可选；缺省用标题
+```
+
+- 比例 **2:1**（列表与详情统一，比 16:9 更扁、更编辑感）
+- 可用外链（Unsplash 等）或本地 `public/covers/`
+- 无封面的文章 UI 与旧版一致
 
 ### 4.8 链接样式（设计系统）
 

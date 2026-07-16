@@ -24,6 +24,22 @@ Second paragraph.`
     expect(frontmatter.tags).toEqual(['writing', 'notes'])
     expect(body).toBe('First paragraph.\n\nSecond paragraph.')
   })
+
+  it('extracts optional cover and coverAlt', () => {
+    const raw = `---
+title: "With cover"
+date: "2026-01-10"
+cover: /covers/with-cover.svg
+coverAlt: "Soft diagram"
+---
+
+Body.`
+
+    const { frontmatter } = parseFrontmatter(raw)
+
+    expect(frontmatter.cover).toBe('/covers/with-cover.svg')
+    expect(frontmatter.coverAlt).toBe('Soft diagram')
+  })
 })
 
 describe('renderMarkdownToHtml', () => {

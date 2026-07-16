@@ -323,7 +323,7 @@ a:hover {
 }
 
 .site-main {
-  padding-block: clamp(3rem, 8vw, 5.5rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem);
 }
 
 .site-footer {
@@ -619,13 +619,81 @@ a:hover {
 
 .post-item {
   position: relative;
-  padding-block: 1.75rem;
+  padding-block: 1.5rem;
   border-top: 1px solid var(--border);
 }
 
 .post-item:first-child {
   border-top: none;
   padding-top: 0;
+}
+
+.post-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--bg-elevated);
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Article cover: same column as title + prose (aligned measure) */
+.article-cover-wrap {
+  margin-bottom: 2rem;
+}
+
+.post-cover--hero {
+  aspect-ratio: 2 / 1;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.article-cover {
+  margin: 0;
+}
+
+/* List: compact thumb on the right — text-first scanning */
+.post-item--with-cover .post-item__link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5.75rem;
+  gap: 0 1rem;
+  align-items: center;
+}
+
+.post-item__media {
+  width: 5.75rem;
+  height: 5.75rem;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  transition: border-color 160ms ease;
+}
+
+.post-item__media .post-cover {
+  transition: none;
+}
+
+.post-item__body {
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .post-item--with-cover .post-item__link {
+    grid-template-columns: minmax(0, 1fr) 4.5rem;
+    gap: 0 0.75rem;
+  }
+
+  .post-item__media {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 7px;
+  }
 }
 
 .post-item__meta {
@@ -690,6 +758,11 @@ a:hover {
   letter-spacing: -0.01em;
 }
 
+.post-item__link:hover .post-item__media,
+.post-item__link:focus-visible .post-item__media {
+  border-color: var(--border-strong);
+}
+
 .post-item__excerpt {
   margin: 0;
   max-width: 40rem;
@@ -741,14 +814,21 @@ a:hover {
 
 .back-link {
   display: inline-block;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
   font-size: 0.8125rem;
 }
 
 .article-header {
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border);
+}
+
+/* Title sits above the cover — drop the rule so the image is the break */
+.article-header--with-cover {
+  margin-bottom: 1rem;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .article-title {
