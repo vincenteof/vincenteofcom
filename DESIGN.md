@@ -153,6 +153,16 @@
 /about      关于
 ```
 
+### 4.1.1 404 / Error
+
+- 全局：`__root` 的 `notFoundComponent` / `errorComponent`，router 上同步 `default*`
+- 布局：与 About 同列（`page-wrap--narrow`、左对齐）
+- 层次：小码 mono label → `hero-title` → `hero-lead` → 短 divider → quiet 链接
+- 404：首页、博客；Error：重试（`router.invalidate`）、首页
+- 开发态 Error 可显示 `error.message`；生产不展示堆栈
+- 文章缺失：`getPostBySlugFn` 已 `throw notFound()`，走同一套 UI
+- 不做居中海报风大 404、插画、实心按钮
+
 ### 4.2 Header
 
 - Logo：头像（`logo192` 小图）+ `Vincenteof`（左），链到首页
@@ -207,7 +217,7 @@
 
 ### 4.7 文章页
 
-- **阅读顺序**：返回 → 标题/日期/标签 → 封面 → 正文（标题在图上方，不叠字）
+- **阅读顺序**：返回 → 标题 → excerpt 导语 → 日期/标签 → 封面 → 正文（标题在图上方，不叠字）
 - **封面**（可选）：2:1，**与正文等宽**（同 `page-wrap--narrow`），圆角 12px + `--border`
 - 有封面时 header 去掉底部分隔线，由图承担节奏断点；标题在上时不再拉宽封面（避免头窄身宽）
 - **正文**：`ArticleProse` — Shiki 双主题高亮 + 块级 stagger 入场
@@ -245,9 +255,12 @@ coverAlt: "短描述"                         # 可选；缺省用标题
 
 ### Markdown
 
-- 格式：`.md` + YAML frontmatter（`title`, `date`, `tags`）
+- 格式：`slug.en.md` / `slug.zh.md` + YAML frontmatter（`title`, `date`, `tags`, 可选 `excerpt` / `cover` / `coverAlt`）
+- **列表摘要**：优先 frontmatter `excerpt`（一句话）；缺省才用正文截断 `buildExcerpt`
+- **双语**：同一 URL `/blog/$slug`；内容跟随 UI locale（cookie）；缺译时 fallback 到 `en` 并标 `isFallback`
 - 渲染：`marked` → Shiki 代码高亮 → HTML
 - 不引入 MDX；外部 embed（Twitter 等）暂不支持
+- 语言切换：`LanguageToggle` 写 cookie 后 `router.invalidate()`，重新跑文章 loader
 
 ### 代码高亮
 

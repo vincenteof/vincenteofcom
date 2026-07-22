@@ -4,6 +4,7 @@ date: "2026-02-28"
 tags:
   - investing
   - risk
+excerpt: "Size risk before you chase entries — survive first, then refine the edge."
 cover: https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80
 coverAlt: "Candlestick chart on a trading screen"
 ---

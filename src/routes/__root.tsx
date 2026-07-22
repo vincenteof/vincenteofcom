@@ -3,6 +3,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import { DefaultError, DefaultNotFound } from '../components/RouteStatus'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { getMessages } from '../i18n/translate'
 import type { Locale } from '../i18n/types'
@@ -14,6 +15,8 @@ import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
   loader: () => getShellPreferencesFn(),
+  notFoundComponent: DefaultNotFound,
+  errorComponent: DefaultError,
   head: ({ loaderData }) => {
     const locale: Locale = loaderData?.locale === 'zh' ? 'zh' : 'en'
 
@@ -88,9 +91,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="[overflow-wrap:anywhere]">
         <ThemeProvider initialMode={theme}>
           <I18nProvider initialLocale={locale}>
-            <Header />
-            {children}
-            <Footer />
+            <div className="site-shell">
+              <Header />
+              <div className="site-shell__main">{children}</div>
+              <Footer />
+            </div>
           </I18nProvider>
         </ThemeProvider>
         <TanStackDevtools

@@ -25,10 +25,11 @@ Second paragraph.`
     expect(body).toBe('First paragraph.\n\nSecond paragraph.')
   })
 
-  it('extracts optional cover and coverAlt', () => {
+  it('extracts optional cover, coverAlt, and excerpt', () => {
     const raw = `---
 title: "With cover"
 date: "2026-01-10"
+excerpt: "One-line blurb for the list."
 cover: /covers/with-cover.svg
 coverAlt: "Soft diagram"
 ---
@@ -37,6 +38,7 @@ Body.`
 
     const { frontmatter } = parseFrontmatter(raw)
 
+    expect(frontmatter.excerpt).toBe('One-line blurb for the list.')
     expect(frontmatter.cover).toBe('/covers/with-cover.svg')
     expect(frontmatter.coverAlt).toBe('Soft diagram')
   })

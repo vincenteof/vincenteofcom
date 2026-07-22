@@ -30,16 +30,32 @@ export const en = {
       'Notes on software development and investing — experiments, mental models, and things worth keeping.',
     shortTakes: 'Short takes on Twitter →',
     back: '← Blog',
+    translationFallback:
+      'Chinese translation is not available yet — showing the English version.',
   },
   article: {
     copy: 'Copy',
     copied: 'Copied',
     copyFailed: 'Failed',
   },
+  notFound: {
+    code: '404',
+    title: 'Page not found',
+    lead: 'This page does not exist, or the post may have been moved.',
+    home: '← Home',
+    blog: 'Browse the blog →',
+  },
+  error: {
+    code: 'Error',
+    title: 'Something went wrong',
+    lead: 'An unexpected error occurred. You can try again, or head home.',
+    retry: 'Try again',
+    home: '← Home',
+  },
   about: {
     title: 'About',
     lead: "I'm Vincenteof.",
-    bio: "I've spent nearly a decade writing code in tech and now work full-stack at an exchange. In my spare time, I ship software of my own and keep investing notes.",
+    bio: "I've spent nearly a decade writing code in tech and now work on security products at an exchange. In my spare time, I ship software of my own and keep investing notes.",
     introPrefix: 'This site is a personal blog. Most of what I publish lives under',
     introLink: 'Blog',
     introSuffix:

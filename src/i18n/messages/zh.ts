@@ -32,16 +32,31 @@ export const zh: MessageTree = {
     lead: '关于软件开发与投资的笔记——实验、思维模型，以及值得留存的想法。',
     shortTakes: '短想法在推特 →',
     back: '← 博客',
+    translationFallback: '暂无中文译本，以下为英文原文。',
   },
   article: {
     copy: '复制',
     copied: '已复制',
     copyFailed: '失败',
   },
+  notFound: {
+    code: '404',
+    title: '页面不存在',
+    lead: '这个地址没有对应页面，或者文章已经换了位置。',
+    home: '← 首页',
+    blog: '去博客看看 →',
+  },
+  error: {
+    code: '出错了',
+    title: '出了点问题',
+    lead: '发生了意外错误。可以重试一次，或先回首页。',
+    retry: '重试',
+    home: '← 首页',
+  },
   about: {
     title: '关于',
     lead: '我是 Vincenteof。',
-    bio: '在科技行业写了近十年代码，目前在一家交易所做全栈。业余时间写自己的软件，也记投资笔记。',
+    bio: '在科技行业写了近十年代码，目前在一家交易所做安全产品。业余时间写自己的软件，也记投资笔记。',
     introPrefix: '这是一个个人博客。大部分内容在',
     introLink: '博客',
     introSuffix:

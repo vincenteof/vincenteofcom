@@ -48,6 +48,7 @@ export function parseFrontmatter(raw: string): {
   const { data, content } = matter(raw)
   const tags = normalizeTags(data.tags)
 
+  const excerpt = normalizeOptionalString(data.excerpt)
   const cover = normalizeOptionalString(data.cover)
   const coverAlt = normalizeOptionalString(data.coverAlt)
 
@@ -56,6 +57,7 @@ export function parseFrontmatter(raw: string): {
       title: typeof data.title === 'string' ? data.title : undefined,
       date: typeof data.date === 'string' ? data.date : undefined,
       tags,
+      ...(excerpt ? { excerpt } : {}),
       ...(cover ? { cover } : {}),
       ...(coverAlt ? { coverAlt } : {}),
     },

@@ -49,6 +49,10 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 html,
 body,
 #app {
@@ -57,6 +61,7 @@ body,
 
 body {
   margin: 0;
+  min-height: 100dvh;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -64,6 +69,23 @@ body {
   background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sticky footer: short pages (404 / error / about) keep footer at the bottom */
+.site-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.site-shell__main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-shell__main > .site-main {
+  flex: 1 0 auto;
 }
 
 @keyframes theme-fade-in {
@@ -326,7 +348,90 @@ a:hover {
   padding-block: clamp(2rem, 5vw, 3.5rem);
 }
 
+/* Status pages (404 / error): same column & type as About, light craft only */
+.status-panel {
+  max-width: 32rem;
+}
+
+/* Small mono label — like meta / section label language */
+.status-code {
+  margin-bottom: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* Reuse hero-title scale; slightly smaller so it fits status copy */
+.status-title {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+
+.status-lead {
+  max-width: 28rem;
+}
+
+.status-detail {
+  margin-top: 1.15rem;
+  max-width: 32rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--text-tertiary);
+  word-break: break-word;
+}
+
+.status-divider {
+  width: 2.5rem;
+  height: 1px;
+  margin: 1.75rem 0 1.5rem;
+  border: none;
+  background: var(--border-strong);
+}
+
+.status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.5rem;
+}
+
+.status-retry {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition:
+    color 160ms ease,
+    background-size 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.status-retry:hover {
+  color: var(--accent-hover);
+  background-image: linear-gradient(var(--accent-hover), var(--accent-hover));
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-retry {
+    transition: color 160ms ease;
+  }
+}
+
 .site-footer {
+  flex-shrink: 0;
   border-top: 1px solid var(--border);
   padding-block: 2.5rem;
   color: var(--text-tertiary);
@@ -832,12 +937,22 @@ a:hover {
 }
 
 .article-title {
-  margin: 0 0 1rem;
+  margin: 0 0 0.85rem;
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.035em;
+}
+
+/* One-line deck from frontmatter excerpt (same string as list preview) */
+.article-excerpt {
+  margin: 0 0 1.1rem;
+  max-width: 36rem;
+  font-size: clamp(1.0625rem, 2vw, 1.1875rem);
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--text-secondary);
 }
 
 .article-meta {
@@ -846,6 +961,13 @@ a:hover {
   align-items: center;
   gap: 0.75rem;
   font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.article-fallback {
+  margin-top: 0.85rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
   color: var(--text-tertiary);
 }
 

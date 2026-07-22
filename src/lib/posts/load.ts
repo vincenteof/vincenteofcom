@@ -1,72 +1,115 @@
 import '@tanstack/react-start/server-only'
 
+import type { Locale } from '#/i18n/types'
 import {
   buildPostFromRaw,
-  findPostBySlug,
+  groupPostsBySlug,
+  resolveLocalizedPost,
   sortPostsByDate,
+  toPostSummary,
 } from './posts'
-import type { Post, PostSummary } from './types'
+import type { LocalizedPostGroup, Post, PostSummary } from './types'
 
-const postModules = import.meta.glob('../../../content/posts/*.md', {
+const postModules = import.meta.glob('../../../content/posts/*.{en,zh}.md', {
   query: '?raw',
   import: 'default',
   eager: true,
 }) as Record<string, string>
 
-export function slugFromPath(path: string): string {
+const LOCALE_FILE = /^(.+)\.(en|zh)\.md$/
+
+export function parsePostPath(path: string): {
+  slug: string
+  locale: Locale
+} | null {
   const filename = path.split('/').pop() ?? path
-  return filename.replace(/\.md$/, '')
+  const match = filename.match(LOCALE_FILE)
+  if (!match) {
+    return null
+  }
+
+  return {
+    slug: match[1]!,
+    locale: match[2] as Locale,
+  }
+}
+
+/** @deprecated prefer parsePostPath — kept for clearer test names */
+export function slugFromPath(path: string): string {
+  return parsePostPath(path)?.slug ?? path.replace(/\.md$/, '')
 }
 
 export async function collectPostsFromModules(
   modules: Record<string, string>,
 ): Promise<Post[]> {
   const posts = await Promise.all(
-    Object.entries(modules).map(([path, raw]) =>
-      buildPostFromRaw({ slug: slugFromPath(path), raw }),
-    ),
+    Object.entries(modules).map(async ([path, raw]) => {
+      const parsed = parsePostPath(path)
+      if (!parsed) {
+        throw new Error(`Invalid post path (expected slug.en.md / slug.zh.md): ${path}`)
+      }
+
+      return buildPostFromRaw({
+        slug: parsed.slug,
+        raw,
+        sourceLocale: parsed.locale,
+      })
+    }),
   )
 
-  return sortPostsByDate(posts) as Post[]
+  return posts
 }
 
-async function loadPosts(): Promise<Post[]> {
-  return collectPostsFromModules(postModules)
+async function loadLocalizedGroups(): Promise<LocalizedPostGroup[]> {
+  const posts = await collectPostsFromModules(postModules)
+  return groupPostsBySlug(posts)
 }
 
-let cachedPosts: Post[] | null = null
-let loadingPromise: Promise<Post[]> | null = null
+let cachedGroups: LocalizedPostGroup[] | null = null
+let loadingPromise: Promise<LocalizedPostGroup[]> | null = null
 
-export async function getAllPosts(): Promise<Post[]> {
-  if (cachedPosts) {
-    return cachedPosts
+export async function getLocalizedPostGroups(): Promise<LocalizedPostGroup[]> {
+  if (cachedGroups) {
+    return cachedGroups
   }
 
   if (!loadingPromise) {
-    loadingPromise = loadPosts().then((posts) => {
-      cachedPosts = posts
-      return posts
+    loadingPromise = loadLocalizedGroups().then((groups) => {
+      cachedGroups = groups
+      return groups
     })
   }
 
   return loadingPromise
 }
 
-export async function getAllPostSummaries(): Promise<PostSummary[]> {
-  const posts = await getAllPosts()
-
-  return posts.map(({ slug, title, date, tags, excerpt, cover, coverAlt }) => ({
-    slug,
-    title,
-    date,
-    tags,
-    excerpt,
-    ...(cover ? { cover } : {}),
-    ...(coverAlt ? { coverAlt } : {}),
-  }))
+/** All source files as posts (one entry per locale file). Mostly for tests. */
+export async function getAllPosts(): Promise<Post[]> {
+  const groups = await getLocalizedPostGroups()
+  return groups.flatMap((group) => Object.values(group.byLocale) as Post[])
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | undefined> {
-  const posts = await getAllPosts()
-  return findPostBySlug(posts, slug)
+export async function getAllPostSummaries(
+  locale: Locale,
+): Promise<PostSummary[]> {
+  const groups = await getLocalizedPostGroups()
+  const resolved = groups
+    .map((group) => resolveLocalizedPost(group, locale))
+    .filter((post): post is Post => post !== undefined)
+    .map(toPostSummary)
+
+  return sortPostsByDate(resolved)
+}
+
+export async function getPostBySlug(
+  slug: string,
+  locale: Locale,
+): Promise<Post | undefined> {
+  const groups = await getLocalizedPostGroups()
+  const group = groups.find((entry) => entry.slug === slug)
+  if (!group) {
+    return undefined
+  }
+
+  return resolveLocalizedPost(group, locale)
 }

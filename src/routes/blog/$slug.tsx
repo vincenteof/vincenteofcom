@@ -55,6 +55,9 @@ function BlogPost() {
         }
       >
         <h1 className="article-title">{post.title}</h1>
+        {post.excerpt ? (
+          <p className="article-excerpt m-0">{post.excerpt}</p>
+        ) : null}
         <div className="article-meta">
           <time dateTime={post.date}>{formatDate(post.date, 'long')}</time>
           {post.tags.map((postTag) => (
@@ -63,6 +66,9 @@ function BlogPost() {
             </span>
           ))}
         </div>
+        {post.isFallback ? (
+          <p className="article-fallback m-0">{t('blog.translationFallback')}</p>
+        ) : null}
       </header>
 
       {post.cover ? (
@@ -77,7 +83,7 @@ function BlogPost() {
         </div>
       ) : null}
 
-      <ArticleProse key={post.slug} html={post.html} />
+      <ArticleProse key={`${post.slug}-${post.locale}`} html={post.html} />
     </main>
   )
 }

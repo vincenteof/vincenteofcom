@@ -7,34 +7,43 @@ import {
   getAllPostSummaries,
   getAllPosts,
   getPostBySlug,
+  parsePostPath,
   slugFromPath,
 } from './load'
 
 const testDir = path.dirname(fileURLToPath(import.meta.url))
 const postsDir = path.resolve(testDir, '../../../content/posts')
 
-function readPostsFromDisk() {
+function readLocalePostsFromDisk() {
   return fs
     .readdirSync(postsDir)
-    .filter((filename) => filename.endsWith('.md'))
+    .filter((filename) => /\.(en|zh)\.md$/.test(filename))
     .map((filename) => {
-      const slug = filename.replace(/\.md$/, '')
+      const match = filename.match(/^(.+)\.(en|zh)\.md$/)!
       const raw = fs.readFileSync(path.join(postsDir, filename), 'utf8')
-      return { slug, raw, filename }
+      return {
+        slug: match[1]!,
+        locale: match[2] as 'en' | 'zh',
+        raw,
+        filename,
+      }
     })
 }
 
-describe('slugFromPath', () => {
-  it('derives slugs from glob module paths', () => {
-    expect(slugFromPath('../../../content/posts/full-stack-type-safety.md')).toBe(
+describe('parsePostPath / slugFromPath', () => {
+  it('derives slug and locale from localized filenames', () => {
+    expect(
+      parsePostPath('../../../content/posts/full-stack-type-safety.en.md'),
+    ).toEqual({ slug: 'full-stack-type-safety', locale: 'en' })
+    expect(slugFromPath('../../../content/posts/full-stack-type-safety.zh.md')).toBe(
       'full-stack-type-safety',
     )
   })
 })
 
 describe('collectPostsFromModules', () => {
-  it('loads and sorts posts from a module map shaped like import.meta.glob output', async () => {
-    const diskPosts = readPostsFromDisk()
+  it('loads localized sources from a module map shaped like import.meta.glob', async () => {
+    const diskPosts = readLocalePostsFromDisk()
     const modules = Object.fromEntries(
       diskPosts.map(({ filename, raw }) => [
         `../../../content/posts/${filename}`,
@@ -43,63 +52,50 @@ describe('collectPostsFromModules', () => {
     )
 
     const posts = await collectPostsFromModules(modules)
+    const slugs = [...new Set(posts.map((post) => post.slug))].sort()
 
-    expect(posts.map((post) => post.slug)).toEqual([
+    expect(slugs).toEqual([
       'full-stack-type-safety',
       'position-sizing-basics',
     ])
-    expect(posts[0]?.title).toBe('Type safety from database to browser')
-    expect(posts[1]?.title).toBe('Position sizing before entry timing')
+    expect(posts.some((post) => post.locale === 'en')).toBe(true)
+    expect(posts.some((post) => post.locale === 'zh')).toBe(true)
   })
 })
 
 describe('getAllPosts', () => {
-  it('loads every markdown source file from content/posts', async () => {
-    const diskSlugs = readPostsFromDisk()
-      .map((post) => post.slug)
-      .sort()
+  it('loads every localized markdown source from content/posts', async () => {
+    const diskFiles = readLocalePostsFromDisk()
     const loadedPosts = await getAllPosts()
-    const loadedSlugs = loadedPosts.map((post) => post.slug).sort()
 
-    expect(loadedSlugs).toEqual(diskSlugs)
-    expect(loadedPosts.length).toBe(diskSlugs.length)
-  })
-
-  it('returns posts sorted newest first for the blog listing path', async () => {
-    const posts = await getAllPosts()
-
-    expect(posts.map((post) => post.slug)).toEqual([
-      'full-stack-type-safety',
-      'position-sizing-basics',
-    ])
+    expect(loadedPosts).toHaveLength(diskFiles.length)
   })
 })
 
 describe('getAllPostSummaries', () => {
-  it('returns index listing data sourced from markdown files on disk', async () => {
-    const diskPosts = readPostsFromDisk()
-    const summaries = await getAllPostSummaries()
+  it('returns one summary per slug for the requested locale', async () => {
+    const summaries = await getAllPostSummaries('en')
 
-    for (const { slug, raw } of diskPosts) {
-      const summary = summaries.find((entry) => entry.slug === slug)
-      const titleMatch = raw.match(/^title:\s*"(.+)"\s*$/m)
+    expect(summaries.map((post) => post.slug)).toEqual([
+      'full-stack-type-safety',
+      'position-sizing-basics',
+    ])
+    expect(summaries[0]?.title).toBe('Type safety from database to browser')
+    expect(summaries[0]?.locale).toBe('en')
+    expect(summaries[0]?.isFallback).toBe(false)
+  })
 
-      expect(summary).toBeDefined()
-      expect(summary?.title).toBe(titleMatch?.[1])
-      expect(summary?.excerpt.length).toBeGreaterThan(0)
-    }
+  it('returns Chinese titles when locale is zh', async () => {
+    const summaries = await getAllPostSummaries('zh')
+
+    expect(summaries[0]?.title).toBe('从数据库到浏览器的类型安全')
+    expect(summaries[0]?.locale).toBe('zh')
   })
 })
 
 describe('getPostBySlug', () => {
-  it('returns the full post with markdown body rendered from disk source', async () => {
-    const diskPost = readPostsFromDisk().find(
-      (post) => post.slug === 'full-stack-type-safety',
-    )
-
-    expect(diskPost).toBeDefined()
-
-    const loaded = await getPostBySlug('full-stack-type-safety')
+  it('returns the English post body for en', async () => {
+    const loaded = await getPostBySlug('full-stack-type-safety', 'en')
 
     expect(loaded?.title).toBe('Type safety from database to browser')
     expect(loaded?.body).toContain(
@@ -108,10 +104,18 @@ describe('getPostBySlug', () => {
     expect(loaded?.html).toContain(
       '<p>Modern full-stack work is less about picking a framework',
     )
-    expect(diskPost!.raw).toContain(loaded?.body ?? '')
+    expect(loaded?.isFallback).toBe(false)
+  })
+
+  it('returns the Chinese post body for zh', async () => {
+    const loaded = await getPostBySlug('full-stack-type-safety', 'zh')
+
+    expect(loaded?.title).toBe('从数据库到浏览器的类型安全')
+    expect(loaded?.body).toContain('现代全栈工作')
+    expect(loaded?.isFallback).toBe(false)
   })
 
   it('returns undefined when the slug has no markdown source', async () => {
-    expect(await getPostBySlug('this-slug-does-not-exist')).toBeUndefined()
+    expect(await getPostBySlug('this-slug-does-not-exist', 'en')).toBeUndefined()
   })
 })
