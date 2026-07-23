@@ -785,7 +785,10 @@ a:hover {
 }
 
 .post-item__body {
+  /* Shared left rail for hover accent bar — keeps meta / title / excerpt aligned */
+  --post-item-rail: 0.85rem;
   min-width: 0;
+  padding-left: var(--post-item-rail);
 }
 
 @media (max-width: 480px) {
@@ -814,7 +817,6 @@ a:hover {
 .post-item__title {
   position: relative;
   margin: 0 0 0.5rem;
-  padding-left: 0.85rem;
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   font-weight: 600;
@@ -829,7 +831,7 @@ a:hover {
 .post-item__title::before {
   content: "";
   position: absolute;
-  left: 0;
+  left: calc(-1 * var(--post-item-rail));
   top: 0.12em;
   bottom: 0.12em;
   width: 2px;
