@@ -172,14 +172,10 @@
 
 ### 4.2.1 站点图标 / 头像
 
-- 主视觉：粉笔画风自画像（礼帽 + 单片镜），源文件 `public/me.png`
-- 由 `pnpm icons`（`scripts/generate-icons.mjs`）生成：
-  - 透明底压到**纯白**（favicon / Header 一致，避免透出黑底）
-  - 自动检测主体并裁成正方形，favicon 裁得更紧
-  - `favicon.ico` / `favicon-16x16.png` / `favicon-32x32.png`
-  - `apple-touch-icon.png`、`logo192.png`、`logo512.png`
-- About / Header 展示裁切后的白底图，圆角方图（不用圆形，避免裁掉帽檐）
-- 替换头像：覆盖 `public/me.png` 后执行 `pnpm icons`
+- 主视觉：粉笔画风自画像（礼帽 + 单片镜）
+- 静态资源在 `public/`：`me.png`、`favicon.ico` / `favicon-16x16.png` / `favicon-32x32.png`、`apple-touch-icon.png`、`logo192.png` / `logo512.png`
+- About / Header 展示白底裁切图，圆角方图（不用圆形，避免裁掉帽檐）
+- 替换图标：直接覆盖 `public/` 里对应文件即可
 
 ### 4.3 Footer（极简）
 

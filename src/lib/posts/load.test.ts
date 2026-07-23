@@ -33,11 +33,11 @@ function readLocalePostsFromDisk() {
 describe('parsePostPath / slugFromPath', () => {
   it('derives slug and locale from localized filenames', () => {
     expect(
-      parsePostPath('../../../content/posts/full-stack-type-safety.en.md'),
-    ).toEqual({ slug: 'full-stack-type-safety', locale: 'en' })
-    expect(slugFromPath('../../../content/posts/full-stack-type-safety.zh.md')).toBe(
-      'full-stack-type-safety',
-    )
+      parsePostPath('../../../content/posts/my-spcx-investment-plan.en.md'),
+    ).toEqual({ slug: 'my-spcx-investment-plan', locale: 'en' })
+    expect(
+      slugFromPath('../../../content/posts/my-spcx-investment-plan.zh.md'),
+    ).toBe('my-spcx-investment-plan')
   })
 })
 
@@ -53,11 +53,9 @@ describe('collectPostsFromModules', () => {
 
     const posts = await collectPostsFromModules(modules)
     const slugs = [...new Set(posts.map((post) => post.slug))].sort()
+    const expectedSlugs = [...new Set(diskPosts.map((post) => post.slug))].sort()
 
-    expect(slugs).toEqual([
-      'full-stack-type-safety',
-      'position-sizing-basics',
-    ])
+    expect(slugs).toEqual(expectedSlugs)
     expect(posts.some((post) => post.locale === 'en')).toBe(true)
     expect(posts.some((post) => post.locale === 'zh')).toBe(true)
   })
@@ -74,44 +72,48 @@ describe('getAllPosts', () => {
 
 describe('getAllPostSummaries', () => {
   it('returns one summary per slug for the requested locale', async () => {
+    const diskSlugs = [
+      ...new Set(readLocalePostsFromDisk().map((post) => post.slug)),
+    ].sort()
     const summaries = await getAllPostSummaries('en')
+    // Newest first by date
+    const sortedByDate = [...summaries]
+      .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+      .map((post) => post.slug)
 
-    expect(summaries.map((post) => post.slug)).toEqual([
-      'full-stack-type-safety',
-      'position-sizing-basics',
-    ])
-    expect(summaries[0]?.title).toBe('Type safety from database to browser')
-    expect(summaries[0]?.locale).toBe('en')
-    expect(summaries[0]?.isFallback).toBe(false)
+    expect(summaries.map((post) => post.slug)).toEqual(sortedByDate)
+    expect([...summaries.map((post) => post.slug)].sort()).toEqual(diskSlugs)
+    expect(summaries.every((post) => post.locale === 'en')).toBe(true)
+    expect(summaries.every((post) => post.isFallback === false)).toBe(true)
   })
 
   it('returns Chinese titles when locale is zh', async () => {
     const summaries = await getAllPostSummaries('zh')
+    const sample = summaries.find(
+      (post) => post.slug === 'my-spcx-investment-plan',
+    )
 
-    expect(summaries[0]?.title).toBe('从数据库到浏览器的类型安全')
-    expect(summaries[0]?.locale).toBe('zh')
+    expect(sample?.title).toBe('我的 SPCX 投资计划')
+    expect(sample?.locale).toBe('zh')
   })
 })
 
 describe('getPostBySlug', () => {
   it('returns the English post body for en', async () => {
-    const loaded = await getPostBySlug('full-stack-type-safety', 'en')
+    const loaded = await getPostBySlug('my-spcx-investment-plan', 'en')
 
-    expect(loaded?.title).toBe('Type safety from database to browser')
-    expect(loaded?.body).toContain(
-      'Modern full-stack work is less about picking a framework',
-    )
-    expect(loaded?.html).toContain(
-      '<p>Modern full-stack work is less about picking a framework',
-    )
+    expect(loaded?.title).toBe('My SPCX investment plan')
+    expect(loaded?.body).toContain("No one seriously doubts SPCX's monopoly")
+    expect(loaded?.html).toContain('<p>')
+    expect(loaded?.html).toMatch(/SPCX/i)
     expect(loaded?.isFallback).toBe(false)
   })
 
   it('returns the Chinese post body for zh', async () => {
-    const loaded = await getPostBySlug('full-stack-type-safety', 'zh')
+    const loaded = await getPostBySlug('my-spcx-investment-plan', 'zh')
 
-    expect(loaded?.title).toBe('从数据库到浏览器的类型安全')
-    expect(loaded?.body).toContain('现代全栈工作')
+    expect(loaded?.title).toBe('我的 SPCX 投资计划')
+    expect(loaded?.body).toContain('没有人会质疑 SPCX')
     expect(loaded?.isFallback).toBe(false)
   })
 
