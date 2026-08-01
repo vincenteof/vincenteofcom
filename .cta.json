@@ -2,16 +2,16 @@
   "projectName": "vincenteofcom",
   "mode": "file-router",
   "typescript": true,
-  "packageManager": "pnpm",
-  "includeExamples": true,
   "tailwind": true,
-  "addOnOptions": {},
-  "envVarValues": {},
+  "packageManager": "pnpm",
   "git": false,
+  "install": true,
+  "intent": true,
+  "addOnOptions": {},
+  "includeExamples": true,
+  "envVarValues": {},
   "routerOnly": false,
   "version": 1,
-  "framework": "react-cra",
-  "chosenAddOns": [
-    "cloudflare"
-  ]
+  "framework": "react",
+  "chosenAddOns": []
 }

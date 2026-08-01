@@ -1,0 +1,61 @@
+import { Link, createFileRoute } from '@tanstack/react-router'
+import { SocialLabeledLinks } from '#/components/SocialLinks'
+import { useI18n } from '#/i18n/I18nProvider'
+
+export const Route = createFileRoute('/about')({
+  component: About,
+})
+
+function About() {
+  const { locale, t } = useI18n()
+
+  return (
+    <main className="site-main page-wrap--narrow px-4">
+      <section className="mb-12">
+        <img
+          src="/logo512.png"
+          alt=""
+          width={96}
+          height={96}
+          className="about-avatar"
+          decoding="async"
+        />
+        <h1 className="hero-title">{t('about.title')}</h1>
+        <p className="hero-lead">{t('about.lead')}</p>
+      </section>
+
+      <div className="article-prose">
+        <p>{t('about.bio')}</p>
+
+        <p>
+          {t('about.introPrefix')}{' '}
+          <Link to="/blog">{t('about.introLink')}</Link>
+          {t('about.introSuffix')}
+        </p>
+
+        <h2>{t('about.techTitle')}</h2>
+        <p>{t('about.techContext')}</p>
+        <p>{t('about.techBody')}</p>
+
+        <h2>{t('about.investingTitle')}</h2>
+        <p>{t('about.investingOrigin')}</p>
+        <p>{t('about.investingBody')}</p>
+
+        <h2>{t('about.whyTitle')}</h2>
+        <p>{t('about.whyBody')}</p>
+
+        <h2>{t('about.elsewhereTitle')}</h2>
+        <SocialLabeledLinks
+          locale={locale}
+          ariaLabel={t('footer.socialNav')}
+        />
+
+        <p>
+          <Link to="/blog" className="section-link">
+            {t('about.cta')}
+          </Link>
+        </p>
+      </div>
+    </main>
+  )
+}
