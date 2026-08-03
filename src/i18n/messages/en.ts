@@ -19,7 +19,7 @@ export const en = {
     leadAnd: 'and',
     leadInvesting: 'investing',
     leadSuffix:
-      '— making things I\'m proud of, and swinging only when the pitch sits in the sweet spot.',
+      '. Making things I\'m proud of, and swinging only when the pitch sits in the sweet spot.',
     meta: 'Tech · Investing',
     writing: 'Writing',
     viewAll: 'View all',
@@ -27,7 +27,7 @@ export const en = {
   blog: {
     title: 'Blog',
     lead:
-      'Notes on software development and investing — experiments, mental models, and things worth keeping.',
+      'Notes on software development and investing. Experiments, mental models, and things worth keeping.',
     shortTakes: 'Short takes on Twitter →',
     back: '← Blog',
     translationFallback:

@@ -30,7 +30,7 @@ function About() {
         <p>
           {t('about.introPrefix')}{' '}
           <Link to="/blog">{t('about.introLink')}</Link>
-          {t('about.introSuffix')}
+          {' '}{t('about.introSuffix')}
         </p>
 
         <h2>{t('about.techTitle')}</h2>

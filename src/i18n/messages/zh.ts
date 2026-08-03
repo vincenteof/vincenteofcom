@@ -22,14 +22,14 @@ export const zh: MessageTree = {
     leadAnd: '与',
     leadInvesting: '投资',
     leadSuffix:
-      '——做值得留下的作品；耐心等待，只在击球区内的机会出现时，打出完美一击。',
+      '。做值得留下的作品；耐心等待，只在击球区内的机会出现时，打出完美一击。',
     meta: '技术 · 投资',
     writing: '写作',
     viewAll: '查看全部',
   },
   blog: {
     title: '博客',
-    lead: '关于软件开发与投资的笔记——实验、思维模型，以及值得留存的想法。',
+    lead: '关于软件开发与投资的笔记。实验、思维模型，以及值得留存的想法。',
     shortTakes: '短想法在推特 →',
     back: '← 博客',
     translationFallback: '暂无中文译本，以下为英文原文。',

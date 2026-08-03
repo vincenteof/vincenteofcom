@@ -4,7 +4,7 @@ date: "2026-07-22"
 tags:
   - investing
   - risk
-excerpt: "好资产也要好价格。SPCX 已从高点回撤逾 40%，我按约 10% 仓位分三阶段慢慢买。"
+excerpt: "好资产也要好价格。SPCX 已从高点回撤逾 40%，我按约 10% 仓位分三阶段逢低买入。"
 cover: /covers/my-spcx-investment-plan.webp
 coverAlt: "SPCX 封面"
 ---

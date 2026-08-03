@@ -30,7 +30,7 @@ export const socialLinks: readonly SocialLink[] = [
   {
     id: 'douyin',
     label: { en: 'Douyin', zh: '抖音' },
-    href: 'https://www.douyin.com/user/self',
+    href: 'https://www.douyin.com/user/MS4wLjABAAAAugm6d8rM6x9lLtguVWlLN5MXLotyWlZtA-d8MZj7L3JLy0I9HF9YYI_gmFGMk1Fu',
   },
 ] as const
 
