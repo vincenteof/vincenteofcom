@@ -7,7 +7,7 @@ export default function Header() {
   const { t } = useI18n()
 
   return (
-    <header className="site-header px-4">
+    <header className="site-header">
       <nav className="site-nav page-wrap">
         <Link to="/" className="site-logo">
           <img
@@ -21,7 +21,7 @@ export default function Header() {
           <span className="site-logo__name">Vincenteof</span>
         </Link>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="site-nav__actions">
           <div className="site-links">
             <Link
               to="/"
